@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+
+commit_msg_file="$1"
+
+[ -f "$commit_msg_file" ] || exit 0
+
+first_line=$(sed -n '1p' "$commit_msg_file")
+
+case "$first_line" in
+  ""|\#*|Merge\ *|Revert\ *|fixup\!*|squash\!*|✨\ *|🐛\ *|📝\ *|💄\ *|♻️\ *|⚡\ *|✅\ *|🔧\ *|🚀\ *|📦\ *|🔒\ *|⬆️\ *|🔥\ *)
+    exit 0
+    ;;
+esac
+
+emoji="✨"
+case "$first_line" in
+  fix*|bugfix*|hotfix*) emoji="🐛" ;;
+  docs*) emoji="📝" ;;
+  style*|ui*) emoji="💄" ;;
+  refactor*) emoji="♻️" ;;
+  perf*) emoji="⚡" ;;
+  test*) emoji="✅" ;;
+  chore*|build*|ci*) emoji="🔧" ;;
+  feat*) emoji="✨" ;;
+  release*) emoji="🚀" ;;
+  deps*|package*) emoji="📦" ;;
+  security*) emoji="🔒" ;;
+  upgrade*) emoji="⬆️" ;;
+  remove*|delete*) emoji="🔥" ;;
+esac
+
+tmp_file="${commit_msg_file}.tmp"
+{
+  printf '%s %s\n' "$emoji" "$first_line"
+  sed -n '2,$p' "$commit_msg_file"
+} > "$tmp_file" && mv "$tmp_file" "$commit_msg_file"
