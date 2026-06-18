@@ -7,7 +7,7 @@ This project was created with [Better-T-Stack](https://github.com/AmanVarshney01
 - **TypeScript** - For type safety and improved developer experience
 - **Next.js** - Full-stack React framework
 - **TailwindCSS** - Utility-first CSS for rapid UI development
-- **Shared UI package** - shadcn/ui primitives live in `packages/ui`
+- **Shared UI package** - Base UI primitives live in `packages/ui`
 - **Drizzle** - TypeScript-first ORM
 - **PostgreSQL** - Database engine
 - **Husky** - Git hooks for code quality
@@ -44,18 +44,18 @@ Open [http://localhost:3001](http://localhost:3001) in your browser to see the f
 
 ## UI Customization
 
-React web apps in this stack share shadcn/ui primitives through `packages/ui`.
+React web apps in this stack share Base UI primitives through `packages/ui`.
 
 - Change design tokens and global styles in `packages/ui/src/styles/globals.css`
 - Update shared primitives in `packages/ui/src/components/*`
-- Adjust shadcn aliases or style config in `packages/ui/components.json` and `apps/web/components.json`
+- Shared components are exported from `@Docify/ui/components/*`
 
 ### Add more shared components
 
-Run this from the project root to add more primitives to the shared UI package:
+Install or wrap additional Base UI primitives in `packages/ui/src/components`.
 
 ```bash
-npx shadcn@latest add accordion dialog popover sheet table -c packages/ui
+bun add @base-ui/react --filter @Docify/ui
 ```
 
 Import shared components like this:
@@ -66,7 +66,7 @@ import { Button } from "@Docify/ui/components/button";
 
 ### Add app-specific blocks
 
-If you want to add app-specific blocks instead of shared primitives, run the shadcn CLI from `apps/web`.
+If you want to add app-specific blocks instead of shared primitives, keep them inside `apps/web`.
 
 ## Deployment
 
@@ -92,7 +92,7 @@ Docify/
 ├── apps/
 │   └── web/         # Fullstack application (Next.js)
 ├── packages/
-│   ├── ui/          # Shared shadcn/ui components and styles
+│   ├── ui/          # Shared Base UI components and styles
 │   └── db/          # Database schema & queries
 ```
 

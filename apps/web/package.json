@@ -10,9 +10,9 @@
   "dependencies": {
     "@Docify/env": "workspace:*",
     "@Docify/ui": "workspace:*",
+    "@hugeicons/core-free-icons": "^4.2.0",
     "babel-plugin-react-compiler": "^1.0.0",
     "dotenv": "catalog:",
-    "lucide-react": "catalog:",
     "next": "^16.2.0",
     "next-themes": "catalog:",
     "react": "catalog:",

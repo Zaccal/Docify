@@ -4,7 +4,7 @@ WORKDIR /app
 ENV SKIP_ENV_VALIDATION=1
 
 COPY . .
-RUN --mount=type=cache,target=/root/.bun/install/cache bun install
+RUN bun install
 
 ENV NODE_ENV=production
 RUN cd apps/web && bun run build
