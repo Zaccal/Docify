@@ -26,6 +26,7 @@
     "build": "turbo build",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
+    "lint:github": "oxlint --format=github",
     "check-types": "turbo check-types",
     "dev:web": "turbo -F web dev",
     "db:push": "turbo -F @Docify/db db:push",
