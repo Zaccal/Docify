@@ -153,7 +153,18 @@
   }
 
   body {
-    background: var(--background);
+    background: var(--muted);
     color: var(--foreground);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .wrapper {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 }
