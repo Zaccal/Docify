@@ -1,8 +1,8 @@
-import { cn } from "@Docify/ui/lib/utils";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Loading03Icon } from "@hugeicons/core-free-icons";
+import { cn } from '@Docify/ui/lib/utils'
+import { Loading03Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 
-function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+function Spinner({ className, ...props }: React.ComponentProps<'svg'>) {
   return (
     <HugeiconsIcon
       icon={Loading03Icon}
@@ -10,10 +10,10 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
       data-slot="spinner"
       role="status"
       aria-label="Loading"
-      className={cn("size-4 animate-spin", className)}
+      className={cn('size-4 animate-spin', className)}
       {...props}
     />
-  );
+  )
 }
 
-export { Spinner };
+export { Spinner }

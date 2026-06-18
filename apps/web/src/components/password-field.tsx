@@ -1,19 +1,19 @@
-"use client";
+'use client'
 
-import { Button } from "@Docify/ui/components/button";
-import { Field, FieldError, FieldLabel } from "@Docify/ui/components/field";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@Docify/ui/components/input-group";
-import { EyeIcon, EyeOffIcon, LockPasswordIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import * as React from "react";
+import { Button } from '@Docify/ui/components/button'
+import { Field, FieldError, FieldLabel } from '@Docify/ui/components/field'
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@Docify/ui/components/input-group'
+import { EyeIcon, EyeOffIcon, LockPasswordIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
+import * as React from 'react'
 
 interface PasswordFieldProps {
-  disabled?: boolean;
-  errors?: Array<{ message?: string } | undefined>;
+  disabled?: boolean
+  errors?: Array<{ message?: string } | undefined>
 }
 
 export function PasswordField({ disabled, errors }: PasswordFieldProps) {
-  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false)
 
   return (
     <Field>
@@ -26,7 +26,7 @@ export function PasswordField({ disabled, errors }: PasswordFieldProps) {
         <InputGroupInput
           id="password"
           name="password"
-          type={isPasswordVisible ? "text" : "password"}
+          type={isPasswordVisible ? 'text' : 'password'}
           placeholder="Пароль"
           disabled={disabled}
         />
@@ -35,7 +35,7 @@ export function PasswordField({ disabled, errors }: PasswordFieldProps) {
             type="button"
             size="icon-sm"
             variant="ghost"
-            aria-label={isPasswordVisible ? "Скрыть пароль" : "Показать пароль"}
+            aria-label={isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'}
             aria-pressed={isPasswordVisible}
             onClick={() => setIsPasswordVisible((visible) => !visible)}
           >
@@ -44,5 +44,5 @@ export function PasswordField({ disabled, errors }: PasswordFieldProps) {
         </InputGroupAddon>
       </InputGroup>
     </Field>
-  );
+  )
 }

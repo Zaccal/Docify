@@ -27,5 +27,5 @@
   "dbSetup": "docker",
   "api": "none",
   "webDeploy": "docker",
-  "serverDeploy": "none",
+  "serverDeploy": "none"
 }

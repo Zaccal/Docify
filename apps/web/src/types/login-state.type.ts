@@ -1,4 +1,4 @@
 export type LoginState = {
-  success: boolean;
-  error?: Array<{ message?: string } | undefined>;
-};
+  success: boolean
+  error?: Array<{ message?: string } | undefined>
+}

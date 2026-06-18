@@ -61,7 +61,7 @@ bun add @base-ui/react --filter @Docify/ui
 Import shared components like this:
 
 ```tsx
-import { Button } from "@Docify/ui/components/button";
+import { Button } from '@Docify/ui/components/button'
 ```
 
 ### Add app-specific blocks
