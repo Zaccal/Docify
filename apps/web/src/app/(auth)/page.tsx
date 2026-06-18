@@ -36,20 +36,14 @@ export default function Auth() {
           </div>
           <CardTitle className="text-4xl text-center">Docify</CardTitle>
           <CardDescription className="text-center">
-            Введите данные — и готовый документ у вас через секунды. Без сложной
-            терминологии.
+            Введите данные — и готовый документ у вас через секунды. Без сложной терминологии.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Separator className="mb-4 h-px" />
           <form action={formAction}>
             <PasswordField errors={state.error} disabled={pending} />
-            <Button
-              loading={pending}
-              fullWidth
-              className={"mt-4"}
-              type="submit"
-            >
+            <Button loading={pending} fullWidth className={"mt-4"} type="submit">
               Войти
             </Button>
           </form>

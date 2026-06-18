@@ -2,16 +2,8 @@
 
 import { Button } from "@Docify/ui/components/button";
 import { Field, FieldError, FieldLabel } from "@Docify/ui/components/field";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@Docify/ui/components/input-group";
-import {
-  EyeIcon,
-  EyeOffIcon,
-  LockPasswordIcon,
-} from "@hugeicons/core-free-icons";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@Docify/ui/components/input-group";
+import { EyeIcon, EyeOffIcon, LockPasswordIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
 

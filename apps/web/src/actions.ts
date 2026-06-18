@@ -5,10 +5,7 @@ import { loginSchema } from "./schemas/login.schema";
 import type { LoginState } from "./types/login-state.type";
 import { redirect } from "next/navigation";
 
-export async function Login(
-  _prevState: LoginState,
-  formData: FormData,
-): Promise<LoginState> {
+export async function Login(_prevState: LoginState, formData: FormData): Promise<LoginState> {
   const result = loginSchema.safeParse(Object.fromEntries(formData.entries()));
 
   if (!result.success) {
