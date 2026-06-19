@@ -31,3 +31,11 @@ export async function Login(_prevState: LoginState, formData: FormData): Promise
 
   redirect('/dashboard')
 }
+
+export async function Logout() {
+  const cookieStore = await cookies()
+
+  cookieStore.delete(COOKIE_NAME)
+
+  redirect('/')
+}

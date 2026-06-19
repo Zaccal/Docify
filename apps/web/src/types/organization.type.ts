@@ -1,1 +1,1 @@
-export type Organization = 'XANSHA' | 'NomaDocs'
+export type Organization = 'XANSHA' | 'NomadDocs'
