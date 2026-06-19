@@ -48,6 +48,7 @@
   "dependencies": {
     "@Docify/env": "workspace:*",
     "dotenv": "catalog:",
+    "react-day-picker": "^10.0.1",
     "zod": "catalog:"
   },
   "devDependencies": {
