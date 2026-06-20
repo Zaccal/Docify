@@ -5,15 +5,11 @@ import { FieldDescription, FieldLegend, FieldSet } from '@Docify/ui/components/f
 import { useActionState } from 'react'
 
 import { createDocument } from '@/actions'
-import BankBlock from '@/components/create-document-blocks/bank-block'
-import CellsBlock from '@/components/create-document-blocks/cells-block'
-import ClientBlock from '@/components/create-document-blocks/client-block'
-import DocumentBlock from '@/components/create-document-blocks/document-block'
-import OrganizationBlock from '@/components/create-document-blocks/organization-block'
-import CreateDocumentBtnsWrapper from '@/components/create-document-btns-wrapper'
+import CellsBlock from '@/components/cells-block'
+import CreateDocumentFields from '@/components/create-document-fields'
 
 export default function CreateDocumentPage() {
-  const [state, formAction] = useActionState(createDocument, {
+  const [state, formAction, pending] = useActionState(createDocument, {
     success: false
   })
 
@@ -24,17 +20,18 @@ export default function CreateDocumentPage() {
           <FieldLegend>Создание документа</FieldLegend>
           <FieldDescription>Заполните поля для создания документа</FieldDescription>
         </FieldSet>
-        <DocumentBlock errors={state.error} />
-        <ClientBlock errors={state.error} />
-        <OrganizationBlock errors={state.error} />
-        <BankBlock errors={state.error} />
+        <CreateDocumentFields errors={state.error} />
         <CellsBlock errors={state.error} />
-        <CreateDocumentBtnsWrapper>
-          <Button type="reset" variant={'secondary'}>
-            Сбросить
-          </Button>
-          <Button type="submit">Сохранить документ</Button>
-        </CreateDocumentBtnsWrapper>
+        <div className="flex items-center justify-end py-8">
+          <div className="flex items-center gap-4">
+            <Button disabled={pending} type="reset" variant={'secondary'}>
+              Сбросить
+            </Button>
+            <Button loading={pending} type="submit">
+              Сохранить документ
+            </Button>
+          </div>
+        </div>
       </form>
     </div>
   )
