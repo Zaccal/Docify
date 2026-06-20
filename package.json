@@ -34,6 +34,7 @@
     "db:studio": "turbo -F @Docify/db db:studio",
     "db:generate": "turbo -F @Docify/db db:generate",
     "db:migrate": "turbo -F @Docify/db db:migrate",
+    "db:drop": "turbo -F @Docify/db db:drop",
     "db:start": "docker compose up -d postgres",
     "db:watch": "docker compose up postgres",
     "db:stop": "docker compose stop postgres",
