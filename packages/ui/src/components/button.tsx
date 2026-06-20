@@ -42,7 +42,7 @@ const buttonVariants = cva(
 
 type ButtonPropsOrigin = ButtonPrimitive.Props & VariantProps<typeof buttonVariants>
 
-interface ButtonProps extends ButtonPropsOrigin {
+export interface ButtonProps extends ButtonPropsOrigin {
   loading?: boolean
   fullWidth?: boolean
 }

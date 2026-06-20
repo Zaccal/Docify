@@ -28,7 +28,7 @@ export default function AppSidebar() {
     <Sidebar>
       <SidebarHeader>
         <div className="flex items-center gap-2.5">
-          <Image src="/Logo.webp" alt="Docify" width={32} height={32} />
+          <Image src="/Logo.webp" alt="Docify" width={560} height={630} className="h-auto w-8" />
           <div className="">
             <h1 className="text-lg font-semibold">Docify</h1>
             <p className="text-sm">Генерация документов</p>

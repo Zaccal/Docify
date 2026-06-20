@@ -26,7 +26,14 @@ export default function Auth() {
       <Card className="mx-auto w-full max-w-md">
         <CardHeader>
           <div className="mx-auto flex size-24 items-center justify-center overflow-hidden rounded-lg">
-            <Image width={96} height={96} src="/Logo.webp" alt="Docify logo" priority />
+            <Image
+              width={560}
+              height={630}
+              src="/Logo.webp"
+              alt="Docify logo"
+              priority
+              className="h-auto w-24"
+            />
           </div>
           <CardTitle className="text-center text-4xl">Docify</CardTitle>
           <CardDescription className="text-center">

@@ -14,7 +14,11 @@ export default function CreateDocumentCard() {
         <CardContent>
           <div className="flex items-center gap-4">
             <div className="bg-primary/20 border-primary/25 rounded-full border p-4">
-              <Button render={<Link href={CREATE_DOCUMENT_ROUTE} />} size="icon-lg">
+              <Button
+                nativeButton={false}
+                render={<Link href={CREATE_DOCUMENT_ROUTE} />}
+                size="icon-lg"
+              >
                 <HugeiconsIcon icon={Plus} />
               </Button>
             </div>
@@ -25,7 +29,7 @@ export default function CreateDocumentCard() {
                   Создавайте договоры и документы за несколько кликов.
                 </p>
               </div>
-              <Button render={<Link href={CREATE_DOCUMENT_ROUTE} />} size="sm">
+              <Button nativeButton={false} render={<Link href={CREATE_DOCUMENT_ROUTE} />} size="sm">
                 Создать документ
                 <HugeiconsIcon icon={ArrowRight02Icon} />
               </Button>
