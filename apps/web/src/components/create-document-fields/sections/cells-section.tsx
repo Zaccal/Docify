@@ -9,12 +9,13 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { useMemo } from 'react'
 
 import { useArray } from '@/hooks/useArray'
-import type { BlockProps } from '@/types/block-props'
 import type { Cell } from '@/types/cells.type'
 
-import CreateDocumentCard from './create-document-card/index'
+import CreateDocumentCard from '../../create-document-card/index'
+import { useCreateDocumentFields } from '../create-document-fields-store'
 
-export default function CellsBlock({ errors }: BlockProps) {
+export default function CellsSection() {
+  const { errors } = useCreateDocumentFields()
   const { value, push, edit, remove } = useArray<Cell>()
   const cellsLineValue = useMemo(
     () =>

@@ -5,7 +5,7 @@ import type { ReactNode } from 'react'
 
 import type { Organization } from '@/types/organization.type'
 
-type OrganizationSelectContextValue = {
+interface OrganizationSelectContextValue {
   organization: Organization
   setOrganization: (organization: Organization) => void
 }
