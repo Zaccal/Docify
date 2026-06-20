@@ -1,10 +1,10 @@
 import { Separator } from '@Docify/ui/components/separator'
 import { cn } from '@Docify/ui/lib/utils'
-import { type IconSvgObject } from '@hugeicons/core-free-icons'
+import type { Home01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 
 interface CreateDocumentCardHeaderProps {
-  icon: IconSvgObject
+  icon: typeof Home01Icon
   color: string
   title: string
   description: string

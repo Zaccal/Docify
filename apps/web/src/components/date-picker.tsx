@@ -3,9 +3,10 @@
 import { Calendar } from '@Docify/ui/components/calendar'
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@Docify/ui/components/input-group'
 import { Popover, PopoverContent, PopoverTrigger } from '@Docify/ui/components/popover'
+import { Calendar01Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { format } from 'date-fns'
 import { ru } from 'date-fns/locale'
-import { CalendarIcon } from 'lucide-react'
 import { useState } from 'react'
 import { type DateRange } from 'react-day-picker'
 
@@ -59,7 +60,7 @@ export function DatePicker({ invalid, name = 'documentDate', fromName, toName }:
         render={
           <InputGroup aria-invalid={invalid}>
             <InputGroupAddon>
-              <CalendarIcon />
+              <HugeiconsIcon icon={Calendar01Icon} />
             </InputGroupAddon>
             <InputGroupInput
               id="date-picker-range"

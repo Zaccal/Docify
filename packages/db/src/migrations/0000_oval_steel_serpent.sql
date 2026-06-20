@@ -1,0 +1,20 @@
+CREATE TABLE "documents_table" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"enumeration" varchar(4) NOT NULL,
+	"fullname_client" varchar(255) NOT NULL,
+	"organization" varchar NOT NULL,
+	"client_id_number" varchar(9) NOT NULL,
+	"client_id_date_from" text NOT NULL,
+	"client_id_type" text NOT NULL,
+	"cost_per_day" text NOT NULL,
+	"document_date" text[],
+	"bin" varchar(12) NOT NULL,
+	"iin" varchar(12) NOT NULL,
+	"address" text NOT NULL,
+	"city" text NOT NULL,
+	"iik" varchar(18) NOT NULL,
+	"bik" varchar(9) NOT NULL,
+	"bank" text NOT NULL,
+	"cells_line" text NOT NULL,
+	"index" text NOT NULL
+);
