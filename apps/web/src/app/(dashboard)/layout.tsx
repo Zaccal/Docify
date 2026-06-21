@@ -1,4 +1,5 @@
 import { SidebarProvider, SidebarTrigger } from '@Docify/ui/components/sidebar'
+import { Toaster } from '@Docify/ui/components/sonner'
 
 import AppSidebar from '@/components/app-sidebar'
 import { OrganizationSelectProvider } from '@/components/organization-select/organization-select-store'
@@ -16,6 +17,7 @@ export default function Layout({ children }: LayoutProps) {
           <SidebarTrigger />
           {children}
         </main>
+        <Toaster />
       </SidebarProvider>
     </OrganizationSelectProvider>
   )
