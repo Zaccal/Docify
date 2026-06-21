@@ -15,8 +15,13 @@ import CreateDocumentCard from '../../create-document-card/index'
 import { useCreateDocumentFields } from '../create-document-fields-store'
 
 export default function CellsSection() {
-  const { errors } = useCreateDocumentFields()
-  const { value, push, edit, remove } = useArray<Cell>()
+  const { errors, values } = useCreateDocumentFields()
+  const initialCells = Object.entries(values?.cellsLine ?? {}).map(([key, value]) => ({
+    id: crypto.randomUUID(),
+    key,
+    value
+  }))
+  const { value, push, edit, remove } = useArray<Cell>(initialCells)
   const cellsLineValue = useMemo(
     () =>
       JSON.stringify(

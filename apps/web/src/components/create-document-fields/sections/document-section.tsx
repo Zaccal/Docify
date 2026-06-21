@@ -7,7 +7,7 @@ import { DatePicker } from '../../date-picker'
 import { useCreateDocumentFields } from '../create-document-fields-store'
 
 export default function DocumentSection() {
-  const { errors } = useCreateDocumentFields()
+  const { errors, values } = useCreateDocumentFields()
 
   return (
     <CreateDocumentCard.Root>
@@ -23,6 +23,7 @@ export default function DocumentSection() {
             <FieldLabel>Нумерация</FieldLabel>
             <Input
               aria-invalid={Boolean(errors?.enumeration?.length)}
+              defaultValue={values?.enumeration}
               name="enumeration"
               placeholder="0004"
             />
@@ -31,7 +32,11 @@ export default function DocumentSection() {
 
           <Field>
             <FieldLabel>Дата документа</FieldLabel>
-            <DatePicker name="documentDate" invalid={Boolean(errors?.documentDate?.length)} />
+            <DatePicker
+              name="documentDate"
+              invalid={Boolean(errors?.documentDate?.length)}
+              defaultValue={values?.documentDate}
+            />
             <FieldError errors={errors?.documentDate} />
           </Field>
         </div>

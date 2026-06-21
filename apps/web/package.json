@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@Docify/db": "workspace:*",
     "@Docify/env": "workspace:*",
     "@Docify/ui": "workspace:*",
     "@hugeicons/core-free-icons": "^4.2.0",

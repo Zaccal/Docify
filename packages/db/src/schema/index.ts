@@ -1,16 +1,16 @@
 import { relations } from 'drizzle-orm'
-import { pgTable, text, uuid, varchar } from 'drizzle-orm/pg-core'
+import { jsonb, pgTable, text, uuid, varchar } from 'drizzle-orm/pg-core'
 
 export const OrganizationsTable = pgTable('organizations_table', {
   id: uuid('id').primaryKey().defaultRandom(),
-  organization: varchar('organization').notNull(),
+  organization: text('organization').notNull(),
   bin: varchar('bin', { length: 12 }).notNull(),
   city: text('city').notNull(),
   index: text('index').notNull(),
   address: text('address').notNull(),
   costPerDay: text('cost_per_day').notNull(),
-  iik: varchar('iik', { length: 18 }).notNull(),
-  bik: varchar('bik', { length: 9 }).notNull(),
+  iik: varchar('iik', { length: 20 }).notNull(),
+  bik: varchar('bik', { length: 8 }).notNull(),
   bank: text('bank').notNull()
 })
 
@@ -31,7 +31,7 @@ export const DocumentsTable = pgTable('documents_table', {
   id: uuid('id').primaryKey().defaultRandom(),
   enumeration: varchar('enumeration', { length: 4 }).notNull(),
   documentDate: text('document_date').array(),
-  cellsLine: text('cells_line').notNull(),
+  cellsLine: jsonb('cells_line').$type<Record<string, string>>().notNull(),
 
   customerId: uuid('customer_id')
     .references(() => CustomersTable.id)

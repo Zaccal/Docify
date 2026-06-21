@@ -9,7 +9,8 @@ import CreateDocumentFields from '@/components/create-document-fields/create-doc
 
 export default function CreateDocumentPage() {
   const [state, formAction, pending] = useActionState(createDocument, {
-    success: false
+    success: false,
+    values: {}
   })
 
   return (
@@ -19,7 +20,7 @@ export default function CreateDocumentPage() {
           <FieldLegend>Создание документа</FieldLegend>
           <FieldDescription>Заполните поля для создания документа</FieldDescription>
         </FieldSet>
-        <CreateDocumentFields errors={state.error} />
+        <CreateDocumentFields errors={state.error} values={state.values} />
         <div className="flex items-center justify-end py-8">
           <div className="flex items-center gap-4">
             <Button disabled={pending} type="reset" variant={'secondary'}>

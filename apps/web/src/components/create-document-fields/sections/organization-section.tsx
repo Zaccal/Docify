@@ -6,7 +6,7 @@ import CreateDocumentCard from '../../create-document-card/index'
 import { useCreateDocumentFields } from '../create-document-fields-store'
 
 export default function OrganizationSection() {
-  const { errors } = useCreateDocumentFields()
+  const { errors, values } = useCreateDocumentFields()
 
   return (
     <>
@@ -22,6 +22,7 @@ export default function OrganizationSection() {
             <FieldLabel htmlFor="organization">Название организации</FieldLabel>
             <Input
               aria-invalid={Boolean(errors?.organization)}
+              defaultValue={values?.organization}
               id="organization"
               name="organization"
               placeholder="Название организации"
@@ -33,6 +34,7 @@ export default function OrganizationSection() {
               <FieldLabel htmlFor="bin">БИН</FieldLabel>
               <Input
                 aria-invalid={Boolean(errors?.bin)}
+                defaultValue={values?.bin}
                 id="bin"
                 name="bin"
                 placeholder="12-значный БИН"
@@ -43,6 +45,7 @@ export default function OrganizationSection() {
               <FieldLabel htmlFor="city">Город</FieldLabel>
               <Input
                 aria-invalid={Boolean(errors?.city)}
+                defaultValue={values?.city}
                 id="city"
                 name="city"
                 placeholder="Астана"
@@ -53,6 +56,7 @@ export default function OrganizationSection() {
               <FieldLabel htmlFor="index">Индекс</FieldLabel>
               <Input
                 aria-invalid={Boolean(errors?.index)}
+                defaultValue={values?.index}
                 id="index"
                 name="index"
                 placeholder="600000"
@@ -64,6 +68,7 @@ export default function OrganizationSection() {
             <FieldLabel htmlFor="address">Адрес</FieldLabel>
             <Input
               aria-invalid={Boolean(errors?.address?.length)}
+              defaultValue={values?.address}
               id="address"
               name="address"
               placeholder="Адрес организации"

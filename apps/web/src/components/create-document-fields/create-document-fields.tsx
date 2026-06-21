@@ -1,4 +1,5 @@
 import type { DocumentFormError } from '@/schemas/document-schema/document.schema'
+import type { CreateDocumentValues } from '@/types/create-document-state.type'
 
 import { CreateDocumentFieldsProvider } from './create-document-fields-store'
 import BankSection from './sections/bank-section'
@@ -9,11 +10,12 @@ import OrganizationSection from './sections/organization-section'
 
 interface CreateDocumentFieldsProps {
   errors?: DocumentFormError
+  values?: CreateDocumentValues
 }
 
-export default function CreateDocumentFields({ errors }: CreateDocumentFieldsProps) {
+export default function CreateDocumentFields({ errors, values }: CreateDocumentFieldsProps) {
   return (
-    <CreateDocumentFieldsProvider errors={errors}>
+    <CreateDocumentFieldsProvider errors={errors} values={values}>
       <DocumentSection />
       <ClientSection />
       <OrganizationSection />

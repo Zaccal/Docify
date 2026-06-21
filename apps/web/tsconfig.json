@@ -21,6 +21,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "@Docify/db": ["../../packages/db/src/index.ts"],
+      "@Docify/db/schema": ["../../packages/db/src/schema/index.ts"],
       "@Docify/ui/*": ["../../packages/ui/src/*"]
     }
   },

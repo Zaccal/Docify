@@ -152,8 +152,8 @@ export const bankNameSchema = z
   .string('Название банка должно быть строкой')
   .check(z.trim(), z.minLength(3, 'Название банка должно быть не менее 3 символов'))
 
-export const dynamicKeyValueSchema = z
-  .record(
+export const dynamicKeyValueSchema = z.optional(
+  z.record(
     z
       .string('Ключ строки должен быть строкой')
       .check(z.trim(), z.minLength(1, 'Ключ строки не может быть пустым')),
@@ -161,7 +161,7 @@ export const dynamicKeyValueSchema = z
       .string('Значение строки должно быть строкой')
       .check(z.trim(), z.minLength(1, 'Значение строки не может быть пустым'))
   )
-  .check(z.refine((value) => Object.keys(value).length > 0, 'Добавьте минимум одну строку'))
+)
 
 export const indexSchema = z
   .string('Почтовый индекс должен быть строкой')

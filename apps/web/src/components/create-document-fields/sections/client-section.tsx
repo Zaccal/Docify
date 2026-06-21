@@ -8,7 +8,7 @@ import CreateDocumentCard from '../../create-document-card/index'
 import { useCreateDocumentFields } from '../create-document-fields-store'
 
 export default function ClientSection() {
-  const { errors } = useCreateDocumentFields()
+  const { errors, values } = useCreateDocumentFields()
 
   return (
     <CreateDocumentCard.Root>
@@ -25,6 +25,7 @@ export default function ClientSection() {
             name="fullnameClient"
             id="fullnameClient"
             aria-invalid={Boolean(errors?.fullnameClient?.length)}
+            defaultValue={values?.fullnameClient}
             placeholder="Иван И.О."
           />
           <FieldError errors={errors?.fullnameClient} />
@@ -36,6 +37,7 @@ export default function ClientSection() {
               name="clientIdNumber"
               id="clientIdNumber"
               aria-invalid={Boolean(errors?.clientIdNumber?.length)}
+              defaultValue={values?.clientIdNumber}
               placeholder="1234567890"
             />
             <FieldError errors={errors?.clientIdNumber} />
@@ -46,6 +48,7 @@ export default function ClientSection() {
               name="clientIdDateFrom"
               id="clientIdDateFrom"
               aria-invalid={Boolean(errors?.clientIdDateFrom?.length)}
+              defaultValue={values?.clientIdDateFrom}
               placeholder="12-12-2024"
             />
             <FieldError errors={errors?.clientIdDateFrom} />
@@ -58,6 +61,7 @@ export default function ClientSection() {
               name="clientIdType"
               id="clientIdType"
               aria-invalid={Boolean(errors?.clientIdType?.length)}
+              defaultValue={values?.clientIdType}
               placeholder="МВД РК"
             />
             <FieldError errors={errors?.clientIdType} />
@@ -68,6 +72,7 @@ export default function ClientSection() {
               name="iin"
               id="iin"
               aria-invalid={Boolean(errors?.iin?.length)}
+              defaultValue={values?.iin}
               placeholder="12-значный иин"
             />
           </Field>
@@ -82,6 +87,7 @@ export default function ClientSection() {
               name="costPerDay"
               id="costPerDay"
               aria-invalid={Boolean(errors?.costPerDay?.length)}
+              defaultValue={values?.costPerDay}
               placeholder="0.00"
             />
           </InputGroup>

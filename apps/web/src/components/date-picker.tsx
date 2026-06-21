@@ -15,6 +15,28 @@ interface DatePickerProps {
   name?: string
   fromName?: string
   toName?: string
+  defaultValue?: string[]
+}
+
+function parseDateFromInput(value?: string) {
+  if (!value) {
+    return undefined
+  }
+
+  const date = new Date(`${value}T00:00:00`)
+
+  return Number.isNaN(date.getTime()) ? undefined : date
+}
+
+function parseDateRangeFromInput(value?: string[]): DateRange | undefined {
+  if (!value || value.length !== 2) {
+    return undefined
+  }
+
+  return {
+    from: parseDateFromInput(value[0]),
+    to: parseDateFromInput(value[1])
+  }
 }
 
 function formatDateForInput(date?: Date) {
@@ -47,8 +69,16 @@ function formatDateRangeForDisplay(date?: DateRange) {
   })}`
 }
 
-export function DatePicker({ invalid, name = 'documentDate', fromName, toName }: DatePickerProps) {
-  const [date, setDate] = useState<DateRange | undefined>(undefined)
+export function DatePicker({
+  invalid,
+  name = 'documentDate',
+  fromName,
+  toName,
+  defaultValue
+}: DatePickerProps) {
+  const [date, setDate] = useState<DateRange | undefined>(() =>
+    parseDateRangeFromInput(defaultValue)
+  )
 
   return (
     <Popover>

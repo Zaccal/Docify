@@ -1,21 +1,29 @@
 import { createContext, createElement, useContext } from 'react'
 
 import type { DocumentFormError } from '@/schemas/document-schema/document.schema'
+import type { CreateDocumentValues } from '@/types/create-document-state.type'
 
 interface CreateDocumentFieldsContextValue {
   errors?: DocumentFormError
+  values?: CreateDocumentValues
 }
 
 const CreateDocumentFieldsContext = createContext<CreateDocumentFieldsContextValue>({})
 
 export function CreateDocumentFieldsProvider({
   children,
-  errors
+  errors,
+  values
 }: {
   children: React.ReactNode
   errors?: DocumentFormError
+  values?: CreateDocumentValues
 }) {
-  return createElement(CreateDocumentFieldsContext.Provider, { value: { errors } }, children)
+  return createElement(
+    CreateDocumentFieldsContext.Provider,
+    { value: { errors, values } },
+    children
+  )
 }
 
 export function useCreateDocumentFields() {

@@ -1,5 +1,5 @@
 {
-  "id": "442fbaa9-f66f-4f95-8689-008dc6aa2f21",
+  "id": "8bf87b95-9529-41b4-8313-af6b8a2cff82",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -95,7 +95,7 @@
         },
         "cells_line": {
           "name": "cells_line",
-          "type": "text",
+          "type": "jsonb",
           "primaryKey": false,
           "notNull": true
         },
@@ -152,7 +152,7 @@
         },
         "organization": {
           "name": "organization",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -188,13 +188,13 @@
         },
         "iik": {
           "name": "iik",
-          "type": "varchar(18)",
+          "type": "varchar(20)",
           "primaryKey": false,
           "notNull": true
         },
         "bik": {
           "name": "bik",
-          "type": "varchar(9)",
+          "type": "varchar(8)",
           "primaryKey": false,
           "notNull": true
         },

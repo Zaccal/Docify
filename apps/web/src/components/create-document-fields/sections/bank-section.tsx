@@ -6,7 +6,7 @@ import CreateDocumentCard from '../../create-document-card/index'
 import { useCreateDocumentFields } from '../create-document-fields-store'
 
 export default function BankSection() {
-  const { errors } = useCreateDocumentFields()
+  const { errors, values } = useCreateDocumentFields()
 
   return (
     <CreateDocumentCard.Root>
@@ -21,6 +21,7 @@ export default function BankSection() {
           <FieldLabel htmlFor="bank">Название банка</FieldLabel>
           <Input
             aria-invalid={Boolean(errors?.bank?.length)}
+            defaultValue={values?.bank}
             name="bank"
             id="bank"
             placeholder="Название банка"
@@ -32,6 +33,7 @@ export default function BankSection() {
             <FieldLabel htmlFor="iik">ИИК</FieldLabel>
             <Input
               aria-invalid={Boolean(errors?.iik?.length)}
+              defaultValue={values?.iik}
               name="iik"
               id="iik"
               placeholder="20-значный ИИК"
@@ -42,6 +44,7 @@ export default function BankSection() {
             <FieldLabel htmlFor="bik">БИК</FieldLabel>
             <Input
               aria-invalid={Boolean(errors?.bik?.length)}
+              defaultValue={values?.bik}
               name="bik"
               id="bik"
               placeholder="8-значный БИК"
