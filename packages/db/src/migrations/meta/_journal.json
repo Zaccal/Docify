@@ -8,6 +8,48 @@
       "when": 1782050890650,
       "tag": "0000_charming_the_fury",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1782054330608,
+      "tag": "0001_oval_red_hulk",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1782054966548,
+      "tag": "0002_confused_lady_ursula",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1782057377717,
+      "tag": "0003_nifty_ink",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1782057468222,
+      "tag": "0004_aspiring_quentin_quire",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1782058224825,
+      "tag": "0005_misty_stature",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1782143571579,
+      "tag": "0006_black_storm",
+      "breakpoints": true
     }
   ]
 }

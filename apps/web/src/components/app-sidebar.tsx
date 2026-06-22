@@ -15,7 +15,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { Logout } from '@/actions'
+import { Logout } from '@/actions/auth/auth'
 import { SIDEBAR_ITEMS } from '@/lib/constants'
 
 import LogoutSubmitButton from './logout-submit-button'

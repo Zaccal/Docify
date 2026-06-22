@@ -17,7 +17,7 @@ export const FULLNAME_CLIENT_REGEX = new RegExp(
 )
 export const ORGANIZATION_REGEX = new RegExp(`^[0-9A-Za-z${CYRILLIC}\\s"«».-]+$`, 'u')
 export const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/
-export const DD_MM_YYYY_DATE_REGEX = /^\d{2}-\d{2}-\d{4}$/
+export const DD_MM_YYYY_DATE_REGEX = /^\d{2}\.\d{2}\.\d{4}$/
 export const COST_PER_DAY_REGEX = /^(?:\d+)(?:[.,]\d{1,2})?$/
 export const ADDRESS_REGEX = new RegExp(`^[0-9A-Za-z${CYRILLIC}\\s,./№-]+$`, 'u')
 export const CITY_REGEX = new RegExp(`^[A-Za-z${CYRILLIC}\\s-]+$`, 'u')
@@ -71,5 +71,14 @@ export const CARD_HEADER_COLORS = {
   green: 'bg-green-100 text-green-400',
   orange: 'bg-orange-100 text-orange-400',
   purple: 'bg-purple-100 text-purple-400',
-  red: 'bg-red-100 text-red-400'
+  red: 'bg-red-100 text-red-400',
+  gray: 'bg-gray-100 text-gray-400'
 } as const
+
+export const UNIQUE_CONSTRAINT_MESSAGES: Record<string, string> = {
+  organizations_table_organization_unique: 'Организация с таким названием уже существует',
+  organizations_table_bin_unique: 'Организация с таким БИН уже существует',
+  customers_table_fullname_client_unique: 'Клиент с таким полным именем уже существует',
+  customers_table_client_id_number_unique: 'Клиент с таким номером удостоверения уже существует',
+  customers_table_iin_unique: 'Клиент с таким ИИН уже существует'
+}

@@ -49,7 +49,7 @@ export default function ClientSection() {
               id="clientIdDateFrom"
               aria-invalid={Boolean(errors?.clientIdDateFrom?.length)}
               defaultValue={values?.clientIdDateFrom}
-              placeholder="12-12-2024"
+              placeholder="12.12.2024"
             />
             <FieldError errors={errors?.clientIdDateFrom} />
           </Field>

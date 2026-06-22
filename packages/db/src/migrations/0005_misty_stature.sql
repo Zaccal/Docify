@@ -1,0 +1,2 @@
+CREATE INDEX "documents_table_enumeration_idx" ON "documents_table" USING btree ("enumeration");--> statement-breakpoint
+ALTER TABLE "documents_table" ADD CONSTRAINT "documents_table_enumeration_unique" UNIQUE("enumeration");

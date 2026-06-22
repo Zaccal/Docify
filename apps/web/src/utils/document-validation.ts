@@ -59,7 +59,7 @@ export function isValidDdMmYyyyDate(value: string): boolean {
     return false
   }
 
-  const [day, month, year] = value.split('-').map(Number)
+  const [day, month, year] = value.split('.').map(Number)
 
   return !!getDateFromParts(year, month, day)
 }
@@ -69,7 +69,7 @@ export function isNotFutureDdMmYyyyDate(value: string): boolean {
     return false
   }
 
-  const [day, month, year] = value.split('-').map(Number)
+  const [day, month, year] = value.split('.').map(Number)
   const date = Date.UTC(year, month - 1, day)
   const now = new Date()
   const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())

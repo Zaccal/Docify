@@ -1,41 +1,40 @@
 'use client'
 
 import { Button } from '@Docify/ui/components/button'
-import { FieldDescription, FieldLegend, FieldSet } from '@Docify/ui/components/field'
 import { SecurityWarningIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useActionState } from 'react'
 import { toast } from 'sonner'
 
-import { createDocument } from '@/actions'
+import { createDocument } from '@/actions/documents/crud-documents'
 import CreateDocumentFields from '@/components/create-document-fields/create-document-fields'
+import ExistingDocumentSearchSection from '@/components/create-document-fields/sections/existing-document-search-section/existing-document-search-section'
 import type { CreateDocumentState } from '@/types/create-document-state.type'
 
-async function createDocumentCallback(prevState: CreateDocumentState, formData: FormData) {
+async function handleCreateDocument(prevState: CreateDocumentState, formData: FormData) {
   const result = await createDocument(prevState, formData)
 
   if (result.success) {
     toast.success('Документ успешно создан')
-  } else if (result.message) {
-    toast.error('Что-то пошло не так', { description: result.message })
   }
 
   return result
 }
 
 export default function CreateDocumentPage() {
-  const [state, formAction, pending] = useActionState(createDocumentCallback, {
+  const [state, formAction, pending] = useActionState(handleCreateDocument, {
     success: false,
     values: {}
   })
 
   return (
     <div className="mx-auto max-w-4xl">
+      {/* Search */}
+
+      <ExistingDocumentSearchSection />
+
+      {/* Create Document */}
       <form action={formAction}>
-        <FieldSet>
-          <FieldLegend>Создание документа</FieldLegend>
-          <FieldDescription>Заполните поля для создания документа</FieldDescription>
-        </FieldSet>
         <CreateDocumentFields errors={state.error} values={state.values} />
         {state.message && (
           <div className="bg-destructive/10 text-destructive mt-8 rounded-lg px-6 py-4 text-lg">

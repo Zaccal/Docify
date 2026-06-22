@@ -1,0 +1,403 @@
+{
+  "id": "e0af55b9-7683-4b7f-b7e8-1a2114e36e95",
+  "prevId": "bb21d1b8-1ceb-45c7-8864-c1a5dbd11dd5",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.customers_table": {
+      "name": "customers_table",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "fullname_client": {
+          "name": "fullname_client",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "client_id_number": {
+          "name": "client_id_number",
+          "type": "varchar(9)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "client_id_date_from": {
+          "name": "client_id_date_from",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "client_id_type": {
+          "name": "client_id_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "iin": {
+          "name": "iin",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "organization_id": {
+          "name": "organization_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "customers_table_fullname_client_idx": {
+          "name": "customers_table_fullname_client_idx",
+          "columns": [
+            {
+              "expression": "fullname_client",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "customers_table_client_id_number_idx": {
+          "name": "customers_table_client_id_number_idx",
+          "columns": [
+            {
+              "expression": "client_id_number",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "customers_table_iin_idx": {
+          "name": "customers_table_iin_idx",
+          "columns": [
+            {
+              "expression": "iin",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "customers_table_organization_id_organizations_table_id_fk": {
+          "name": "customers_table_organization_id_organizations_table_id_fk",
+          "tableFrom": "customers_table",
+          "tableTo": "organizations_table",
+          "columnsFrom": ["organization_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "customers_table_fullname_client_unique": {
+          "name": "customers_table_fullname_client_unique",
+          "nullsNotDistinct": false,
+          "columns": ["fullname_client"]
+        },
+        "customers_table_client_id_number_unique": {
+          "name": "customers_table_client_id_number_unique",
+          "nullsNotDistinct": false,
+          "columns": ["client_id_number"]
+        },
+        "customers_table_iin_unique": {
+          "name": "customers_table_iin_unique",
+          "nullsNotDistinct": false,
+          "columns": ["iin"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.documents_table": {
+      "name": "documents_table",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "enumeration": {
+          "name": "enumeration",
+          "type": "varchar(4)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "document_date": {
+          "name": "document_date",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "cells_line": {
+          "name": "cells_line",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "customer_id": {
+          "name": "customer_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "organization_id": {
+          "name": "organization_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "documents_table_customer_id_idx": {
+          "name": "documents_table_customer_id_idx",
+          "columns": [
+            {
+              "expression": "customer_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "documents_table_organization_id_idx": {
+          "name": "documents_table_organization_id_idx",
+          "columns": [
+            {
+              "expression": "organization_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "documents_table_enumeration_idx": {
+          "name": "documents_table_enumeration_idx",
+          "columns": [
+            {
+              "expression": "enumeration",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "documents_table_customer_id_customers_table_id_fk": {
+          "name": "documents_table_customer_id_customers_table_id_fk",
+          "tableFrom": "documents_table",
+          "tableTo": "customers_table",
+          "columnsFrom": ["customer_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "documents_table_organization_id_organizations_table_id_fk": {
+          "name": "documents_table_organization_id_organizations_table_id_fk",
+          "tableFrom": "documents_table",
+          "tableTo": "organizations_table",
+          "columnsFrom": ["organization_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "documents_table_enumeration_unique": {
+          "name": "documents_table_enumeration_unique",
+          "nullsNotDistinct": false,
+          "columns": ["enumeration"]
+        },
+        "documents_table_customer_id_unique": {
+          "name": "documents_table_customer_id_unique",
+          "nullsNotDistinct": false,
+          "columns": ["customer_id"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.organizations_table": {
+      "name": "organizations_table",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "organization": {
+          "name": "organization",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bin": {
+          "name": "bin",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "city": {
+          "name": "city",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "index": {
+          "name": "index",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cost_per_day": {
+          "name": "cost_per_day",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "iik": {
+          "name": "iik",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bik": {
+          "name": "bik",
+          "type": "varchar(8)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bank": {
+          "name": "bank",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "organizations_table_organization_idx": {
+          "name": "organizations_table_organization_idx",
+          "columns": [
+            {
+              "expression": "organization",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "organizations_table_bin_idx": {
+          "name": "organizations_table_bin_idx",
+          "columns": [
+            {
+              "expression": "bin",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "organizations_table_organization_unique": {
+          "name": "organizations_table_organization_unique",
+          "nullsNotDistinct": false,
+          "columns": ["organization"]
+        },
+        "organizations_table_bin_unique": {
+          "name": "organizations_table_bin_unique",
+          "nullsNotDistinct": false,
+          "columns": ["bin"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

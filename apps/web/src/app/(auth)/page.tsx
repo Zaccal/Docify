@@ -12,7 +12,7 @@ import { Separator } from '@Docify/ui/components/separator'
 import Image from 'next/image'
 import { useActionState } from 'react'
 
-import { Login } from '@/actions'
+import { Login } from '@/actions/auth/auth'
 
 import { PasswordField } from '../../components/password-field'
 

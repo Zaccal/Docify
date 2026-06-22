@@ -57,7 +57,7 @@ export const clientIdDateFromSchema = z
   .string('Дата выдачи удостоверения должна быть строкой')
   .check(
     z.trim(),
-    z.regex(DD_MM_YYYY_DATE_REGEX, 'Дата выдачи удостоверения должна быть в формате DD-MM-YYYY'),
+    z.regex(DD_MM_YYYY_DATE_REGEX, 'Дата выдачи удостоверения должна быть в формате DD.MM.YYYY'),
     z.refine(
       isValidDdMmYyyyDate,
       'Дата выдачи удостоверения должна быть корректной календарной датой'
