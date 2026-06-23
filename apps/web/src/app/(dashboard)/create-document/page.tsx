@@ -42,7 +42,11 @@ export default function CreateDocumentPage() {
 
       {/* Create Document */}
       <form action={formAction}>
-        <CreateDocumentFields errors={state.error} values={values} />
+        <CreateDocumentFields
+          key={selectedDocument?.id ?? 'new-document'}
+          errors={state.error}
+          values={values}
+        />
         {state.message && (
           <div className="bg-destructive/10 text-destructive mt-8 rounded-lg px-6 py-4 text-lg">
             <div className="flex items-center gap-2">
