@@ -29,7 +29,7 @@ export default function ExistingDocumentSearchSection({
   const [selected, setSelected] = useState<SearchResultDocument | null>(null)
   const [debouncedQuery, setDebouncedQuery] = useState('')
 
-  const { isLoading, error, data } = useQuery(
+  const { error, data } = useQuery(
     async ({ signal }) => {
       return fetchExistingDocuments(debouncedQuery, signal)
     },
@@ -87,7 +87,6 @@ export default function ExistingDocumentSearchSection({
           <div>
             <Field>
               <Input
-                disabled={isLoading && hasQuery}
                 value={query}
                 onChange={handleInputChange}
                 type="search"

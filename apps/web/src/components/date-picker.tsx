@@ -23,9 +23,24 @@ function parseDateFromInput(value?: string) {
     return undefined
   }
 
-  const date = new Date(`${value}T00:00:00`)
+  const ddMmYyyyMatch = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(value)
+  const isoMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value)
 
-  return Number.isNaN(date.getTime()) ? undefined : date
+  const day = Number(ddMmYyyyMatch?.[1] ?? isoMatch?.[3])
+  const month = Number(ddMmYyyyMatch?.[2] ?? isoMatch?.[2])
+  const year = Number(ddMmYyyyMatch?.[3] ?? isoMatch?.[1])
+
+  if (!day || !month || !year) {
+    return undefined
+  }
+
+  const date = new Date(year, month - 1, day)
+
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
+    return undefined
+  }
+
+  return date
 }
 
 function parseDateRangeFromInput(value?: string[]): DateRange | undefined {
@@ -44,7 +59,7 @@ function formatDateForInput(date?: Date) {
     return ''
   }
 
-  return format(date, 'yyyy-MM-dd')
+  return format(date, 'dd.MM.yyyy')
 }
 
 function formatDateRangeForInput(date?: DateRange) {

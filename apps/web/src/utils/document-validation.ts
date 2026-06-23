@@ -1,4 +1,4 @@
-import { DD_MM_YYYY_DATE_REGEX, IIN_OR_BIN_REGEX, ISO_DATE_REGEX } from '@/lib/constants'
+import { DD_MM_YYYY_DATE_REGEX, IIN_OR_BIN_REGEX } from '@/lib/constants'
 
 function getDateFromParts(year: number, month: number, day: number) {
   const date = new Date(Date.UTC(year, month - 1, day))
@@ -32,11 +32,11 @@ function hasValidKazakhstanControlDigit(value: string): boolean {
 }
 
 export function isValidDate(value: string): boolean {
-  if (!ISO_DATE_REGEX.test(value)) {
+  if (!DD_MM_YYYY_DATE_REGEX.test(value)) {
     return false
   }
 
-  const [year, month, day] = value.split('-').map(Number)
+  const [day, month, year] = value.split('.').map(Number)
 
   return !!getDateFromParts(year, month, day)
 }
@@ -46,7 +46,7 @@ export function isNotFutureDate(value: string): boolean {
     return false
   }
 
-  const [year, month, day] = value.split('-').map(Number)
+  const [day, month, year] = value.split('.').map(Number)
   const date = Date.UTC(year, month - 1, day)
   const now = new Date()
   const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
@@ -75,6 +75,17 @@ export function isNotFutureDdMmYyyyDate(value: string): boolean {
   const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
 
   return date <= today
+}
+
+export function isDateRangeOrdered(from: string, to: string): boolean {
+  if (!isValidDate(from) || !isValidDate(to)) {
+    return false
+  }
+
+  const [fromDay, fromMonth, fromYear] = from.split('.').map(Number)
+  const [toDay, toMonth, toYear] = to.split('.').map(Number)
+
+  return Date.UTC(fromYear, fromMonth - 1, fromDay) <= Date.UTC(toYear, toMonth - 1, toDay)
 }
 
 export function isValidIin(value: string): boolean {

@@ -11,6 +11,7 @@ import CreateDocumentFields from '@/components/create-document-fields/create-doc
 import ExistingDocumentSearchSection from '@/components/create-document-fields/sections/existing-document-search-section/existing-document-search-section'
 import type { CreateDocumentState } from '@/types/create-document-state.type'
 import type { SearchResultDocument } from '@/types/search-state.type'
+import { documentToFormValues } from '@/utils/documents-to-form-values'
 
 async function handleCreateDocument(prevState: CreateDocumentState, formData: FormData) {
   const result = await createDocument(prevState, formData)
@@ -23,13 +24,15 @@ async function handleCreateDocument(prevState: CreateDocumentState, formData: Fo
 }
 
 export default function CreateDocumentPage() {
-  const [_selectedDocument, setSelectedDocument] = useState<SearchResultDocument | undefined>(
+  const [selectedDocument, setSelectedDocument] = useState<SearchResultDocument | undefined>(
     undefined
   )
   const [state, formAction, pending] = useActionState(handleCreateDocument, {
     success: false,
     values: {}
   })
+
+  const values = selectedDocument ? documentToFormValues(selectedDocument) : state.values
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -39,7 +42,7 @@ export default function CreateDocumentPage() {
 
       {/* Create Document */}
       <form action={formAction}>
-        <CreateDocumentFields errors={state.error} values={state.values} />
+        <CreateDocumentFields errors={state.error} values={values} />
         {state.message && (
           <div className="bg-destructive/10 text-destructive mt-8 rounded-lg px-6 py-4 text-lg">
             <div className="flex items-center gap-2">

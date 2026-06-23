@@ -16,7 +16,6 @@ export const FULLNAME_CLIENT_REGEX = new RegExp(
   'u'
 )
 export const ORGANIZATION_REGEX = new RegExp(`^[0-9A-Za-z${CYRILLIC}\\s"«».-]+$`, 'u')
-export const ISO_DATE_REGEX = /^\d{2}\.\d{2}\.\d{4}$/
 export const DD_MM_YYYY_DATE_REGEX = /^\d{2}\.\d{2}\.\d{4}$/
 export const COST_PER_DAY_REGEX = /^(?:\d+)(?:[.,]\d{1,2})?$/
 export const ADDRESS_REGEX = new RegExp(`^[0-9A-Za-z${CYRILLIC}\\s,./№-]+$`, 'u')

@@ -7,11 +7,11 @@ import {
   DD_MM_YYYY_DATE_REGEX,
   ENUMERATION_REGEX,
   FULLNAME_CLIENT_REGEX,
-  ISO_DATE_REGEX,
   ORGANIZATION_REGEX
 } from '@/lib/constants'
 import type { FieldError } from '@/types/field-error'
 import {
+  isDateRangeOrdered,
   isNotFutureDate,
   isNotFutureDdMmYyyyDate,
   isValidBin,
@@ -83,16 +83,19 @@ const documentDateItemSchema = z
   .string('Дата документа должна быть строкой')
   .check(
     z.trim(),
-    z.regex(ISO_DATE_REGEX, 'Дата документа должна быть в формате DD.MM.YYYY'),
+    z.regex(DD_MM_YYYY_DATE_REGEX, 'Дата документа должна быть в формате DD.MM.YYYY'),
     z.refine(isValidDate, 'Дата документа должна быть корректной календарной датой'),
     z.refine(isNotFutureDate, 'Дата документа не может быть в будущем')
   )
 
 export const documentDateSchema = z
-  .tuple([documentDateItemSchema, documentDateItemSchema])
+  .tuple(
+    [documentDateItemSchema, documentDateItemSchema],
+    'Дата документа должна быть корректной календарной датой'
+  )
   .check(
     z.refine(
-      ([from, to]) => Date.parse(from) <= Date.parse(to),
+      ([from, to]) => isDateRangeOrdered(from, to),
       'Дата начала периода не может быть позже даты окончания'
     )
   )
