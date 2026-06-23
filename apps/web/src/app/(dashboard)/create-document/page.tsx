@@ -23,13 +23,13 @@ async function handleCreateDocument(prevState: CreateDocumentState, formData: Fo
 }
 
 export default function CreateDocumentPage() {
+  const [_selectedDocument, setSelectedDocument] = useState<SearchResultDocument | undefined>(
+    undefined
+  )
   const [state, formAction, pending] = useActionState(handleCreateDocument, {
     success: false,
     values: {}
   })
-  const [_selectedDocument, setSelectedDocument] = useState<SearchResultDocument | undefined>(
-    undefined
-  )
 
   return (
     <div className="mx-auto max-w-4xl">

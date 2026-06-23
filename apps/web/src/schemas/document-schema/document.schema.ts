@@ -83,7 +83,7 @@ const documentDateItemSchema = z
   .string('Дата документа должна быть строкой')
   .check(
     z.trim(),
-    z.regex(ISO_DATE_REGEX, 'Дата документа должна быть в формате YYYY-MM-DD'),
+    z.regex(ISO_DATE_REGEX, 'Дата документа должна быть в формате DD.MM.YYYY'),
     z.refine(isValidDate, 'Дата документа должна быть корректной календарной датой'),
     z.refine(isNotFutureDate, 'Дата документа не может быть в будущем')
   )
