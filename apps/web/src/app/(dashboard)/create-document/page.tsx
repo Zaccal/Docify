@@ -3,13 +3,14 @@
 import { Button } from '@Docify/ui/components/button'
 import { SecurityWarningIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { useActionState } from 'react'
+import { useActionState, useState } from 'react'
 import { toast } from 'sonner'
 
 import { createDocument } from '@/actions/documents/crud-documents'
 import CreateDocumentFields from '@/components/create-document-fields/create-document-fields'
 import ExistingDocumentSearchSection from '@/components/create-document-fields/sections/existing-document-search-section/existing-document-search-section'
 import type { CreateDocumentState } from '@/types/create-document-state.type'
+import type { SearchResultDocument } from '@/types/search-state.type'
 
 async function handleCreateDocument(prevState: CreateDocumentState, formData: FormData) {
   const result = await createDocument(prevState, formData)
@@ -26,12 +27,15 @@ export default function CreateDocumentPage() {
     success: false,
     values: {}
   })
+  const [_selectedDocument, setSelectedDocument] = useState<SearchResultDocument | undefined>(
+    undefined
+  )
 
   return (
     <div className="mx-auto max-w-4xl">
       {/* Search */}
 
-      <ExistingDocumentSearchSection />
+      <ExistingDocumentSearchSection onSelect={(document) => setSelectedDocument(document)} />
 
       {/* Create Document */}
       <form action={formAction}>

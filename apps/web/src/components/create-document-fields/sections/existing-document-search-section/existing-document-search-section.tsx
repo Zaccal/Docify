@@ -7,29 +7,28 @@ import {
 } from '@Docify/ui/components/field'
 import { Input } from '@Docify/ui/components/input'
 import { Search02Icon } from '@hugeicons/core-free-icons'
-import { format } from 'date-fns'
 import { useState } from 'react'
 
 import CreateDocumentCard from '@/components/create-document-card/index'
-import Lists from '@/components/lists'
 import { useDebounceCallback } from '@/hooks/useDebounceCallback'
 import { useQuery } from '@/hooks/useQuery'
-import type { SearchState } from '@/types/search-state.type'
-import { cutText } from '@/utils/cut-text'
+import { fetchExistingDocuments } from '@/services/documents/search-documents'
+import type { SearchResultDocument } from '@/types/search-state.type'
 
-async function fetchExistingDocuments(query: string, signal: AbortSignal): Promise<SearchState> {
-  const response = await fetch(`/api/documents/search?q=${encodeURIComponent(query)}`, { signal })
-  if (!response.ok) {
-    const errorData = await response.json()
-    throw new Error(errorData.message)
-  }
-  const data = await response.json()
-  return data
+import ExistingDocumentSearchNotice from './existing-document-search-notice'
+import ExistingDocumentSearchResult from './existing-document-search-result'
+
+interface ExistingDocumentSearchSectionProps {
+  onSelect: (document: SearchResultDocument) => void
 }
 
-export default function ExistingDocumentSearchSection() {
+export default function ExistingDocumentSearchSection({
+  onSelect
+}: ExistingDocumentSearchSectionProps) {
   const [query, setQuery] = useState('')
-  const [debouncedQuery, setDebouncedQuery] = useState(query)
+  const [selected, setSelected] = useState<SearchResultDocument | null>(null)
+  const [debouncedQuery, setDebouncedQuery] = useState('')
+
   const { isLoading, error, data } = useQuery(
     async ({ signal }) => {
       return fetchExistingDocuments(debouncedQuery, signal)
@@ -50,6 +49,7 @@ export default function ExistingDocumentSearchSection() {
     const value = e.target.value
 
     setQuery(value)
+    setSelected(null)
 
     if (!value.trim()) {
       handleSearch.cancel()
@@ -59,6 +59,16 @@ export default function ExistingDocumentSearchSection() {
 
     handleSearch(value)
   }
+
+  function handleDocumentSelect(document: SearchResultDocument) {
+    onSelect(document)
+    setQuery(document.customer.fullnameClient)
+    setSelected(document)
+    handleSearch.cancel()
+    setDebouncedQuery('')
+  }
+
+  const isShowList = documents.length > 0 && !selected
 
   return (
     <>
@@ -85,23 +95,16 @@ export default function ExistingDocumentSearchSection() {
               />
               <FieldError errors={hasQuery && error ? [error] : undefined} />
             </Field>
-            {documents.length > 0 && (
-              <Lists.Root className="mt-4">
-                {documents.map((document) => (
-                  <Lists.Item key={document.id}>
-                    <div>
-                      <h3 className="font-semibold">{document.customer.fullnameClient}</h3>
-                      <p
-                        className="mt-1 text-sm text-neutral-400"
-                        title={document.organization.organization}
-                      >
-                        {cutText(document.organization.organization, 50)} · №{document.enumeration}{' '}
-                        · {format(document.updatedAt, 'dd.MM.yyyy')}
-                      </p>
-                    </div>
-                  </Lists.Item>
-                ))}
-              </Lists.Root>
+            <ExistingDocumentSearchResult
+              documents={documents}
+              isShowList={isShowList}
+              onDocumentSelect={handleDocumentSelect}
+            />
+            {selected && (
+              <ExistingDocumentSearchNotice>
+                Поля, предварительно заполненные в документе ({selected.customer.fullnameClient}).
+                Будут сохранены только измененные поля.
+              </ExistingDocumentSearchNotice>
             )}
           </div>
         </CreateDocumentCard.Content>

@@ -6,3 +6,5 @@ export interface SearchState {
   message?: string
   error?: string
 }
+
+export type SearchResultDocument = SearchState['data'][number]
