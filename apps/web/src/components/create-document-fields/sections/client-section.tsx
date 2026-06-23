@@ -3,12 +3,16 @@ import { Input } from '@Docify/ui/components/input'
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@Docify/ui/components/input-group'
 import { Dollar, User } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
+import { useState } from 'react'
+
+import { formatCost, normalizeCost } from '@/utils/cost-format'
 
 import CreateDocumentCard from '../../create-document-card/index'
 import { useCreateDocumentFields } from '../create-document-fields-store'
 
 export default function ClientSection() {
   const { errors, values } = useCreateDocumentFields()
+  const [formattedCost, setFormattedCost] = useState(() => formatCost(values?.costPerDay ?? ''))
 
   return (
     <CreateDocumentCard.Root>
@@ -83,12 +87,14 @@ export default function ClientSection() {
             <InputGroupAddon>
               <HugeiconsIcon icon={Dollar} />
             </InputGroupAddon>
+            <input type="hidden" name="costPerDay" value={normalizeCost(formattedCost)} />
             <InputGroupInput
-              name="costPerDay"
               id="costPerDay"
+              inputMode="decimal"
               aria-invalid={Boolean(errors?.costPerDay?.length)}
-              defaultValue={values?.costPerDay}
-              placeholder="0.00"
+              onChange={(event) => setFormattedCost(formatCost(event.target.value))}
+              value={formattedCost}
+              placeholder="0,00"
             />
           </InputGroup>
           <FieldError errors={errors?.costPerDay} />
