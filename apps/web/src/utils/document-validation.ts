@@ -41,19 +41,6 @@ export function isValidDate(value: string): boolean {
   return !!getDateFromParts(year, month, day)
 }
 
-export function isNotFutureDate(value: string): boolean {
-  if (!isValidDate(value)) {
-    return false
-  }
-
-  const [day, month, year] = value.split('.').map(Number)
-  const date = Date.UTC(year, month - 1, day)
-  const now = new Date()
-  const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
-
-  return date <= today
-}
-
 export function isValidDdMmYyyyDate(value: string): boolean {
   if (!DD_MM_YYYY_DATE_REGEX.test(value)) {
     return false

@@ -12,7 +12,6 @@ import {
 import type { FieldError } from '@/types/field-error'
 import {
   isDateRangeOrdered,
-  isNotFutureDate,
   isNotFutureDdMmYyyyDate,
   isValidBin,
   isValidDate,
@@ -84,8 +83,7 @@ const documentDateItemSchema = z
   .check(
     z.trim(),
     z.regex(DD_MM_YYYY_DATE_REGEX, 'Дата документа должна быть в формате DD.MM.YYYY'),
-    z.refine(isValidDate, 'Дата документа должна быть корректной календарной датой'),
-    z.refine(isNotFutureDate, 'Дата документа не может быть в будущем')
+    z.refine(isValidDate, 'Дата документа должна быть корректной календарной датой')
   )
 
 export const documentDateSchema = z

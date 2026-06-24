@@ -25,8 +25,8 @@ export const CustomersTable = pgTable(
   'customers_table',
   {
     id: uuid('id').primaryKey().defaultRandom(),
-    fullnameClient: varchar('fullname_client', { length: 255 }).notNull().unique(),
-    clientIdNumber: varchar('client_id_number', { length: 9 }).notNull().unique(),
+    fullnameClient: varchar('fullname_client', { length: 255 }).notNull(),
+    clientIdNumber: varchar('client_id_number', { length: 9 }).notNull(),
     clientIdDateFrom: text('client_id_date_from').notNull(),
     clientIdType: text('client_id_type').notNull(),
     iin: varchar('iin', { length: 12 }).notNull().unique(),

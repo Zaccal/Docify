@@ -6,7 +6,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { useActionState, useState } from 'react'
 import { toast } from 'sonner'
 
-import { createDocument } from '@/actions/documents/crud-documents'
+import { createDocument } from '@/actions/documents/create-documents'
 import CreateDocumentFields from '@/components/create-document-fields/create-document-fields'
 import ExistingDocumentSearchSection from '@/components/create-document-fields/sections/existing-document-search-section/existing-document-search-section'
 import type { CreateDocumentState } from '@/types/create-document-state.type'

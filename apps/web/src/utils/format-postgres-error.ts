@@ -1,11 +1,10 @@
-import { DatabaseError } from '@Docify/db'
+import { DatabaseError, DrizzleQueryError } from '@Docify/db'
 
 import { UNIQUE_CONSTRAINT_MESSAGES } from '@/lib/constants'
 
 export function formatPostgresError(error: unknown): string {
-  if (error instanceof DatabaseError && error.code === '23505') {
-    const constrainName = error.constraint ?? ''
-    console.log(`\n\n\n\nconstrainName: ${constrainName}\n\n\n\n\n`)
+  if (error instanceof DrizzleQueryError && error.cause instanceof DatabaseError) {
+    const constrainName = error.cause.constraint ?? ''
     const friendlyMessage =
       UNIQUE_CONSTRAINT_MESSAGES[constrainName] ??
       'Уникальная ограничение нарушено, какая-то из полей ' + constrainName + ' уже существует'
