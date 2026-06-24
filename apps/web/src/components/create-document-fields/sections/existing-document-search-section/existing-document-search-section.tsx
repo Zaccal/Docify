@@ -12,7 +12,7 @@ import { useState } from 'react'
 import CreateDocumentCard from '@/components/create-document-card/index'
 import { useDebounceCallback } from '@/hooks/useDebounceCallback'
 import { useQuery } from '@/hooks/useQuery'
-import { fetchExistingDocuments } from '@/services/documents/search-documents'
+import { searchDocuments } from '@/services/documents/search-documents'
 import type { SearchResultDocument } from '@/types/search-state.type'
 
 import ExistingDocumentSearchNotice from './existing-document-search-notice'
@@ -31,7 +31,7 @@ export default function ExistingDocumentSearchSection({
 
   const { error, data } = useQuery(
     async ({ signal }) => {
-      return fetchExistingDocuments(debouncedQuery, signal)
+      return searchDocuments(debouncedQuery, signal)
     },
     {
       keys: [debouncedQuery],
