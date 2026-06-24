@@ -40,7 +40,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   }
 ]
 
-export const welcomeDescriptions = [
+export const WELCOME_DESCRIPTIONS = [
   'Все ваши документы и клиенты в одном месте.',
   'Создавайте документы за минуты, а не часы.',
   'Управляйте документами и клиентами легко и быстро.',

@@ -1,6 +1,6 @@
 import { Moon02Icon, Sun01Icon, SunCloud01Icon } from '@hugeicons/core-free-icons'
 
-import { welcomeDescriptions } from '@/lib/constants'
+import { WELCOME_DESCRIPTIONS } from '@/lib/constants'
 
 export function getWelcomeText(): string {
   const date = new Date()
@@ -27,6 +27,6 @@ export function getWelcomeIcon() {
 }
 
 export function getWelcomeDescription(): string {
-  const randomIndex = Math.floor(Math.random() * welcomeDescriptions.length)
-  return welcomeDescriptions[randomIndex]
+  const randomIndex = Math.floor(Math.random() * WELCOME_DESCRIPTIONS.length)
+  return WELCOME_DESCRIPTIONS[randomIndex]
 }
