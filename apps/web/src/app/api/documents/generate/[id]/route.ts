@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 
-import { findDocumentById } from '@/controllers/documents/find-by-id'
-import GenerateDocumentsController from '@/controllers/documents/generate-documents.controller'
+import { findDocumentById } from '@/server/documents/find-by-id'
+import { GenerateDocumentsController } from '@/server/documents/generate-documents'
 import type { Organization } from '@/types/organization.type'
 
 interface Params {

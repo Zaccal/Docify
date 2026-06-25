@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 
-import { searchDocuments } from '@/controllers/documents/search.conroller'
+import { searchDocuments } from '@/server/documents/search'
 
 export async function GET(req: NextRequest) {
   const notParsedQuery = req.nextUrl.searchParams.get('q')

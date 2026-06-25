@@ -2,8 +2,8 @@
 
 import { z } from 'zod/mini'
 
-import { createDocumentController } from '@/controllers/documents/create.controller'
 import { documentFormSchema } from '@/schemas/document-schema/document.schema'
+import { createDocumentController } from '@/server/documents/create-document'
 import type { CreateDocumentState, CreateDocumentValues } from '@/types/create-document-state.type'
 import { getDocumentFormData } from '@/utils/create-document-formater'
 import { formatPostgresError } from '@/utils/format-postgres-error'

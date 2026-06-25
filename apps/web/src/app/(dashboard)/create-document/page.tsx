@@ -10,6 +10,7 @@ import { createDocument } from '@/actions/documents/create-documents'
 import CreateDocumentFields from '@/components/create-document-fields/create-document-fields'
 import ExistingDocumentSearchSection from '@/components/create-document-fields/sections/existing-document-search-section/existing-document-search-section'
 import { useOrganizationSelect } from '@/components/organization-select/organization-select-store'
+import { downloadGeneratedDocument } from '@/services/documents/download-generated-documents'
 import type { CreateDocumentState } from '@/types/create-document-state.type'
 import type { SearchResultDocument } from '@/types/search-state.type'
 import { documentToFormValues } from '@/utils/documents-to-form-values'
@@ -24,9 +25,7 @@ export default function CreateDocumentPage() {
 
     if (result.success && result.documentId) {
       toast.success('Документ успешно создан')
-      window.location.assign(
-        `/api/documents/generate/${result.documentId}?organization=${encodeURIComponent(organization)}`
-      )
+      downloadGeneratedDocument(result.documentId, organization)
     }
 
     return result

@@ -1,4 +1,4 @@
-import CreateDocumentCard from '@/components/create-document-card'
+import CreateDocumentCard from '@/components/dashboard/create-document-card'
 import OrganizationSelectValue from '@/components/organization-select/organization-select-value'
 import TotolCustomersCard from '@/components/total-customers-card'
 import TotalDocumentsCard from '@/components/total-documents-card'

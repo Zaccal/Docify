@@ -1,4 +1,4 @@
-import type { searchDocuments } from '@/controllers/documents/search.conroller'
+import type { searchDocuments } from '@/server/documents/search'
 
 export interface SearchState {
   success: boolean

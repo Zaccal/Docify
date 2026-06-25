@@ -11,7 +11,7 @@ import type { FindDocumentByIdData } from '@/types/find-document-by-id.type'
 import type { Organization } from '@/types/organization.type'
 import formatDocumentTemplateData from '@/utils/format-document-template-data/format-document-template-data'
 
-export default async function GenerateDocumentsController(
+export async function GenerateDocumentsController(
   organization: Organization,
   data: NonNullable<FindDocumentByIdData>
 ) {
