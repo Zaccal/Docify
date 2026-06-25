@@ -46,6 +46,7 @@ function formatLeaseAgreement(data: NonNullable<FindDocumentByIdData>) {
     formattedDateTo,
     totalPrice: formatCost(String(totalPrice)),
     totalPriceRu: numberToWordsRu(totalPrice),
-    costPerDayRu
+    costPerDayRu,
+    nightsCount: getNightsCount(dateFrom, dateTo)
   })
 }
