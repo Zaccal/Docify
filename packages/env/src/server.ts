@@ -8,7 +8,8 @@ export const env = createEnv({
     PASSWORD: z.string().min(1),
     CORS_ORIGIN: z.url(),
     AUTH_SECRET: z.string().min(8),
-    NODE_ENV: z.enum(['development', 'production', 'test']).default('development')
+    NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
+    TEMPLATE_DIR: z.string().min(1)
   },
   runtimeEnv: process.env,
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,

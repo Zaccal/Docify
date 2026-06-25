@@ -47,7 +47,7 @@ export const DocumentsTable = pgTable(
   {
     id: uuid('id').primaryKey().defaultRandom(),
     enumeration: varchar('enumeration', { length: 4 }).notNull().unique(),
-    documentDate: text('document_date').array(),
+    documentDate: text('document_date').array().notNull(),
     updatedAt: timestamp('updated_at').notNull().defaultNow(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     cellsLine: jsonb('cells_line').$type<Record<string, string>>().notNull(),

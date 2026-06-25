@@ -25,7 +25,9 @@ export async function createDocument(
   const data = result.data
 
   try {
-    await createDocumentController(data)
+    const document = await createDocumentController(data)
+
+    return { success: true, values: data, documentId: document.id }
   } catch (error) {
     return {
       success: false,
@@ -33,6 +35,4 @@ export async function createDocument(
       values: data
     }
   }
-
-  return { success: true, values: data }
 }

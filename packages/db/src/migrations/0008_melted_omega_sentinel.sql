@@ -1,0 +1,1 @@
+ALTER TABLE "documents_table" ALTER COLUMN "document_date" SET NOT NULL;

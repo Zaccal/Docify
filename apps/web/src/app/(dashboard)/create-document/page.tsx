@@ -9,24 +9,29 @@ import { toast } from 'sonner'
 import { createDocument } from '@/actions/documents/create-documents'
 import CreateDocumentFields from '@/components/create-document-fields/create-document-fields'
 import ExistingDocumentSearchSection from '@/components/create-document-fields/sections/existing-document-search-section/existing-document-search-section'
+import { useOrganizationSelect } from '@/components/organization-select/organization-select-store'
 import type { CreateDocumentState } from '@/types/create-document-state.type'
 import type { SearchResultDocument } from '@/types/search-state.type'
 import { documentToFormValues } from '@/utils/documents-to-form-values'
 
-async function handleCreateDocument(prevState: CreateDocumentState, formData: FormData) {
-  const result = await createDocument(prevState, formData)
-
-  if (result.success) {
-    toast.success('Документ успешно создан')
-  }
-
-  return result
-}
-
 export default function CreateDocumentPage() {
+  const { organization } = useOrganizationSelect()
   const [selectedDocument, setSelectedDocument] = useState<SearchResultDocument | undefined>(
     undefined
   )
+  async function handleCreateDocument(prevState: CreateDocumentState, formData: FormData) {
+    const result = await createDocument(prevState, formData)
+
+    if (result.success && result.documentId) {
+      toast.success('Документ успешно создан')
+      window.location.assign(
+        `/api/documents/generate/${result.documentId}?organization=${encodeURIComponent(organization)}`
+      )
+    }
+
+    return result
+  }
+
   const [state, formAction, pending] = useActionState(handleCreateDocument, {
     success: false,
     values: {}
