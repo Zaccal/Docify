@@ -10,9 +10,9 @@ interface Params {
 
 export async function GET(req: NextRequest, { params }: { params: Promise<Params> }) {
   const { id } = await params
-  const organization =
-    (decodeURIComponent(req.nextUrl.searchParams.get('organization') as string) as Organization) ??
-    'XANSHA'
+  const organization = decodeURIComponent(
+    (req.nextUrl.searchParams.get('organization') as string) ?? 'XANSHA'
+  ) as Organization
 
   try {
     const document = await findDocumentById(id)
