@@ -13,9 +13,26 @@ services:
         required: false
     environment:
       DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-password}@postgres:5432/Docify
+      EXCEL_SERVICE_URL: http://excel-service:3002
     depends_on:
+      excel-service:
+        condition: service_started
       postgres:
         condition: service_healthy
+    restart: unless-stopped
+
+  excel-service:
+    build:
+      context: apps/excel-service
+      dockerfile: Dockerfile
+    init: true
+    ports:
+      - '${EXCEL_SERVICE_PORT:-3002}:3002'
+    env_file:
+      - path: apps/excel-service/.env
+        required: false
+    environment:
+      PORT: 3002
     restart: unless-stopped
 
   postgres:

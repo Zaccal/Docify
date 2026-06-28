@@ -9,7 +9,8 @@ export const env = createEnv({
     CORS_ORIGIN: z.url(),
     AUTH_SECRET: z.string().min(8),
     NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-    TEMPLATE_DIR: z.string().min(1)
+    TEMPLATE_DIR: z.string().min(1),
+    EXCEL_SERVICE_URL: z.url()
   },
   runtimeEnv: process.env,
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,

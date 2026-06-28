@@ -1,0 +1,6 @@
+.env
+.env.*
+tmp
+excel-service
+.air.toml
+package.json

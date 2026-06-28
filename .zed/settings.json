@@ -1,5 +1,13 @@
 {
+  "disable_ai": false,
   "format_on_save": "on",
+  "lsp": {
+    "gopls": {
+      "initialization_options": {
+        "gofumpt": true
+      }
+    }
+  },
   "languages": {
     "TypeScript": {
       "formatter": {

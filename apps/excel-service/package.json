@@ -1,0 +1,10 @@
+{
+  "name": "excel-service",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "air -c .air.toml",
+    "build": "GOCACHE=$PWD/tmp/go-cache go build -mod=vendor -o ./tmp/excel-service .",
+    "start": "./tmp/excel-service"
+  }
+}

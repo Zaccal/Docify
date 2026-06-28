@@ -7,6 +7,8 @@ node_modules
 dist
 build
 *.tsbuildinfo
+apps/excel-service/tmp
+apps/excel-service/excel-service
 
 # Generated files
 apps/web/src/routeTree.gen.ts

@@ -21,6 +21,10 @@
         "typescript": "catalog:",
       },
     },
+    "apps/excel-service": {
+      "name": "excel-service",
+      "version": "0.1.0",
+    },
     "apps/web": {
       "name": "web",
       "version": "0.1.0",
@@ -135,6 +139,8 @@
     "@Docify/env": ["@Docify/env@workspace:packages/env"],
 
     "@Docify/ui": ["@Docify/ui@workspace:packages/ui"],
+
+    "excel-service": ["excel-service@workspace:apps/excel-service"],
 
     "@alloc/quick-lru": ["@alloc/quick-lru@5.2.0", "", {}, "sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw=="],
 
