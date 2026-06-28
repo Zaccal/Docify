@@ -14,6 +14,8 @@ services:
     environment:
       DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-password}@postgres:5432/Docify
       EXCEL_SERVICE_URL: http://excel-service:3002
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3001}
+      TEMPLATE_DIR: templates
     depends_on:
       excel-service:
         condition: service_started
