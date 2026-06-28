@@ -15,9 +15,18 @@ export async function GenerateDocumentsController(
   organization: Organization,
   data: NonNullable<FindDocumentByIdData>
 ) {
+  const archive = new PizZip()
   const leaseAgreementZip = await generateLeaseAgreement(organization, data)
 
-  return leaseAgreementZip.generate({
+  archive.file(
+    `Договор ${data.customer.fullnameClient}.docx`,
+    leaseAgreementZip.generate({
+      type: 'nodebuffer',
+      compression: 'DEFLATE'
+    })
+  )
+
+  return archive.generate({
     type: 'nodebuffer',
     compression: 'DEFLATE'
   })

@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { findDocumentById } from '@/server/documents/find-by-id'
 import { GenerateDocumentsController } from '@/server/documents/generate-documents'
 import type { Organization } from '@/types/organization.type'
+import { getAttachmentHeader } from '@/utils/get-attachment-header'
 
 interface Params {
   id: string
@@ -24,8 +25,10 @@ export async function GET(req: NextRequest, { params }: { params: Promise<Params
 
     return new NextResponse(new Uint8Array(buffer), {
       headers: {
-        'Content-Type': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'Content-Disposition': `attachment; filename="lease-agreement-${id}.docx"`
+        'Content-Type': 'application/zip',
+        'Content-Disposition': getAttachmentHeader(
+          `Документы ${document.customer.fullnameClient}.zip`
+        )
       }
     })
   } catch (error) {
