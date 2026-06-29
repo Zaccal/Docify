@@ -85,14 +85,16 @@ func flattenGapValue(replacements map[string]string, prefix string, value any) {
 
 			flattenGapValue(replacements, nextPrefix, nestedValue)
 
-			if key == "cellsLine" {
+			if key == "cellsLine" || key == "generated" {
 				flattenGapValue(replacements, "", nestedValue)
 			}
 		}
 	case []any:
 		values := make([]string, 0, len(typedValue))
-		for _, item := range typedValue {
-			values = append(values, fmt.Sprint(item))
+		for index, item := range typedValue {
+			itemValue := fmt.Sprint(item)
+			values = append(values, itemValue)
+			setReplacement(replacements, fmt.Sprintf("%s.%d", prefix, index), itemValue)
 		}
 		setReplacement(replacements, prefix, strings.Join(values, ", "))
 	case nil:

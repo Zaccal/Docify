@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/xuri/excelize/v2"
@@ -23,7 +24,11 @@ func TestGenerateExcelDocumentsArchive(t *testing.T) {
 
 	t.Setenv("TEMPLATE_PATH", templateRoot)
 
-	archive, err := GenerateExcelDocumentsArchive(xansha, Payload{})
+	var payload Payload
+	payload.DocumentDate = []string{"10-06-2026", "13-06-2026"}
+	payload.Organization.CostPerDay = "10000"
+
+	archive, err := GenerateExcelDocumentsArchive(xansha, payload)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -39,10 +44,20 @@ func TestGenerateExcelDocumentsArchive(t *testing.T) {
 	}
 
 	for _, template := range excelTemplates {
-		if !files[template.outputName] {
-			t.Fatalf("expected archive to contain %q", template.outputName)
+		if !hasArchiveFile(files, template.outputName, ".xlsx") {
+			t.Fatalf("expected archive to contain file starting with %q and ending with .xlsx", template.outputName)
 		}
 	}
+}
+
+func hasArchiveFile(files map[string]bool, prefix string, suffix string) bool {
+	for file := range files {
+		if strings.HasPrefix(file, prefix) && strings.HasSuffix(file, suffix) {
+			return true
+		}
+	}
+
+	return false
 }
 
 func createTestWorkbook(t *testing.T, path string) {

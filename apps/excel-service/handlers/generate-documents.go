@@ -24,7 +24,6 @@ func GenerateDocumentsHandler(w http.ResponseWriter, r *http.Request) {
 		utils.WriteJSONResponse(w, ErrResponse{Error: err.Error()}, http.StatusBadRequest)
 		return
 	}
-
 	org := r.URL.Query().Get("org")
 	if org == "" {
 		utils.WriteJSONResponse(w, ErrResponse{Error: "org is missing"}, http.StatusBadRequest)

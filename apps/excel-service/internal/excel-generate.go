@@ -64,8 +64,13 @@ func addGeneratedWorkbook(zipWriter *zip.Writer, org string, template excelTempl
 		_ = f.Close()
 	}()
 
+	formattedPayload, err := FormatPayload(data)
+	if err != nil {
+		return fmt.Errorf("format payload: %w", err)
+	}
+
 	for _, sheet := range f.GetSheetList() {
-		if err := fillGap(f, sheet, data); err != nil {
+		if err := fillGap(f, sheet, formattedPayload); err != nil {
 			return fmt.Errorf("fill workbook %s sheet %s: %w", template.templateName, sheet, err)
 		}
 	}
