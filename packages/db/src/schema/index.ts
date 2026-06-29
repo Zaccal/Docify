@@ -13,7 +13,9 @@ export const OrganizationsTable = pgTable(
     costPerDay: text('cost_per_day').notNull(),
     iik: varchar('iik', { length: 20 }).notNull(),
     bik: varchar('bik', { length: 8 }).notNull(),
-    bank: text('bank').notNull()
+    bank: text('bank').notNull(),
+    kbe: varchar('kbe', { length: 2 }).notNull(),
+    knp: varchar('knp', { length: 3 })
   },
   (table) => [
     index('organizations_table_organization_idx').on(table.organization),

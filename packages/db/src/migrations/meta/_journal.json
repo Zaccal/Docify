@@ -64,6 +64,20 @@
       "when": 1782392459211,
       "tag": "0008_melted_omega_sentinel",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1782760054430,
+      "tag": "0009_wide_micromax",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1782760656426,
+      "tag": "0010_bright_human_robot",
+      "breakpoints": true
     }
   ]
 }

@@ -26,6 +26,8 @@ export function documentToFormValues(document: SearchResultDocument): CreateDocu
     costPerDay: organization.costPerDay,
     iik: organization.iik,
     bik: organization.bik,
-    bank: organization.bank
+    bank: organization.bank,
+    knp: organization.knp ?? '',
+    kbe: organization.kbe
   }
 }

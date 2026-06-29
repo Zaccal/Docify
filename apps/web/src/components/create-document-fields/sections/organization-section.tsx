@@ -75,6 +75,30 @@ export default function OrganizationSection() {
             />
             <FieldError errors={errors?.address} />
           </Field>
+          <div className="grid grid-cols-2 gap-4">
+            <Field>
+              <FieldLabel htmlFor="kbe">КБЕ</FieldLabel>
+              <Input
+                aria-invalid={Boolean(errors?.kbe)}
+                defaultValue={values?.kbe}
+                id="kbe"
+                name="kbe"
+                placeholder="КБЕ"
+              />
+              <FieldError errors={errors?.kbe} />
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="knp">КНП</FieldLabel>
+              <Input
+                aria-invalid={Boolean(errors?.knp)}
+                defaultValue={values?.knp}
+                id="knp"
+                name="knp"
+                placeholder="КНП"
+              />
+              <FieldError errors={errors?.knp} />
+            </Field>
+          </div>
         </CreateDocumentCard.Content>
       </CreateDocumentCard.Root>
     </>

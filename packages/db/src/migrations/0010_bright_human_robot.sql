@@ -1,0 +1,1 @@
+ALTER TABLE "organizations_table" ALTER COLUMN "knp" DROP NOT NULL;

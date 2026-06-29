@@ -168,6 +168,14 @@ export const indexSchema = z
   .string('Почтовый индекс должен быть строкой')
   .check(z.trim(), z.length(6, 'Почтовый индекс Казахстана должен состоять из 6 цифр'))
 
+export const knpSchema = z.optional(
+  z.string('KNP должен быть строкой').check(z.trim(), z.length(3, 'KNP должен состоять из 3 цифр'))
+)
+
+export const kbeSchema = z
+  .string('KBE должен быть строкой')
+  .check(z.trim(), z.length(2, 'KBE должен состоять из 2 цифр'))
+
 export const documentFormSchema = z.object({
   enumeration: enumerationSchema,
   fullnameClient: fullnameClientSchema,
@@ -185,6 +193,8 @@ export const documentFormSchema = z.object({
   bik: bikSchema,
   bank: bankNameSchema,
   cellsLine: dynamicKeyValueSchema,
+  knp: knpSchema,
+  kbe: kbeSchema,
   index: indexSchema
 })
 
