@@ -64,6 +64,10 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 	result.Organization.CostPerDay = utils.FormatCost(costPerDayRaw)
 	result.Generated["costPerDayWords"] = costPerDayWords
 
+	if data.Organization.Knp != "" {
+		result.Organization.Knp = "КНП: " + data.Organization.Knp
+	}
+
 	return result, nil
 }
 

@@ -31,5 +31,8 @@ type Payload struct {
 		Iik          string `json:"iik"`
 		Bik          string `json:"bik"`
 		Bank         string `json:"bank"`
+		Knp          string `json:"knp"`
+		Kbe          string `json:"kbe"`
 	} `json:"organization"`
+
 }

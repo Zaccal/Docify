@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/Zaccal/Docify/apps/excel-service/internal"
 	"github.com/Zaccal/Docify/apps/excel-service/utils"
@@ -30,8 +32,13 @@ func GenerateDocumentsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	fmt.Println(payload.DocumentDate)
 	archive, err := internal.GenerateExcelDocumentsArchive(org, payload)
 	if err != nil {
+		if strings.HasPrefix(err.Error(), "format payload:") {
+			utils.WriteJSONResponse(w, ErrResponse{Error: err.Error()}, http.StatusBadRequest)
+			return
+		}
 		utils.WriteJSONResponse(w, ErrResponse{Error: err.Error()}, http.StatusInternalServerError)
 		return
 	}
