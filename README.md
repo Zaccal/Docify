@@ -12,6 +12,7 @@ This project was created with [Better-T-Stack](https://github.com/AmanVarshney01
 - **PostgreSQL** - Database engine
 - **Husky** - Git hooks for code quality
 - **Turborepo** - Optimized monorepo build system
+- **Go** - Microservice for generating Excel documents
 
 ## Getting Started
 
