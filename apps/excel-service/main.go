@@ -19,7 +19,7 @@ func main() {
 	r := http.NewServeMux()
 
 	r.HandleFunc("GET /healthz", handlers.HealthzHandler)
-	r.HandleFunc("GET /generate", handlers.GenerateDocumentsHandler)
+	r.HandleFunc("POST /generate", handlers.GenerateDocumentsHandler)
 
 	log.Println("The server works on :", PORT)
 	err := http.ListenAndServe(":"+PORT, r)

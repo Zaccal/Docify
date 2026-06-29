@@ -35,6 +35,7 @@ services:
         required: false
     environment:
       PORT: 3002
+      TEMPLATE_PATH: /templates
     restart: unless-stopped
 
   postgres:

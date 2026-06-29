@@ -3,6 +3,7 @@ import path from 'node:path'
 import process from 'node:process'
 
 import { env } from '@Docify/env/server'
+import { format } from 'date-fns'
 import DocxTemplate from 'docxtemplater'
 import PizZip from 'pizzip'
 
@@ -19,7 +20,7 @@ export async function GenerateDocumentsController(
   const leaseAgreementZip = await generateLeaseAgreement(organization, data)
 
   archive.file(
-    `Договор ${data.customer.fullnameClient}.docx`,
+    `Договор ${data.customer.fullnameClient} ${format(data.createdAt, 'dd-mm-yyyy')}.docx`,
     leaseAgreementZip.generate({
       type: 'nodebuffer',
       compression: 'DEFLATE'

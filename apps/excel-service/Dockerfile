@@ -13,8 +13,10 @@ FROM alpine:3.22 AS runner
 WORKDIR /app
 
 COPY --from=builder /out/excel-service ./excel-service
+COPY --from=builder /src/templates /templates
 
 ENV PORT=3002
+ENV TEMPLATE_PATH=/templates
 EXPOSE 3002
 
 CMD ["./excel-service"]

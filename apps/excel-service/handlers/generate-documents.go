@@ -12,19 +12,36 @@ type ErrResponse struct {
 }
 
 func GenerateDocumentsHandler(w http.ResponseWriter, r *http.Request) {
-	f := internal.GenerateExcelDocument()
-	defer func() {
-		if err := f.Close(); err != nil {
-			utils.WriteJSONResponse(w, ErrResponse{ Error: err.Error() }, http.StatusInternalServerError)
-			return
-		}
-	}()
+	if r.Method != http.MethodPost {
+		w.Header().Set("Allow", "POST")
+		utils.WriteJSONResponse(w, ErrResponse{Error: "method not allowed"}, http.StatusMethodNotAllowed)
+		return
+	}
 
-	w.Header().Set("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-	w.Header().Set("Content-Disposition", `attachment; filename="document.xlsx`)
+	defer r.Body.Close()
+	var payload internal.Payload
+	if err := utils.ParseJSONBody(r, &payload); err != nil {
+		utils.WriteJSONResponse(w, ErrResponse{Error: err.Error()}, http.StatusBadRequest)
+		return
+	}
 
-	if err := f.Write(w); err != nil {
-		utils.WriteJSONResponse(w, ErrResponse{ Error: err.Error() }, http.StatusInternalServerError)
+	org := r.URL.Query().Get("org")
+	if org == "" {
+		utils.WriteJSONResponse(w, ErrResponse{Error: "org is missing"}, http.StatusBadRequest)
+		return
+	}
+
+	archive, err := internal.GenerateExcelDocumentsArchive(org, payload)
+	if err != nil {
+		utils.WriteJSONResponse(w, ErrResponse{Error: err.Error()}, http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/zip")
+	w.Header().Set("Content-Disposition", `attachment; filename="documents.zip"`)
+
+	if _, err := w.Write(archive); err != nil {
+		utils.WriteJSONResponse(w, ErrResponse{Error: err.Error()}, http.StatusInternalServerError)
 		return
 	}
 }
