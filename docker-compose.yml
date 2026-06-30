@@ -2,8 +2,6 @@ name: Docify
 
 services:
   web:
-    volumes:
-      - ./apps/web:/app
     build:
       context: .
       dockerfile: apps/web/Dockerfile
@@ -17,7 +15,7 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       EXCEL_SERVICE_URL: http://excel-service:3002
       CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3001}
-      TEMPLATE_DIR: templates
+      TEMPLATE_DIR: /app/templates
     depends_on:
       excel-service:
         condition: service_started
