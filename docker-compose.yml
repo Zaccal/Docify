@@ -12,15 +12,13 @@ services:
       - path: apps/web/.env
         required: false
     environment:
-      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-password}@postgres:5432/Docify
+      DATABASE_URL: ${DATABASE_URL}
       EXCEL_SERVICE_URL: http://excel-service:3002
       CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3001}
       TEMPLATE_DIR: templates
     depends_on:
       excel-service:
         condition: service_started
-      postgres:
-        condition: service_healthy
     restart: unless-stopped
 
   excel-service:
@@ -37,24 +35,3 @@ services:
       PORT: 3002
       TEMPLATE_PATH: /templates
     restart: unless-stopped
-
-  postgres:
-    image: postgres
-    container_name: Docify-postgres
-    environment:
-      POSTGRES_DB: Docify
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
-    ports:
-      - '${POSTGRES_PORT:-5433}:5432'
-    volumes:
-      - Docify_postgres_data:/var/lib/postgresql
-    healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U postgres']
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
-
-volumes:
-  Docify_postgres_data:
