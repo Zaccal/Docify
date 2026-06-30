@@ -2,6 +2,8 @@ name: Docify
 
 services:
   web:
+    volumes:
+      - ./apps/web:/app
     build:
       context: .
       dockerfile: apps/web/Dockerfile

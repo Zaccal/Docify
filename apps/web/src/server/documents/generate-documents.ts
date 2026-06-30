@@ -76,5 +76,9 @@ function getTemplatePath(organization: Organization, template: Template) {
 }
 
 function getTemplatesDirectory(organization: Organization) {
-  return path.join(process.cwd(), env.TEMPLATE_DIR, organization)
+  const templateDir = path.isAbsolute(env.TEMPLATE_DIR)
+    ? env.TEMPLATE_DIR
+    : path.join(process.cwd(), env.TEMPLATE_DIR)
+
+  return path.join(templateDir, organization)
 }
