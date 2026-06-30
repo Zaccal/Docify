@@ -26,6 +26,7 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Run migrations
+        working-directory: packages/db
         run: bun run db:migrate
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
