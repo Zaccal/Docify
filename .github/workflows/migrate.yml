@@ -3,7 +3,7 @@ name: Migrate
 on:
   push:
     branches:
-      - dev
+      - main
 
 permissions:
   contents: read
@@ -11,7 +11,7 @@ permissions:
 jobs:
   migrate:
     runs-on: ubuntu-latest
-    environment: development
+    environment: production
 
     steps:
       - name: Checkout repository
@@ -29,4 +29,4 @@ jobs:
         working-directory: packages/db
         run: bun run db:migrate
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL_PREVIEW }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
