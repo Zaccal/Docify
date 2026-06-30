@@ -55,14 +55,14 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 	result.Generated = make(map[string]string)
 
 	result.Generated["totalPrice"] = utils.FormatCost(strconv.Itoa(totalPrice))
-	result.Generated["totalPriceWords"] = totalPriceWords
+	result.Generated["totalPriceWords"] = utils.Capitalize(totalPriceWords)
 	result.Generated["nights"] = strconv.Itoa(nights)
 
 	result.Generated["formattedDateFrom"] = formattedDateFrom
 	result.Generated["formattedDateTo"] = formattedDateTo
 
 	result.Organization.CostPerDay = utils.FormatCost(costPerDayRaw)
-	result.Generated["costPerDayWords"] = costPerDayWords
+	result.Generated["costPerDayWords"] = utils.Capitalize(costPerDayWords)
 
 	if data.Organization.Knp != "" {
 		result.Organization.Knp = "КНП: " + data.Organization.Knp

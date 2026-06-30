@@ -29,7 +29,7 @@ var excelTemplates = []excelTemplate{
 	},
 	{
 		templateName: "Cash Receipt Order.xlsx",
-		outputName:   "Накладная",
+		outputName:   "Приходный ордер",
 	},
 }
 
