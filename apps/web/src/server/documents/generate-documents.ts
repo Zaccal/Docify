@@ -7,6 +7,7 @@ import { format } from 'date-fns'
 import DocxTemplate from 'docxtemplater'
 import PizZip from 'pizzip'
 
+import { fetchExcelService } from '@/services/documents/fetch-excel-service'
 import { Template } from '@/types/enums/template.enum'
 import type { FindDocumentByIdData } from '@/types/find-document-by-id.type'
 import type { Organization } from '@/types/organization.type'
@@ -18,6 +19,7 @@ export async function GenerateDocumentsController(
 ) {
   const archive = new PizZip()
   const leaseAgreementZip = await generateLeaseAgreement(organization, data)
+  const excelArchive = await fetchExcelService(organization, data)
 
   archive.file(
     `Договор ${data.customer.fullnameClient} ${format(data.createdAt, 'dd-mm-yyyy')}.docx`,
@@ -26,6 +28,7 @@ export async function GenerateDocumentsController(
       compression: 'DEFLATE'
     })
   )
+  addZipFilesToArchive(archive, excelArchive)
 
   return archive.generate({
     type: 'nodebuffer',
@@ -51,6 +54,21 @@ async function generateLeaseAgreement(
   leaseAgreementDoc.render(templateData)
 
   return leaseAgreementDoc.getZip()
+}
+
+function addZipFilesToArchive(archive: PizZip, zipBuffer: Buffer) {
+  const sourceArchive = new PizZip(zipBuffer)
+
+  for (const file of Object.values(sourceArchive.files)) {
+    if (file.dir) {
+      continue
+    }
+
+    archive.file(file.name, file.asUint8Array(), {
+      binary: true,
+      date: file.date
+    })
+  }
 }
 
 function getTemplatePath(organization: Organization, template: Template) {

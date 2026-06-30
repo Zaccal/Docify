@@ -14,7 +14,9 @@ export async function createDocumentController(data: DocumentFormSchema) {
       bin: data.bin,
       city: data.city,
       costPerDay: data.costPerDay,
-      iik: data.iik
+      iik: data.iik,
+      kbe: data.kbe,
+      knp: data.knp ?? ''
     }
 
     let [organization] = await tx
