@@ -17,7 +17,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /Docify
+            cd root/Docify
             git pull origin main
             docker compose down
             docker compose up -d --build
