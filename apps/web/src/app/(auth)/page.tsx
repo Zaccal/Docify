@@ -30,6 +30,7 @@ export default function Auth() {
               width={560}
               height={630}
               src="/Logo.webp"
+              loading="eager"
               alt="Docify logo"
               priority
               className="h-auto w-24"
