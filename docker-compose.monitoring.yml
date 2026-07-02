@@ -1,0 +1,17 @@
+name: docify-monitoring
+
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:2
+    container_name: uptime-kuma
+    restart: unless-stopped
+    expose:
+      - '3003'
+    volumes:
+      - ./deployment/uptime-kuma:/app/data
+    networks:
+      - docify_default
+
+networks:
+  docify_default:
+    external: true
