@@ -19,6 +19,8 @@ jobs:
           script: |
             cd /root/Docify
             git pull origin main
-            docker compose down
-            docker compose up -d --build
+            docker compose up -d --build web excel-service nginx
+
+            docker exec docify-nginx-1 nginx -t
+            docker exec docify-nginx-1 nginx -s reload
             docker image prune -f
