@@ -17,10 +17,10 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /root/Docify
+            cd home/adil/Docify
             git pull origin main
             docker compose up -d --build web excel-service nginx
+            docker compose up -d --force-recreate nginx
 
             docker exec docify-nginx-1 nginx -t
-            docker exec docify-nginx-1 nginx -s reload
             docker image prune -f
