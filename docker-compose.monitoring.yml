@@ -6,7 +6,7 @@ services:
     container_name: uptime-kuma
     restart: unless-stopped
     expose:
-      - '3003'
+      - '3001'
     volumes:
       - ./deployment/uptime-kuma:/app/data
     networks:
