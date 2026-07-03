@@ -64,7 +64,6 @@ export function DatePicker({
           selected={date}
           onSelect={setDate}
           locale={ru}
-          disabled={{ after: new Date() }}
           captionLayout="dropdown"
           numberOfMonths={2}
         />
