@@ -80,7 +80,7 @@ func addGeneratedWorkbook(zipWriter *zip.Writer, org string, template excelTempl
 		return fmt.Errorf("write workbook %s: %w", template.templateName, err)
 	}
 
-	archiveFile, err := zipWriter.Create(template.outputName + " " + data.Customer.FullnameClient + " " + data.CreatedAt.Format("02-01-2006") + ".xlsx")
+	archiveFile, err := zipWriter.Create(template.outputName + " " + data.Customer.FullnameClient + " " + data.UpdatedAt.Format("02-01-2006") + ".xlsx")
 	if err != nil {
 		return fmt.Errorf("create archive file %s: %w", template.outputName, err)
 	}

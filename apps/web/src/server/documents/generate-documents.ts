@@ -22,7 +22,7 @@ export async function GenerateDocumentsController(
   const excelArchive = await fetchExcelService(organization, data)
 
   archive.file(
-    `Договор ${data.customer.fullnameClient} ${format(data.createdAt, 'dd-mm-yyyy')}.docx`,
+    `Договор ${data.customer.fullnameClient} ${format(data.updatedAt, 'dd-MM-yyyy')}.docx`,
     leaseAgreementZip.generate({
       type: 'nodebuffer',
       compression: 'DEFLATE'
