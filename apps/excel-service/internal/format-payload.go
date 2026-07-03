@@ -68,6 +68,10 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 		result.Organization.Knp = "КНП: " + data.Organization.Knp
 	}
 
+	if data.Organization.Kbe != "" {
+		result.Organization.Kbe = "КБЕ: " + data.Organization.Kbe
+	}
+
 	return result, nil
 }
 

@@ -177,9 +177,14 @@ export const knpSchema = z.optional(
   ])
 )
 
-export const kbeSchema = z
-  .string('KBE должен быть строкой')
-  .check(z.trim(), z.length(2, 'KBE должен состоять из 2 цифр'))
+export const kbeSchema = z.optional(
+  z.union([
+    z
+      .string('KBE должен быть строкой')
+      .check(z.trim(), z.length(2, 'KBE должен состоять из 2 цифр')),
+    z.literal('')
+  ])
+)
 
 export const documentFormSchema = z.object({
   enumeration: enumerationSchema,
