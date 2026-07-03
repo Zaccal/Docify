@@ -8,6 +8,11 @@
       "@Docify/ui/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "../../apps/web/src/components/section-cards.tsx",
+    "../../apps/web/src/components/chart-area-interactive.tsx"
+  ],
   "exclude": ["node_modules"]
 }
