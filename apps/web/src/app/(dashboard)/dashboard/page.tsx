@@ -9,10 +9,10 @@ export default function Dashboard() {
   return (
     <>
       <div className="wrapper">
-        <div className="flex flex-col items-start gap-6 py-2 lg:flex-row lg:items-center lg:justify-between">
+        <header className="flex flex-col items-start gap-6 py-2 lg:flex-row lg:items-center lg:justify-between">
           <WelcomeText />
           <OrganizationSelectValue />
-        </div>
+        </header>
       </div>
       <div className="flex flex-1 flex-col">
         <div className="@container/main flex flex-1 flex-col gap-2">

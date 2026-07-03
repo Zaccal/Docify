@@ -2,7 +2,7 @@ import { Badge } from '@Docify/ui/components/badge'
 
 import { ModeToggle } from '@/components/mode-toggle'
 
-export default function SettingsPage() {
+export default function Page() {
   return (
     <div className="wrapper">
       <h1 className="mt-2 text-4xl font-bold">Настройки</h1>

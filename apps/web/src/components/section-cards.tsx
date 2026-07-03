@@ -81,7 +81,7 @@ export function SectionCards() {
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Сумма документов</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+          <CardTitle className="text-2xl font-semibold text-nowrap tabular-nums @[250px]/card:text-3xl">
             ₸2 450 000
           </CardTitle>
           <CardAction>
