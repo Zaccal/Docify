@@ -18,7 +18,7 @@ export default function DocumentSection() {
         description="Данные документа и его статус"
       />
       <CreateDocumentCard.Content>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Field>
             <FieldLabel>Нумерация</FieldLabel>
             <Input

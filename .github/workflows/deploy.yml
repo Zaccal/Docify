@@ -24,3 +24,4 @@ jobs:
 
             docker exec docify-nginx-1 nginx -t
             docker image prune -f
+            docker builder prune -f

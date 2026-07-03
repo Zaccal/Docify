@@ -1,29 +1,30 @@
-import CreateDocumentCard from '@/components/dashboard/create-document-card'
+// import { DataTable } from '@Docify/ui/components/data-table'
+
+import { ChartAreaInteractive } from '@/components/chart-area-interactive'
 import OrganizationSelectValue from '@/components/organization-select/organization-select-value'
-import TotolCustomersCard from '@/components/total-customers-card'
-import TotalDocumentsCard from '@/components/total-documents-card'
+import { SectionCards } from '@/components/section-cards'
 import WelcomeText from '@/components/welcome-text'
 
 export default function Dashboard() {
   return (
-    <div className="wrapper">
-      <header>
-        <div className="flex w-full items-center justify-between">
+    <>
+      <div className="wrapper">
+        <header className="flex flex-col items-start gap-6 py-2 lg:flex-row lg:items-center lg:justify-between">
           <WelcomeText />
           <OrganizationSelectValue />
+        </header>
+      </div>
+      <div className="flex flex-1 flex-col">
+        <div className="@container/main flex flex-1 flex-col gap-2">
+          <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+            <SectionCards />
+            <div className="px-4 lg:px-6">
+              <ChartAreaInteractive />
+            </div>
+            {/*<DataTable data={} />*/}
+          </div>
         </div>
-        <div className="mt-8 grid auto-rows-fr grid-cols-4 gap-4">
-          <div className="col-span-2">
-            <CreateDocumentCard />
-          </div>
-          <div className="">
-            <TotolCustomersCard />
-          </div>
-          <div className="">
-            <TotalDocumentsCard />
-          </div>
-        </div>
-      </header>
-    </div>
+      </div>
+    </>
   )
 }

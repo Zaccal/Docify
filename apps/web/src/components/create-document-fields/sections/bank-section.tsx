@@ -28,7 +28,7 @@ export default function BankSection() {
           />
           <FieldError errors={errors?.bank} />
         </Field>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Field>
             <FieldLabel htmlFor="iik">ИИК</FieldLabel>
             <Input

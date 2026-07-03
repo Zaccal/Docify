@@ -20,6 +20,11 @@ services:
       excel-service:
         condition: service_started
     restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'
 
   excel-service:
     build:
@@ -35,6 +40,11 @@ services:
       PORT: 3002
       TEMPLATE_PATH: /templates
     restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'
 
   nginx:
     image: nginx:alpine-slim
@@ -49,3 +59,8 @@ services:
     ports:
       - '80:80'
       - '443:443'
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'

@@ -169,7 +169,12 @@ export const indexSchema = z
   .check(z.trim(), z.length(6, 'Почтовый индекс Казахстана должен состоять из 6 цифр'))
 
 export const knpSchema = z.optional(
-  z.string('KNP должен быть строкой').check(z.trim(), z.length(3, 'KNP должен состоять из 3 цифр'))
+  z.union([
+    z
+      .string('KNP должен быть строкой')
+      .check(z.trim(), z.length(3, 'KNP должен состоять из 3 цифр')),
+    z.literal('')
+  ])
 )
 
 export const kbeSchema = z

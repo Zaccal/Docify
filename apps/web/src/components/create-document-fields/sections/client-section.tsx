@@ -34,7 +34,7 @@ export default function ClientSection() {
           />
           <FieldError errors={errors?.fullnameClient} />
         </Field>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Field>
             <FieldLabel htmlFor="clientIdNumber">Номер удостоверения</FieldLabel>
             <Input
@@ -58,7 +58,7 @@ export default function ClientSection() {
             <FieldError errors={errors?.clientIdDateFrom} />
           </Field>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Field>
             <FieldLabel htmlFor="clientIdType">Тип удостоверения</FieldLabel>
             <Input

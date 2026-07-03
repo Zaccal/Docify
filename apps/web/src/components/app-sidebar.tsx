@@ -12,8 +12,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '@Docify/ui/components/sidebar'
-import { PlusSignIcon } from '@hugeicons/core-free-icons'
+import { PlusSignIcon, Settings03Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
+import type { Route } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -75,6 +76,22 @@ export default function AppSidebar() {
                 >
                   <HugeiconsIcon icon={PlusSignIcon} className="h-5 w-5" />
                   <span>Создать документ</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Аккаунт</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={'/settings' === pathname}
+                  render={<Link href={'settings' as Route} />}
+                >
+                  <HugeiconsIcon icon={Settings03Icon} className="h-5 w-5" />
+                  <span>Настройки</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
