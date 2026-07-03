@@ -39,7 +39,7 @@ export default function CreateDocumentPage() {
   const values = selectedDocument ? documentToFormValues(selectedDocument) : state.values
 
   return (
-    <div className="mx-auto max-w-4xl">
+    <div className="mx-auto max-w-4xl px-4">
       {/* Search */}
 
       <ExistingDocumentSearchSection onSelect={(document) => setSelectedDocument(document)} />
@@ -59,12 +59,17 @@ export default function CreateDocumentPage() {
             </div>
           </div>
         )}
-        <div className="flex items-center justify-end py-8">
-          <div className="flex items-center gap-4">
-            <Button disabled={pending} type="reset" variant={'secondary'}>
+        <div className="flex items-center py-8 md:justify-end">
+          <div className="flex w-full flex-col-reverse items-center gap-4 md:w-auto md:flex-row">
+            <Button
+              disabled={pending}
+              type="reset"
+              variant={'secondary'}
+              className="w-full md:w-auto"
+            >
               Сбросить
             </Button>
-            <Button loading={pending} type="submit">
+            <Button loading={pending} type="submit" className="w-full md:w-auto">
               Сохранить документ
             </Button>
           </div>

@@ -29,7 +29,7 @@ export default function OrganizationSection() {
             />
             <FieldError errors={errors?.organization} />
           </Field>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <Field>
               <FieldLabel htmlFor="bin">БИН</FieldLabel>
               <Input
@@ -75,7 +75,7 @@ export default function OrganizationSection() {
             />
             <FieldError errors={errors?.address} />
           </Field>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <Field>
               <FieldLabel htmlFor="kbe">КБЕ</FieldLabel>
               <Input
