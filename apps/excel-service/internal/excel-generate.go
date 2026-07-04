@@ -77,6 +77,12 @@ func addGeneratedWorkbook(zipWriter *zip.Writer, org string, template excelTempl
 		if err := fillGap(f, sheet, formattedPayload); err != nil {
 			return fmt.Errorf("fill workbook %s sheet %s: %w", template.templateName, sheet, err)
 		}
+
+		if template.templateName == "Tax Invoice.xlsx" {
+			if err := CreateKeyValueRow(f, sheet, tem, org, data.CellsLine); err != nil {
+				return fmt.Errorf("create rows workbook %s sheet %s: %w", template.templateName, sheet, err)
+			}
+		}
 	}
 
 	workbookBuffer, err := f.WriteToBuffer()
@@ -104,11 +110,12 @@ func openTemplateWorkbook(org string, templateName string, tem string) (*exceliz
 
 	var templatePath string
 
-	if tem == "APARTMENT" {
+	switch tem {
+	case "APARTMENT":
 		templatePath = filepath.Join(templatePathRoot, org, templateName)
-	} else if tem == "HOTEL" {
+	case "HOTEL":
 		templatePath = filepath.Join(templatePathRoot, org, "HOTEL", templateName)
-	} else {
+	default:
 		templatePath = filepath.Join(templatePathRoot, org, templateName)
 	}
 

@@ -25,7 +25,7 @@ export default function CreateDocumentPage() {
     const result = await createDocument(prevState, formData)
 
     if (result.success && result.documentId) {
-      const templateType = formData.get('templateType') as TemplateType
+      const templateType = (formData.get('templateType') as TemplateType) ?? 'APARTMENT'
       toast.success('Документ успешно создан')
       downloadGeneratedDocument(result.documentId, organization, templateType)
     }
