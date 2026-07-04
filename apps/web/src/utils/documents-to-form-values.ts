@@ -28,6 +28,6 @@ export function documentToFormValues(document: SearchResultDocument): CreateDocu
     bik: organization.bik,
     bank: organization.bank,
     knp: organization.knp ?? '',
-    kbe: organization.kbe
+    kbe: organization.kbe ?? ''
   }
 }

@@ -14,7 +14,7 @@ export const OrganizationsTable = pgTable(
     iik: varchar('iik', { length: 20 }).notNull(),
     bik: varchar('bik', { length: 8 }).notNull(),
     bank: text('bank').notNull(),
-    kbe: varchar('kbe', { length: 2 }).notNull(),
+    kbe: varchar('kbe', { length: 2 }),
     knp: varchar('knp', { length: 3 })
   },
   (table) => [
