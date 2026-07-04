@@ -186,6 +186,12 @@ export const kbeSchema = z.optional(
   ])
 )
 
+export const templateTypeSchema = z.optional(
+  z._default(z.enum(['HOTEL', 'APARTMENT']), 'APARTMENT')
+)
+
+export type TemplateType = z.infer<typeof templateTypeSchema>
+
 export const documentFormSchema = z.object({
   enumeration: enumerationSchema,
   fullnameClient: fullnameClientSchema,
@@ -205,7 +211,8 @@ export const documentFormSchema = z.object({
   cellsLine: dynamicKeyValueSchema,
   knp: knpSchema,
   kbe: kbeSchema,
-  index: indexSchema
+  index: indexSchema,
+  templateType: templateTypeSchema
 })
 
 export type DocumentFormSchema = z.infer<typeof documentFormSchema>

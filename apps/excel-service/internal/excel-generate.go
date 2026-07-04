@@ -33,16 +33,20 @@ var excelTemplates = []excelTemplate{
 	},
 }
 
-func GenerateExcelDocumentsArchive(org string, data Payload) ([]byte, error) {
+func GenerateExcelDocumentsArchive(org string, data Payload, tem string) ([]byte, error) {
 	if org == "" || org != xansha && org != nomadDocs {
 		return nil, fmt.Errorf("org is missing or invalid")
+	}
+
+	if tem == "" || (tem != "APARTMENT" && tem != "HOTEL") {
+		tem = "APARTMENT"
 	}
 
 	var archive bytes.Buffer
 	zipWriter := zip.NewWriter(&archive)
 
 	for _, template := range excelTemplates {
-		if err := addGeneratedWorkbook(zipWriter, org, template, data); err != nil {
+		if err := addGeneratedWorkbook(zipWriter, org, template, data, tem); err != nil {
 			_ = zipWriter.Close()
 			return nil, err
 		}
@@ -55,8 +59,8 @@ func GenerateExcelDocumentsArchive(org string, data Payload) ([]byte, error) {
 	return archive.Bytes(), nil
 }
 
-func addGeneratedWorkbook(zipWriter *zip.Writer, org string, template excelTemplate, data Payload) error {
-	f, err := openTemplateWorkbook(org, template.templateName)
+func addGeneratedWorkbook(zipWriter *zip.Writer, org string, template excelTemplate, data Payload, tem string) error {
+	f, err := openTemplateWorkbook(org, template.templateName, tem)
 	if err != nil {
 		return err
 	}
@@ -92,13 +96,22 @@ func addGeneratedWorkbook(zipWriter *zip.Writer, org string, template excelTempl
 	return nil
 }
 
-func openTemplateWorkbook(org string, templateName string) (*excelize.File, error) {
+func openTemplateWorkbook(org string, templateName string, tem string) (*excelize.File, error) {
 	templatePathRoot := os.Getenv("TEMPLATE_PATH")
 	if templatePathRoot == "" {
 		return nil, fmt.Errorf("TEMPLATE_PATH is missing")
 	}
 
-	templatePath := filepath.Join(templatePathRoot, org, templateName)
+	var templatePath string
+
+	if tem == "APARTMENT" {
+		templatePath = filepath.Join(templatePathRoot, org, templateName)
+	} else if tem == "HOTEL" {
+		templatePath = filepath.Join(templatePathRoot, org, "HOTEL", templateName)
+	} else {
+		templatePath = filepath.Join(templatePathRoot, org, templateName)
+	}
+
 	f, err := excelize.OpenFile(templatePath)
 	if err != nil {
 		return nil, fmt.Errorf("open template %s: %w", templatePath, err)

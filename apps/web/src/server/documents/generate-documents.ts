@@ -7,6 +7,7 @@ import { format } from 'date-fns'
 import DocxTemplate from 'docxtemplater'
 import PizZip from 'pizzip'
 
+import type { TemplateType } from '@/schemas/document-schema/document.schema'
 import { fetchExcelService } from '@/services/documents/fetch-excel-service'
 import { Template } from '@/types/enums/template.enum'
 import type { FindDocumentByIdData } from '@/types/find-document-by-id.type'
@@ -15,11 +16,12 @@ import formatDocumentTemplateData from '@/utils/format-document-template-data/fo
 
 export async function GenerateDocumentsController(
   organization: Organization,
-  data: NonNullable<FindDocumentByIdData>
+  data: NonNullable<FindDocumentByIdData>,
+  templateType: TemplateType = 'APARTMENT'
 ) {
   const archive = new PizZip()
-  const leaseAgreementZip = await generateLeaseAgreement(organization, data)
-  const excelArchive = await fetchExcelService(organization, data)
+  const leaseAgreementZip = await generateLeaseAgreement(organization, data, templateType)
+  const excelArchive = await fetchExcelService(organization, data, templateType)
 
   archive.file(
     `Договор ${data.customer.fullnameClient} ${format(data.updatedAt, 'dd-MM-yyyy')}.docx`,
@@ -38,9 +40,14 @@ export async function GenerateDocumentsController(
 
 async function generateLeaseAgreement(
   organization: Organization,
-  data: NonNullable<FindDocumentByIdData>
+  data: NonNullable<FindDocumentByIdData>,
+  templateType: TemplateType = 'APARTMENT'
 ) {
-  const templatePath = getTemplatePath(organization, Template.LEASE_AGREEMENT)
+  if (organization !== 'XANSHA' && templateType === 'HOTEL') {
+    throw new Error('Hotel template is only available for XANSHA organization')
+  }
+
+  const templatePath = getTemplatePath(organization, Template.LEASE_AGREEMENT, templateType)
   const templateBuffer = await readFile(templatePath)
 
   const zip = new PizZip(templateBuffer)
@@ -71,7 +78,16 @@ function addZipFilesToArchive(archive: PizZip, zipBuffer: Buffer) {
   }
 }
 
-function getTemplatePath(organization: Organization, template: Template) {
+function getTemplatePath(
+  organization: Organization,
+  template: Template,
+  templateType: TemplateType = 'APARTMENT'
+) {
+  if (templateType === 'HOTEL') {
+    console.log(path.join(getTemplatesDirectory(organization), 'HOTEL', template))
+    return path.join(getTemplatesDirectory(organization), 'HOTEL', template)
+  }
+
   return path.join(getTemplatesDirectory(organization), template)
 }
 
