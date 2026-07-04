@@ -6,6 +6,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { useState } from 'react'
 
 import { formatCost, normalizeCost } from '@/utils/cost-format'
+import { formatDateInput } from '@/utils/format-date-input'
 
 import CreateDocumentCard from '../../create-document-card/index'
 import { useCreateDocumentFields } from '../create-document-fields-store'
@@ -13,6 +14,9 @@ import { useCreateDocumentFields } from '../create-document-fields-store'
 export default function ClientSection() {
   const { errors, values } = useCreateDocumentFields()
   const [formattedCost, setFormattedCost] = useState(() => formatCost(values?.costPerDay ?? ''))
+  const [formattedDate, setFormattedDate] = useState(() =>
+    formatDateInput(values?.clientIdDateFrom ?? '')
+  )
 
   return (
     <CreateDocumentCard.Root>
@@ -54,6 +58,8 @@ export default function ClientSection() {
               aria-invalid={Boolean(errors?.clientIdDateFrom?.length)}
               defaultValue={values?.clientIdDateFrom}
               placeholder="12.12.2024"
+              onChange={(e) => setFormattedDate(formatDateInput(e.target.value))}
+              value={formattedDate}
             />
             <FieldError errors={errors?.clientIdDateFrom} />
           </Field>

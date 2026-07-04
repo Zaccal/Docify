@@ -177,9 +177,20 @@ export const knpSchema = z.optional(
   ])
 )
 
-export const kbeSchema = z
-  .string('KBE должен быть строкой')
-  .check(z.trim(), z.length(2, 'KBE должен состоять из 2 цифр'))
+export const kbeSchema = z.optional(
+  z.union([
+    z
+      .string('KBE должен быть строкой')
+      .check(z.trim(), z.length(2, 'KBE должен состоять из 2 цифр')),
+    z.literal('')
+  ])
+)
+
+export const templateTypeSchema = z.optional(
+  z._default(z.enum(['HOTEL', 'APARTMENT']), 'APARTMENT')
+)
+
+export type TemplateType = z.infer<typeof templateTypeSchema>
 
 export const documentFormSchema = z.object({
   enumeration: enumerationSchema,
@@ -200,7 +211,8 @@ export const documentFormSchema = z.object({
   cellsLine: dynamicKeyValueSchema,
   knp: knpSchema,
   kbe: kbeSchema,
-  index: indexSchema
+  index: indexSchema,
+  templateType: templateTypeSchema
 })
 
 export type DocumentFormSchema = z.infer<typeof documentFormSchema>

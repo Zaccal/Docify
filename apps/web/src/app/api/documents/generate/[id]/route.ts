@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 
+import type { TemplateType } from '@/schemas/document-schema/document.schema'
 import { findDocumentById } from '@/server/documents/find-by-id'
 import { GenerateDocumentsController } from '@/server/documents/generate-documents'
 import type { Organization } from '@/types/organization.type'
@@ -15,13 +16,17 @@ export async function GET(req: NextRequest, { params }: { params: Promise<Params
     (req.nextUrl.searchParams.get('organization') as string) ?? 'XANSHA'
   ) as Organization
 
+  const templateType = decodeURIComponent(
+    (req.nextUrl.searchParams.get('templateType') as string) ?? 'APARTMENT'
+  ) as TemplateType
+
   try {
     const document = await findDocumentById(id)
     if (!document) {
       return NextResponse.json({ error: 'Документ не найден' }, { status: 404 })
     }
 
-    const buffer = await GenerateDocumentsController(organization, document)
+    const buffer = await GenerateDocumentsController(organization, document, templateType)
 
     return new NextResponse(new Uint8Array(buffer), {
       headers: {

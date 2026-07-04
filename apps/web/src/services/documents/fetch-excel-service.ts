@@ -1,20 +1,25 @@
 import { env } from '@Docify/env/server'
 
+import type { TemplateType } from '@/schemas/document-schema/document.schema'
 import type { FindDocumentByIdData } from '@/types/find-document-by-id.type'
 import type { Organization } from '@/types/organization.type'
 
 export async function fetchExcelService(
   organization: Organization,
-  document: NonNullable<FindDocumentByIdData>
+  document: NonNullable<FindDocumentByIdData>,
+  templateType: TemplateType = 'APARTMENT'
 ) {
   const baseURL = env.EXCEL_SERVICE_URL.replace(/\/$/, '')
-  const response = await fetch(`${baseURL}/generate?org=${encodeURIComponent(organization)}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(document)
-  })
+  const response = await fetch(
+    `${baseURL}/generate?org=${encodeURIComponent(organization)}&template=${encodeURIComponent(templateType)}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(document)
+    }
+  )
 
   if (!response.ok) {
     const error = await readExcelServiceError(response)

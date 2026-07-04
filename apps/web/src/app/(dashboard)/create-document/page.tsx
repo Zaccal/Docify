@@ -10,6 +10,7 @@ import { createDocument } from '@/actions/documents/create-documents'
 import CreateDocumentFields from '@/components/create-document-fields/create-document-fields'
 import ExistingDocumentSearchSection from '@/components/create-document-fields/sections/existing-document-search-section/existing-document-search-section'
 import { useOrganizationSelect } from '@/components/organization-select/organization-select-store'
+import type { TemplateType } from '@/schemas/document-schema/document.schema'
 import { downloadGeneratedDocument } from '@/services/documents/download-generated-documents'
 import type { CreateDocumentState } from '@/types/create-document-state.type'
 import type { SearchResultDocument } from '@/types/search-state.type'
@@ -24,8 +25,9 @@ export default function CreateDocumentPage() {
     const result = await createDocument(prevState, formData)
 
     if (result.success && result.documentId) {
+      const templateType = formData.get('templateType') as TemplateType
       toast.success('Документ успешно создан')
-      downloadGeneratedDocument(result.documentId, organization)
+      downloadGeneratedDocument(result.documentId, organization, templateType)
     }
 
     return result

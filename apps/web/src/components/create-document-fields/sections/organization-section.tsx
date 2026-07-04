@@ -77,7 +77,7 @@ export default function OrganizationSection() {
           </Field>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <Field>
-              <FieldLabel htmlFor="kbe">КБЕ</FieldLabel>
+              <FieldLabel htmlFor="kbe">КБЕ (Опционально)</FieldLabel>
               <Input
                 aria-invalid={Boolean(errors?.kbe)}
                 defaultValue={values?.kbe}
@@ -88,7 +88,7 @@ export default function OrganizationSection() {
               <FieldError errors={errors?.kbe} />
             </Field>
             <Field>
-              <FieldLabel htmlFor="knp">КНП</FieldLabel>
+              <FieldLabel htmlFor="knp">КНП (Опционально)</FieldLabel>
               <Input
                 aria-invalid={Boolean(errors?.knp)}
                 defaultValue={values?.knp}

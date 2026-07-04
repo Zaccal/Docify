@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -32,8 +31,17 @@ func GenerateDocumentsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(payload.DocumentDate)
-	archive, err := internal.GenerateExcelDocumentsArchive(org, payload)
+	tem := r.URL.Query().Get("template")
+	if tem == "" {
+		tem = "APARTMENT"
+	}
+
+	if tem == "HOTEL" && org != "XANSHA" {
+		utils.WriteJSONResponse(w, ErrResponse{Error: "HOTEL template is only available for XANSHA org"}, http.StatusBadRequest)
+		return
+	}
+
+	archive, err := internal.GenerateExcelDocumentsArchive(org, payload, tem)
 	if err != nil {
 		if strings.HasPrefix(err.Error(), "format payload:") {
 			utils.WriteJSONResponse(w, ErrResponse{Error: err.Error()}, http.StatusBadRequest)

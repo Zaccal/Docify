@@ -2,11 +2,15 @@ import { Field, FieldError, FieldLabel } from '@Docify/ui/components/field'
 import { Input } from '@Docify/ui/components/input'
 import { DocumentAttachmentIcon } from '@hugeicons/core-free-icons'
 
+import { useOrganizationSelect } from '@/components/organization-select/organization-select-store'
+import TemplateSelect from '@/components/template-select'
+
 import CreateDocumentCard from '../../create-document-card/index'
 import { DatePicker } from '../../date-picker'
 import { useCreateDocumentFields } from '../create-document-fields-store'
 
 export default function DocumentSection() {
+  const { organization } = useOrganizationSelect()
   const { errors, values } = useCreateDocumentFields()
 
   return (
@@ -40,6 +44,12 @@ export default function DocumentSection() {
             <FieldError errors={errors?.documentDate} />
           </Field>
         </div>
+        {organization === 'XANSHA' && (
+          <Field>
+            <FieldLabel>Шаблон</FieldLabel>
+            <TemplateSelect name="templateType" />
+          </Field>
+        )}
       </CreateDocumentCard.Content>
     </CreateDocumentCard.Root>
   )

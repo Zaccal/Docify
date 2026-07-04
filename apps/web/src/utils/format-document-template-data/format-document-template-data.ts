@@ -32,7 +32,8 @@ function formatLeaseAgreement(data: NonNullable<FindDocumentByIdData>) {
     locale: ru
   })
 
-  const totalPrice = Number(data.organization.costPerDay) * getNightsCount(dateFrom, dateTo)
+  const nights = getNightsCount(dateFrom, dateTo)
+  const totalPrice = Number(data.organization.costPerDay) * nights
 
   const costPerDayRu = numberToWordsRu(Number(data.organization.costPerDay))
 
@@ -47,6 +48,6 @@ function formatLeaseAgreement(data: NonNullable<FindDocumentByIdData>) {
     totalPrice: formatCost(String(totalPrice)),
     totalPriceRu: numberToWordsRu(totalPrice),
     costPerDayRu,
-    nightsCount: getNightsCount(dateFrom, dateTo)
+    nightsCount: nights
   })
 }
