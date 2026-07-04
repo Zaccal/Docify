@@ -84,7 +84,6 @@ function getTemplatePath(
   templateType: TemplateType = 'APARTMENT'
 ) {
   if (templateType === 'HOTEL') {
-    console.log(path.join(getTemplatesDirectory(organization), 'HOTEL', template))
     return path.join(getTemplatesDirectory(organization), 'HOTEL', template)
   }
 
@@ -94,7 +93,7 @@ function getTemplatePath(
 function getTemplatesDirectory(organization: Organization) {
   const templateDir = path.isAbsolute(env.TEMPLATE_DIR)
     ? env.TEMPLATE_DIR
-    : path.join(process.cwd(), env.TEMPLATE_DIR)
+    : path.join(process.cwd(), 'templates')
 
   return path.join(templateDir, organization)
 }
