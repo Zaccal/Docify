@@ -4,6 +4,7 @@ import { DocumentAttachmentIcon } from '@hugeicons/core-free-icons'
 
 import { useOrganizationSelect } from '@/components/organization-select/organization-select-store'
 import TemplateSelect from '@/components/template-select'
+import { DEFAULT_ORGANIZATION_TYPE } from '@/lib/constants'
 
 import CreateDocumentCard from '../../create-document-card/index'
 import { DatePicker } from '../../date-picker'
@@ -44,7 +45,7 @@ export default function DocumentSection() {
             <FieldError errors={errors?.documentDate} />
           </Field>
         </div>
-        {organization === 'XANSHA' && (
+        {organization === DEFAULT_ORGANIZATION_TYPE && (
           <Field>
             <FieldLabel>Шаблон</FieldLabel>
             <TemplateSelect name="templateType" />

@@ -148,3 +148,4 @@ export const HUNDREDS = [
 ]
 
 export const DEFAULT_TEMPLATE_TYPE = 'APARTMENT'
+export const DEFAULT_ORGANIZATION_TYPE = 'XANSHA'
