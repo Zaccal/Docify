@@ -146,3 +146,5 @@ export const HUNDREDS = [
   'восемьсот',
   'девятьсот'
 ]
+
+export const DEFAULT_TEMPLATE_TYPE = 'APARTMENT'

@@ -9,7 +9,7 @@ import (
 var rowIndex = map[string]int{
 	"XANSHA:APARTMENT": 24,
 	"XANSHA:HOTEL": 21,
-	"NomadDocs:APARTMENT": 22,
+	"NomadDocs": 22,
 }
 
 func CreateKeyValueRow(f *excelize.File, sheet string, templateType string, org string, data map[string]string) error {

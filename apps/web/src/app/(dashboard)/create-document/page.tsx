@@ -10,24 +10,48 @@ import { createDocument } from '@/actions/documents/create-documents'
 import CreateDocumentFields from '@/components/create-document-fields/create-document-fields'
 import ExistingDocumentSearchSection from '@/components/create-document-fields/sections/existing-document-search-section/existing-document-search-section'
 import { useOrganizationSelect } from '@/components/organization-select/organization-select-store'
-import type { TemplateType } from '@/schemas/document-schema/document.schema'
-import { downloadGeneratedDocument } from '@/services/documents/download-generated-documents'
+import { useDownload } from '@/hooks/useDownload'
+import { DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
+import { templateTypeSchema } from '@/schemas/document-schema/document.schema'
 import type { CreateDocumentState } from '@/types/create-document-state.type'
 import type { SearchResultDocument } from '@/types/search-state.type'
 import { documentToFormValues } from '@/utils/documents-to-form-values'
+import { getUrlDownloadDocument } from '@/utils/get-url-download-document'
 
 export default function CreateDocumentPage() {
   const { organization } = useOrganizationSelect()
+  const { download } = useDownload()
   const [selectedDocument, setSelectedDocument] = useState<SearchResultDocument | undefined>(
     undefined
   )
   async function handleCreateDocument(prevState: CreateDocumentState, formData: FormData) {
-    const result = await createDocument(prevState, formData)
+    let result: CreateDocumentState
+    try {
+      result = await createDocument(prevState, formData)
+    } catch (err) {
+      console.error('createDocument failed:', err)
+      toast.error('Не удалось создать документ. Попробуйте ещё раз')
+      return {
+        success: false,
+        values: prevState.values,
+        message: 'Произошла непредвиденная ошибка'
+      }
+    }
 
     if (result.success && result.documentId) {
-      const templateType = (formData.get('templateType') as TemplateType) ?? 'APARTMENT'
-      toast.success('Документ успешно создан')
-      downloadGeneratedDocument(result.documentId, organization, templateType)
+      const templateTypeRaw = formData.get('templateType')
+      const parsedTemplateType = templateTypeSchema.safeParse(templateTypeRaw)
+      const templateType = parsedTemplateType.success
+        ? parsedTemplateType.data
+        : DEFAULT_TEMPLATE_TYPE
+      const url = getUrlDownloadDocument(result.documentId, organization, templateType)
+      const { success } = await download(url)
+
+      if (!success) {
+        toast.error('Документ создан, но не удалось скачать файл')
+      } else {
+        toast.success('Документ успешно создан')
+      }
     }
 
     return result
@@ -68,6 +92,7 @@ export default function CreateDocumentPage() {
               type="reset"
               variant={'secondary'}
               className="w-full md:w-auto"
+              onClick={() => setSelectedDocument(undefined)}
             >
               Сбросить
             </Button>
