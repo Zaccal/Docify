@@ -7,6 +7,7 @@ import { format } from 'date-fns'
 import DocxTemplate from 'docxtemplater'
 import PizZip from 'pizzip'
 
+import { DEFAULT_ORGANIZATION_TYPE, DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
 import type { TemplateType } from '@/schemas/document-schema/document.schema'
 import { fetchExcelService } from '@/services/documents/fetch-excel-service'
 import { Template } from '@/types/enums/template.enum'
@@ -41,9 +42,9 @@ export async function GenerateDocumentsController(
 async function generateLeaseAgreement(
   organization: Organization,
   data: NonNullable<FindDocumentByIdData>,
-  templateType: TemplateType = 'APARTMENT'
+  templateType: TemplateType = DEFAULT_TEMPLATE_TYPE
 ) {
-  if (organization !== 'XANSHA' && templateType === 'HOTEL') {
+  if (organization !== DEFAULT_ORGANIZATION_TYPE && templateType === 'HOTEL') {
     throw new Error('Hotel template is only available for XANSHA organization')
   }
 

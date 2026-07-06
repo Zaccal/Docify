@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 
+import { DEFAULT_ORGANIZATION_TYPE, DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
 import type { TemplateType } from '@/schemas/document-schema/document.schema'
 import { findDocumentById } from '@/server/documents/find-by-id'
 import { GenerateDocumentsController } from '@/server/documents/generate-documents'
@@ -13,11 +14,11 @@ interface Params {
 export async function GET(req: NextRequest, { params }: { params: Promise<Params> }) {
   const { id } = await params
   const organization = decodeURIComponent(
-    (req.nextUrl.searchParams.get('organization') as string) ?? 'XANSHA'
+    (req.nextUrl.searchParams.get('organization') as string) ?? DEFAULT_ORGANIZATION_TYPE
   ) as Organization
 
   const templateType = decodeURIComponent(
-    (req.nextUrl.searchParams.get('templateType') as string) ?? 'APARTMENT'
+    (req.nextUrl.searchParams.get('templateType') as string) ?? DEFAULT_TEMPLATE_TYPE
   ) as TemplateType
 
   try {
