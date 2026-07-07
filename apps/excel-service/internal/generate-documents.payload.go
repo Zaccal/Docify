@@ -27,7 +27,8 @@ type Payload struct {
 		City         string `json:"city"`
 		Index        string `json:"index"`
 		Address      string `json:"address"`
-		CostPerDay   string `json:"costPerDay"`
+		CostPerDay   int `json:"costPerDay"`
+		TotalCost 	 int `json:"totalCost"`
 		Iik          string `json:"iik"`
 		Bik          string `json:"bik"`
 		Bank         string `json:"bank"`

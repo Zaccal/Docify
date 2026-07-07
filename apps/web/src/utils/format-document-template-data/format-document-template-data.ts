@@ -33,7 +33,6 @@ function formatLeaseAgreement(data: NonNullable<FindDocumentByIdData>) {
   })
 
   const nights = getNightsCount(dateFrom, dateTo)
-  const totalPrice = Number(data.organization.costPerDay) * nights
 
   const costPerDayRu = numberToWordsRu(Number(data.organization.costPerDay))
 
@@ -45,8 +44,8 @@ function formatLeaseAgreement(data: NonNullable<FindDocumentByIdData>) {
     },
     formattedDateFrom,
     formattedDateTo,
-    totalPrice: formatCost(String(totalPrice)),
-    totalPriceRu: numberToWordsRu(totalPrice),
+    totalCost: formatCost(data.organization.totalCost),
+    totalCostRu: numberToWordsRu(data.organization.totalCost),
     costPerDayRu,
     nightsCount: nights
   })

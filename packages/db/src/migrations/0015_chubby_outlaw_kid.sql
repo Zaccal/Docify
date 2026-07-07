@@ -1,0 +1,1 @@
+ALTER TABLE "organizations_table" ALTER COLUMN "total_cost" SET DATA TYPE numeric(10, 2);

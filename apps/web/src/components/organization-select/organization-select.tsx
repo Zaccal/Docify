@@ -12,6 +12,7 @@ import {
 import { Building03Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 
+import { DEFAULT_ORGANIZATION_TYPE } from '@/lib/constants'
 import type { Organization } from '@/types/organization.type'
 
 import { useOrganizationSelect } from './organization-select-store'
@@ -24,7 +25,7 @@ export default function OrganizationSelect() {
       <Select
         value={organization}
         onValueChange={(value) => {
-          setOrganization((value ?? 'XANSHA') as Organization)
+          setOrganization((value ?? DEFAULT_ORGANIZATION_TYPE) as Organization)
         }}
       >
         <SelectTrigger className="w-full">

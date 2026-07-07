@@ -45,24 +45,23 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 		return result, err
 	}
 
-	totalPrice := nights * costPerDay
 
-	totalPriceWords, err := utils.NumbersToWordsRu(totalPrice)
+	totalCostRu, err := utils.NumbersToWordsRu(data.Organization.TotalCost)
 	if err != nil {
 		return result, err
 	}
 
 	result.Generated = make(map[string]string)
 
-	result.Generated["totalPrice"] = utils.FormatCost(strconv.Itoa(totalPrice))
-	result.Generated["totalPriceWords"] = utils.Capitalize(totalPriceWords)
+	result.Generated["totalCost"] = utils.FormatCost(strconv.Itoa(data.Organization.TotalCost))
+	result.Generated["totalCostRu"] = utils.Capitalize(totalCostRu)
 	result.Generated["nights"] = strconv.Itoa(nights)
 
 	result.Generated["formattedDateFrom"] = formattedDateFrom
 	result.Generated["formattedDateTo"] = formattedDateTo
 
-	result.Organization.CostPerDay = utils.FormatCost(costPerDayRaw)
-	result.Generated["costPerDayWords"] = utils.Capitalize(costPerDayWords)
+	result.Generated["costPerDayFormatted"] = utils.FormatCost(costPerDayRaw)
+	result.Generated["costPerDayRu"] = utils.Capitalize(costPerDayWords)
 
 	if data.Organization.Knp != "" {
 		result.Organization.Knp = "КНП: " + data.Organization.Knp
@@ -75,7 +74,9 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 	return result, nil
 }
 
-func normalizeNumericString(value string) string {
+func normalizeNumericString(data int) string {
+	value := strconv.Itoa(data)
+
 	replacer := strings.NewReplacer(" ", "", "\u00a0", "", "\u202f", "")
 	return replacer.Replace(value)
 }

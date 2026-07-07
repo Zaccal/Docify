@@ -1,0 +1,1 @@
+ALTER TABLE "organizations_table" ADD COLUMN "total_cost" numeric DEFAULT '0' NOT NULL;

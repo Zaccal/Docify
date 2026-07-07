@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm'
-import { index, jsonb, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { index, jsonb, numeric, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 
 export const OrganizationsTable = pgTable(
   'organizations_table',
@@ -10,7 +10,16 @@ export const OrganizationsTable = pgTable(
     city: text('city').notNull(),
     index: text('index').notNull(),
     address: text('address').notNull(),
-    costPerDay: text('cost_per_day').notNull(),
+    costPerDay: numeric('cost_per_day', {
+      precision: 10,
+      scale: 2,
+      mode: 'number'
+    }).notNull(),
+    totalCost: numeric('total_cost', {
+      precision: 10,
+      scale: 2,
+      mode: 'number'
+    }).notNull(),
     iik: varchar('iik', { length: 20 }).notNull(),
     bik: varchar('bik', { length: 8 }).notNull(),
     bank: text('bank').notNull(),

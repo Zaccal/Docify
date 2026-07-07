@@ -2,8 +2,12 @@ import { db, eq } from '@Docify/db'
 import { CustomersTable, DocumentsTable, OrganizationsTable } from '@Docify/db/schema'
 
 import type { DocumentFormSchema } from '@/schemas/document-schema/document.schema'
+import { getNightsCount } from '@/utils/format-document-template-data/subutils/get-nights-count'
 
 export async function createDocumentController(data: DocumentFormSchema) {
+  const nights = getNightsCount(data.documentDate[0], data.documentDate[1])
+  const totalCost = nights * data.costPerDay
+
   return db.transaction(async (tx) => {
     const organizationValues = {
       organization: data.organization,
@@ -14,6 +18,7 @@ export async function createDocumentController(data: DocumentFormSchema) {
       bin: data.bin,
       city: data.city,
       costPerDay: data.costPerDay,
+      totalCost,
       iik: data.iik,
       kbe: data.kbe,
       knp: data.knp ?? ''

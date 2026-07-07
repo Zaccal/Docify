@@ -68,14 +68,17 @@ export const clientIdTypeSchema = z
   .string()
   .check(z.minLength(2, 'Тип документа должен быть строкой и содержать минимум 2 символа'))
 
-export const costPerDaySchema = z.string('Стоимость за день должна быть строкой').check(
-  z.trim(),
-  z.minLength(1, 'Укажите стоимость за день'),
-  z.regex(
-    COST_PER_DAY_REGEX,
-    'Стоимость должна быть положительным числом с максимум 2 знаками после точки или запятой'
+export const costPerDaySchema = z.pipe(
+  z.string('Стоимость за день должна быть строкой').check(
+    z.trim(),
+    z.minLength(1, 'Укажите стоимость за день'),
+    z.regex(
+      COST_PER_DAY_REGEX,
+      'Стоимость должна быть положительным числом с максимум 2 знаками после точки или запятой'
+    ),
+    z.refine((value) => Number(value.replace(',', '.')) > 0, 'Стоимость должна быть больше 0')
   ),
-  z.refine((value) => Number(value.replace(',', '.')) > 0, 'Стоимость должна быть больше 0')
+  z.transform((value) => Number(value.replace(',', '.')))
 )
 
 const documentDateItemSchema = z
