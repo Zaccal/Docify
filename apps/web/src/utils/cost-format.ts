@@ -1,5 +1,5 @@
-export function formatCost(data: number) {
-  const value = String(data)
+export function formatCost(data: number | string) {
+  const value = typeof data === 'string' ? data : String(data)
   const cleaned = value.replace(/\s/g, '').replace(/[^\d,.]/g, '')
   const [integer = '', fraction] = cleaned.split(/[,.]/)
 
