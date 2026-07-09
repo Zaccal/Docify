@@ -2,7 +2,7 @@
 
 import { ChartAreaInteractive } from '@/components/chart-area-interactive'
 import OrganizationSelectValue from '@/components/organization-select/organization-select-value'
-import { SectionCards } from '@/components/section-cards'
+import { SectionCards } from '@/components/section-cards/section-cards'
 import WelcomeText from '@/components/welcome-text'
 
 export default function Dashboard() {

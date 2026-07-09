@@ -4,7 +4,8 @@ import type { NextConfig } from 'next'
 const nextConfig: NextConfig = {
   typedRoutes: true,
   reactCompiler: true,
-  output: 'standalone'
+  output: 'standalone',
+  cacheComponents: true
 }
 
 export default nextConfig

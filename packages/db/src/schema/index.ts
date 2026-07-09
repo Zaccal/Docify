@@ -5,6 +5,8 @@ export const OrganizationsTable = pgTable(
   'organizations_table',
   {
     id: uuid('id').primaryKey().defaultRandom(),
+    updatedAt: timestamp('updated_at').notNull().defaultNow(),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
     organization: text('organization').notNull().unique(),
     bin: varchar('bin', { length: 12 }).notNull().unique(),
     city: text('city').notNull(),
@@ -41,6 +43,8 @@ export const CustomersTable = pgTable(
     clientIdDateFrom: text('client_id_date_from').notNull(),
     clientIdType: text('client_id_type').notNull(),
     iin: varchar('iin', { length: 12 }).notNull().unique(),
+    updatedAt: timestamp('updated_at').notNull().defaultNow(),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
 
     organizationId: uuid('organization_id')
       .references(() => OrganizationsTable.id, { onDelete: 'cascade' })

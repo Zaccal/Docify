@@ -1,8 +1,10 @@
+'use cache'
+
 import { HugeiconsIcon } from '@hugeicons/react'
 
 import { getWelcomeDescription, getWelcomeIcon, getWelcomeText } from '@/utils/get-welcome-text'
 
-export default function WelcomeText() {
+export default async function WelcomeText() {
   return (
     <div>
       <div className="flex items-center gap-4">

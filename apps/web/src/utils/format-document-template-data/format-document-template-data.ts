@@ -5,7 +5,7 @@ import { flattenObject } from 'es-toolkit'
 import { Template } from '@/types/enums/template.enum'
 import type { FindDocumentByIdData } from '@/types/find-document-by-id.type'
 
-import { formatCost } from '../cost-format'
+import { formatNumber } from '../format-number'
 import { getNightsCount } from './subutils/get-nights-count'
 import { numberToWordsRu } from './subutils/numbers-to-words-ru'
 import { parseDocumentDateRange } from './subutils/parse-document-date-range'
@@ -40,11 +40,11 @@ function formatLeaseAgreement(data: NonNullable<FindDocumentByIdData>) {
     ...data,
     organization: {
       ...data.organization,
-      costPerDay: formatCost(data.organization.costPerDay)
+      costPerDay: formatNumber(data.organization.costPerDay)
     },
     formattedDateFrom,
     formattedDateTo,
-    totalCost: formatCost(data.organization.totalCost),
+    totalCost: formatNumber(data.organization.totalCost),
     totalCostRu: numberToWordsRu(data.organization.totalCost),
     costPerDayRu,
     nightsCount: nights

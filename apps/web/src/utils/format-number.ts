@@ -1,4 +1,4 @@
-export function formatCost(data: number | string) {
+export function formatNumber(data: number | string) {
   const value = typeof data === 'string' ? data : String(data)
   const cleaned = value.replace(/\s/g, '').replace(/[^\d,.]/g, '')
   const [integer = '', fraction] = cleaned.split(/[,.]/)
@@ -8,6 +8,6 @@ export function formatCost(data: number | string) {
   return fraction !== undefined ? `${grouped},${fraction.slice(0, 2)}` : grouped
 }
 
-export function normalizeCost(value: string) {
+export function normalizeNumber(value: string) {
   return value.replace(/\s/g, '').replace(',', '.')
 }

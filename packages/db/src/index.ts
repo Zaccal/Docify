@@ -4,7 +4,8 @@ import { drizzle } from 'drizzle-orm/node-postgres'
 import * as schema from './schema'
 export { DrizzleQueryError } from 'drizzle-orm'
 export { DatabaseError } from 'pg'
-export { or, ilike, eq, exists, and } from 'drizzle-orm'
+export { or, ilike, eq, exists, and, gte, lt, sql } from 'drizzle-orm'
+export type { AnyColumn } from 'drizzle-orm'
 
 export function createDb() {
   return drizzle(env.DATABASE_URL, { schema })

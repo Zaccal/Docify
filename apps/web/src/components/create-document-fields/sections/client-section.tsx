@@ -5,15 +5,15 @@ import { Dollar, User } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useState } from 'react'
 
-import { formatCost, normalizeCost } from '@/utils/cost-format'
 import { formatDateInput } from '@/utils/format-date-input'
+import { formatNumber, normalizeNumber } from '@/utils/format-number'
 
 import CreateDocumentCard from '../../create-document-card/index'
 import { useCreateDocumentFields } from '../create-document-fields-store'
 
 export default function ClientSection() {
   const { errors, values } = useCreateDocumentFields()
-  const [formattedCost, setFormattedCost] = useState(() => formatCost(values?.costPerDay ?? ''))
+  const [formattedCost, setFormattedCost] = useState(() => formatNumber(values?.costPerDay ?? ''))
   const [formattedDate, setFormattedDate] = useState(() =>
     formatDateInput(values?.clientIdDateFrom ?? '')
   )
@@ -93,12 +93,12 @@ export default function ClientSection() {
             <InputGroupAddon>
               <HugeiconsIcon icon={Dollar} />
             </InputGroupAddon>
-            <input type="hidden" name="costPerDay" value={normalizeCost(formattedCost)} />
+            <input type="hidden" name="costPerDay" value={normalizeNumber(formattedCost)} />
             <InputGroupInput
               id="costPerDay"
               inputMode="decimal"
               aria-invalid={Boolean(errors?.costPerDay?.length)}
-              onChange={(event) => setFormattedCost(formatCost(event.target.value))}
+              onChange={(event) => setFormattedCost(formatNumber(event.target.value))}
               value={formattedCost}
               placeholder="0,00"
             />
