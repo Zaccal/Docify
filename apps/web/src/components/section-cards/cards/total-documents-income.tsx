@@ -48,8 +48,9 @@ export default function TotalDocumentsIncome() {
 
   if (isLoading ?? !totalIncome) return <Skeleton className="h-[210.5px] w-full" />
 
-  const totalSum = totalIncome[0] ?? 0
-  const prevMonthSum = totalIncome[1] ?? 0
+  const fallbackIncome = totalIncome ?? []
+  const totalSum = fallbackIncome[0] ?? 0
+  const prevMonthSum = fallbackIncome[1] ?? 0
 
   const percentage =
     prevMonthSum === 0 ? (totalSum > 0 ? 100 : 0) : ((totalSum - prevMonthSum) / prevMonthSum) * 100
