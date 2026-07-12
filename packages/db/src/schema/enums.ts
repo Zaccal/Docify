@@ -1,6 +1,6 @@
 import { pgEnum } from 'drizzle-orm/pg-core'
 
-export const OrganizationEnum = pgEnum('organization', ['XANSHA', 'NomadDocs'])
+export const CompanyEnum = pgEnum('company', ['XANSHA', 'NomadDocs'])
 
 export const CostTransactionTypeEnum = pgEnum('cost_transaction_type', ['CHARGE', 'REVERSAL'])
 

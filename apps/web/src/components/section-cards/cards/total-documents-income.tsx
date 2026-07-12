@@ -1,3 +1,5 @@
+'use client'
+
 import { Badge } from '@Docify/ui/components/badge'
 import {
   Card,
@@ -7,18 +9,47 @@ import {
   CardHeader,
   CardTitle
 } from '@Docify/ui/components/card'
+import { Skeleton } from '@Docify/ui/components/skeleton'
 import { HugeiconsIcon } from '@hugeicons/react'
 
-import { sumTotalAmountForCurrentMonth } from '@/server/repositories/transactions/sum-total-amount-current-month'
-import { sumTotalAmountForPrevMonth } from '@/server/repositories/transactions/sum-total-amount-prev-month'
+import { useLocalStorage } from '@/hooks'
+import { useQuery } from '@/hooks/useQuery'
+import { COMPANY_LOCAL_STORAGE_KEY } from '@/lib/constants'
+import type { Company } from '@/types/company.type'
 import { formatNumber } from '@/utils/format-number'
 import { getStatisticIcon, getStatisticText } from '@/utils/get-statistic-text'
 
-export default async function TotalDocumentsIncome() {
-  const result = await Promise.all([sumTotalAmountForCurrentMonth(), sumTotalAmountForPrevMonth()])
+export default function TotalDocumentsIncome() {
+  const company = useLocalStorage<Company>(COMPANY_LOCAL_STORAGE_KEY).value
+  const {
+    data: totalIncome,
+    isError,
+    isLoading
+  } = useQuery<[number, number]>(
+    async () => {
+      const response = await fetch(`/api/transactions/total-income?company=${company}`)
+      return response.json()
+    },
+    { enabled: !!company, keys: [company] }
+  )
 
-  const totalSum = result[0]
-  const prevMonthSum = result[1]
+  if (isError) {
+    return (
+      <Card className="@container/card">
+        <CardHeader>
+          <CardTitle>Ой, что-то пошло не так</CardTitle>
+          <CardDescription>
+            Попробуйте обновить страницу или обратитесь к администратору.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    )
+  }
+
+  if (isLoading ?? !totalIncome) return <Skeleton className="h-[210.5px] w-full" />
+
+  const totalSum = totalIncome[0] ?? 0
+  const prevMonthSum = totalIncome[1] ?? 0
 
   const percentage =
     prevMonthSum === 0 ? (totalSum > 0 ? 100 : 0) : ((totalSum - prevMonthSum) / prevMonthSum) * 100

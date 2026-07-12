@@ -18,9 +18,7 @@ export function SectionCards() {
       <Suspense fallback={<Skeleton className="h-[210.5px] w-full" />}>
         <TotalOrganization />
       </Suspense>
-      <Suspense fallback={<Skeleton className="h-[210.5px] w-full" />}>
-        <TotalDocumentsIncome />
-      </Suspense>
+      <TotalDocumentsIncome />
     </div>
   )
 }

@@ -16,7 +16,7 @@ import {
   CostTransactionReasonEnum,
   CostTransactionStatusEnum,
   CostTransactionTypeEnum,
-  OrganizationEnum
+  CompanyEnum
 } from './enums'
 
 export const CostTransactionsTable = pgTable(
@@ -31,7 +31,7 @@ export const CostTransactionsTable = pgTable(
     }).notNull(),
     operationId: uuid('operation_id').notNull(),
     transactionDate: timestamp('transaction_date').notNull().defaultNow(),
-    ip: OrganizationEnum('ip').default('XANSHA').notNull(),
+    company: CompanyEnum('company').default('XANSHA').notNull(),
     type: CostTransactionTypeEnum('type').default('CHARGE').notNull(),
     reason: CostTransactionReasonEnum('reason').default('NEW_ORDER').notNull(),
     status: CostTransactionStatusEnum('status').default('POSTED').notNull(),
@@ -45,7 +45,7 @@ export const CostTransactionsTable = pgTable(
     index(`cost_transactions_table_document_transaction_date_idx`).on(table.transactionDate),
     index('cost_transactions_table_document_id_idx').on(table.documentId),
     index('cost_transactions_table_amount_idx').on(table.amount),
-    index('cost_transactions_table_ip_idx').on(table.ip),
+    index('cost_transactions_table_company_idx').on(table.company),
     index('cost_transactions_table_type_idx').on(table.type),
     index('cost_transactions_table_reason_idx').on(table.reason),
     index('cost_transactions_table_status_idx').on(table.status),

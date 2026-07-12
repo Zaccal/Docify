@@ -195,3 +195,5 @@ export const ACTIONS: Array<{
     description: 'Отмените предыдущее списание.'
   }
 ]
+
+export const COMPANY_LOCAL_STORAGE_KEY = 'company' as const

@@ -1,8 +1,10 @@
 'use client'
 
-import { createContext, createElement, useContext, useMemo, useState } from 'react'
+import { createContext, createElement, useContext, useMemo } from 'react'
 import type { ReactNode } from 'react'
 
+import { useLocalStorage } from '@/hooks'
+import { COMPANY_LOCAL_STORAGE_KEY, DEFAULT_COMPANY_TYPE } from '@/lib/constants'
 import type { Company } from '@/types/company.type'
 
 interface CompanySelectContextValue {
@@ -13,8 +15,11 @@ interface CompanySelectContextValue {
 const CompanySelectContext = createContext<CompanySelectContextValue | null>(null)
 
 export function CompanySelectProvider({ children }: { children: ReactNode }) {
-  const [company, setCompany] = useState<Company>('XANSHA')
-  const value = useMemo(() => ({ company, setCompany }), [company])
+  const { value: company, set: setCompany } = useLocalStorage<Company>(
+    COMPANY_LOCAL_STORAGE_KEY,
+    DEFAULT_COMPANY_TYPE
+  )
+  const value = useMemo(() => ({ company: company ?? DEFAULT_COMPANY_TYPE, setCompany }), [company])
 
   return createElement(CompanySelectContext.Provider, { value }, children)
 }

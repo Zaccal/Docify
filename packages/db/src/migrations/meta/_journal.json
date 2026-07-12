@@ -141,6 +141,13 @@
       "when": 1783769555826,
       "tag": "0019_spicy_gargoyle",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1783866807568,
+      "tag": "0020_cooing_nick_fury",
+      "breakpoints": true
     }
   ]
 }
