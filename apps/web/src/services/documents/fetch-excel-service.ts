@@ -1,17 +1,17 @@
 import { env } from '@Docify/env/server'
 
 import type { TemplateType } from '@/schemas/document-schema/document.schema'
+import type { Company } from '@/types/company.type'
 import type { FindDocumentByIdData } from '@/types/find-document-by-id.type'
-import type { Organization } from '@/types/organization.type'
 
 export async function fetchExcelService(
-  organization: Organization,
+  company: Company,
   document: NonNullable<FindDocumentByIdData>,
   templateType: TemplateType = 'APARTMENT'
 ) {
   const baseURL = env.EXCEL_SERVICE_URL.replace(/\/$/, '')
   const response = await fetch(
-    `${baseURL}/generate?org=${encodeURIComponent(organization)}&template=${encodeURIComponent(templateType)}`,
+    `${baseURL}/generate?org=${encodeURIComponent(company)}&template=${encodeURIComponent(templateType)}`,
     {
       method: 'POST',
       headers: {

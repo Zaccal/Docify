@@ -195,6 +195,12 @@ export const templateTypeSchema = z.optional(
 
 export type TemplateType = z.infer<typeof templateTypeSchema>
 
+export const operationIdSchema = z.uuid()
+
+export const companySchema = z.enum(['XANSHA', 'NomadDocs'])
+
+export const documentIdSchema = z.optional(z.uuid())
+
 export const documentFormSchema = z.object({
   enumeration: enumerationSchema,
   fullnameClient: fullnameClientSchema,
@@ -215,7 +221,10 @@ export const documentFormSchema = z.object({
   knp: knpSchema,
   kbe: kbeSchema,
   index: indexSchema,
-  templateType: templateTypeSchema
+  templateType: templateTypeSchema,
+  operationId: operationIdSchema,
+  company: companySchema,
+  documentId: documentIdSchema
 })
 
 export type DocumentFormSchema = z.infer<typeof documentFormSchema>

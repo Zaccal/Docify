@@ -1,7 +1,7 @@
 // import { DataTable } from '@Docify/ui/components/data-table'
 
 import { ChartAreaInteractive } from '@/components/chart-area-interactive'
-import OrganizationSelectValue from '@/components/organization-select/organization-select-value'
+import OrganizationSelectValue from '@/components/company-select/company-select-value'
 import { SectionCards } from '@/components/section-cards/section-cards'
 import WelcomeText from '@/components/welcome-text'
 

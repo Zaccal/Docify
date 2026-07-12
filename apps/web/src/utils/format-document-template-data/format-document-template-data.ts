@@ -10,6 +10,7 @@ import { getNightsCount } from './subutils/get-nights-count'
 import { numberToWordsRu } from './subutils/numbers-to-words-ru'
 import { parseDocumentDateRange } from './subutils/parse-document-date-range'
 
+// TODO: Remove Template type and switch
 export default function formatDocumentTemplateData(
   data: NonNullable<FindDocumentByIdData>,
   template: Template

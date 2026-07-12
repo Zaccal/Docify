@@ -1,5 +1,6 @@
 import { DocumentAttachmentIcon, Home01Icon, User02Icon } from '@hugeicons/core-free-icons'
 
+import type { DocumentAction } from '@/types/document-action.type'
 import type { SidebarItem } from '@/types/sidebar-items.type'
 
 export const COOKIE_NAME = 'auth'
@@ -148,9 +149,36 @@ export const HUNDREDS = [
 ]
 
 export const DEFAULT_TEMPLATE_TYPE = 'APARTMENT'
-export const DEFAULT_ORGANIZATION_TYPE = 'XANSHA'
+export const DEFAULT_COMPANY_TYPE = 'XANSHA'
 
 const now = new Date()
 export const START_OF_THIS_MONTH = new Date(now.getFullYear(), now.getMonth(), 1)
 export const START_OF_NEXT_MONTH = new Date(now.getFullYear(), now.getMonth() + 1, 1)
 export const START_OF_PREV_MONTH = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+
+export const ACTIONS: Array<{
+  value: DocumentAction
+  title: string
+  description: string
+}> = [
+  {
+    value: 'NEW_ORDER',
+    title: 'Новый документ',
+    description: 'Обновите документы и добавьте новый платеж.'
+  },
+  {
+    value: 'CORRECTION',
+    title: 'Исправить ошибку',
+    description: 'Замените предыдущее списание на новое.'
+  },
+  {
+    value: 'REGENERATE',
+    title: 'Восстановить документ',
+    description: 'Повторите генерацию без финансового учета.'
+  },
+  {
+    value: 'CANCEL',
+    title: 'Возврат документа',
+    description: 'Отмените предыдущее списание.'
+  }
+]

@@ -31,7 +31,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    ".next/dev/types/**/*.ts",
+    "../../packages/db/src/types/transaction-snapshot.type.ts",
+    "../../packages/db/src/types/transaction-snapshot.type.ts"
   ],
   "exclude": ["./node_modules"]
 }

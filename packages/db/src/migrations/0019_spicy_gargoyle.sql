@@ -1,0 +1,1 @@
+ALTER TABLE "documents_table" DROP COLUMN "ip";

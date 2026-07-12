@@ -1,4 +1,4 @@
-import type { searchDocuments } from '@/server/documents/search'
+import type { searchDocuments } from '@/server/repositories/documents/search'
 
 export interface SearchState {
   success: boolean

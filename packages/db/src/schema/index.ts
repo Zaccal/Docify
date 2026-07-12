@@ -1,6 +1,8 @@
 import { relations } from 'drizzle-orm'
 import { index, jsonb, numeric, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 
+import { CostTransactionsTable } from './transactions'
+
 export const OrganizationsTable = pgTable(
   'organizations_table',
   {
@@ -95,7 +97,7 @@ export const customerRelations = relations(CustomersTable, ({ one }) => ({
   documents: one(DocumentsTable)
 }))
 
-export const documentRelations = relations(DocumentsTable, ({ one }) => ({
+export const documentRelations = relations(DocumentsTable, ({ one, many }) => ({
   customer: one(CustomersTable, {
     fields: [DocumentsTable.customerId],
     references: [CustomersTable.id]
@@ -103,5 +105,9 @@ export const documentRelations = relations(DocumentsTable, ({ one }) => ({
   organization: one(OrganizationsTable, {
     fields: [DocumentsTable.organizationId],
     references: [OrganizationsTable.id]
-  })
+  }),
+  costTransactions: many(CostTransactionsTable)
 }))
+
+export * from './transactions'
+export * from './enums'

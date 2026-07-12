@@ -2,16 +2,16 @@ import { Field, FieldError, FieldLabel } from '@Docify/ui/components/field'
 import { Input } from '@Docify/ui/components/input'
 import { DocumentAttachmentIcon } from '@hugeicons/core-free-icons'
 
-import { useOrganizationSelect } from '@/components/organization-select/organization-select-store'
+import { useCompanySelect } from '@/components/company-select/company-select-store'
 import TemplateSelect from '@/components/template-select'
-import { DEFAULT_ORGANIZATION_TYPE } from '@/lib/constants'
+import { DEFAULT_COMPANY_TYPE } from '@/lib/constants'
 
 import CreateDocumentCard from '../../create-document-card/index'
 import { DatePicker } from '../../date-picker'
 import { useCreateDocumentFields } from '../create-document-fields-store'
 
 export default function DocumentSection() {
-  const { organization } = useOrganizationSelect()
+  const { company } = useCompanySelect()
   const { errors, values } = useCreateDocumentFields()
 
   return (
@@ -45,7 +45,7 @@ export default function DocumentSection() {
             <FieldError errors={errors?.documentDate} />
           </Field>
         </div>
-        {organization === DEFAULT_ORGANIZATION_TYPE && (
+        {company === DEFAULT_COMPANY_TYPE && (
           <Field>
             <FieldLabel>Шаблон</FieldLabel>
             <TemplateSelect name="templateType" />

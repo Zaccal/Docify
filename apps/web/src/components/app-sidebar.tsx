@@ -22,8 +22,8 @@ import { usePathname } from 'next/navigation'
 import { Logout } from '@/actions/auth/auth'
 import { SIDEBAR_ITEMS } from '@/lib/constants'
 
+import OrganizationSelect from './company-select/company-select'
 import LogoutSubmitButton from './logout-submit-button'
-import OrganizationSelect from './organization-select/organization-select'
 
 export default function AppSidebar() {
   const pathname = usePathname()

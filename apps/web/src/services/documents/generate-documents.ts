@@ -7,16 +7,16 @@ import { format } from 'date-fns'
 import DocxTemplate from 'docxtemplater'
 import PizZip from 'pizzip'
 
-import { DEFAULT_ORGANIZATION_TYPE, DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
+import { DEFAULT_COMPANY_TYPE, DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
 import type { TemplateType } from '@/schemas/document-schema/document.schema'
 import { fetchExcelService } from '@/services/documents/fetch-excel-service'
+import type { Company } from '@/types/company.type'
 import { Template } from '@/types/enums/template.enum'
 import type { FindDocumentByIdData } from '@/types/find-document-by-id.type'
-import type { Organization } from '@/types/organization.type'
 import formatDocumentTemplateData from '@/utils/format-document-template-data/format-document-template-data'
 
 export async function GenerateDocumentsController(
-  organization: Organization,
+  organization: Company,
   data: NonNullable<FindDocumentByIdData>,
   templateType: TemplateType = 'APARTMENT'
 ) {
@@ -40,12 +40,12 @@ export async function GenerateDocumentsController(
 }
 
 async function generateLeaseAgreement(
-  organization: Organization,
+  organization: Company,
   data: NonNullable<FindDocumentByIdData>,
   templateType: TemplateType = DEFAULT_TEMPLATE_TYPE
 ) {
-  if (organization !== DEFAULT_ORGANIZATION_TYPE && templateType === 'HOTEL') {
-    throw new Error('Hotel template is only available for XANSHA organization')
+  if (organization !== DEFAULT_COMPANY_TYPE && templateType === 'HOTEL') {
+    throw new Error('Hotel template is only available for XANSHA company')
   }
 
   const templatePath = getTemplatePath(organization, Template.LEASE_AGREEMENT, templateType)
@@ -80,7 +80,7 @@ function addZipFilesToArchive(archive: PizZip, zipBuffer: Buffer) {
 }
 
 function getTemplatePath(
-  organization: Organization,
+  organization: Company,
   template: Template,
   templateType: TemplateType = 'APARTMENT'
 ) {
@@ -91,7 +91,7 @@ function getTemplatePath(
   return path.join(getTemplatesDirectory(organization), template)
 }
 
-function getTemplatesDirectory(organization: Organization) {
+function getTemplatesDirectory(organization: Company) {
   const templateDir = path.isAbsolute(env.TEMPLATE_DIR)
     ? env.TEMPLATE_DIR
     : path.join(process.cwd(), 'templates')

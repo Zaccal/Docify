@@ -3,13 +3,13 @@
 import { Button } from '@Docify/ui/components/button'
 import { SecurityWarningIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { useActionState, useState } from 'react'
+import { useActionState, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
-import { createDocument } from '@/actions/documents/create-documents'
+import { createDocuments } from '@/actions/documents/create-documents'
+import { useCompanySelect } from '@/components/company-select/company-select-store'
 import CreateDocumentFields from '@/components/create-document-fields/create-document-fields'
 import ExistingDocumentSearchSection from '@/components/create-document-fields/sections/existing-document-search-section/existing-document-search-section'
-import { useOrganizationSelect } from '@/components/organization-select/organization-select-store'
 import { useDownload } from '@/hooks/useDownload'
 import { DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
 import { templateTypeSchema } from '@/schemas/document-schema/document.schema'
@@ -19,15 +19,21 @@ import { documentToFormValues } from '@/utils/documents-to-form-values'
 import { getUrlDownloadDocument } from '@/utils/get-url-download-document'
 
 export default function CreateDocumentPage() {
-  const { organization } = useOrganizationSelect()
+  const operationIdRef = useRef<null | string>(null)
+  const { company } = useCompanySelect()
   const { download } = useDownload()
   const [selectedDocument, setSelectedDocument] = useState<SearchResultDocument | undefined>(
     undefined
   )
   async function handleCreateDocument(prevState: CreateDocumentState, formData: FormData) {
+    operationIdRef.current ??= crypto.randomUUID()
+
+    formData.set('operationId', operationIdRef.current)
+    formData.set('company', company)
+
     let result: CreateDocumentState
     try {
-      result = await createDocument(prevState, formData)
+      result = await createDocuments(prevState, formData)
     } catch (err) {
       console.error('createDocument failed:', err)
       toast.error('Не удалось создать документ. Попробуйте ещё раз')
@@ -39,12 +45,16 @@ export default function CreateDocumentPage() {
     }
 
     if (result.success && result.documentId) {
+      operationIdRef.current = null
+
+      // TODO: Move to utils
       const templateTypeRaw = formData.get('templateType')
       const parsedTemplateType = templateTypeSchema.safeParse(templateTypeRaw)
       const templateType = parsedTemplateType.success
         ? parsedTemplateType.data
         : DEFAULT_TEMPLATE_TYPE
-      const url = getUrlDownloadDocument(result.documentId, organization, templateType)
+
+      const url = getUrlDownloadDocument(result.documentId, company, templateType)
       const { success } = await download(url)
 
       if (!success) {
@@ -96,7 +106,7 @@ export default function CreateDocumentPage() {
             >
               Сбросить
             </Button>
-            <Button loading={pending} type="submit" className="w-full md:w-auto">
+            <Button type="submit" loading={pending} className="w-full md:w-auto">
               Сохранить документ
             </Button>
           </div>

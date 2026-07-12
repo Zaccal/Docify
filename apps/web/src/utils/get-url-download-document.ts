@@ -1,11 +1,11 @@
 import { DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
 import type { TemplateType } from '@/schemas/document-schema/document.schema'
-import type { Organization } from '@/types/organization.type'
+import type { Company } from '@/types/company.type'
 
 export function getUrlDownloadDocument(
   documentId: string,
-  organization: Organization,
+  company: Company,
   templateType: TemplateType = DEFAULT_TEMPLATE_TYPE
 ) {
-  return `/api/documents/generate/${documentId}?organization=${encodeURIComponent(organization)}&templateType=${encodeURIComponent(templateType)}`
+  return `/api/documents/generate/${documentId}?company=${encodeURIComponent(company)}&templateType=${encodeURIComponent(templateType)}`
 }

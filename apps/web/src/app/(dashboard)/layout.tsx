@@ -2,7 +2,7 @@ import { SidebarProvider, SidebarTrigger } from '@Docify/ui/components/sidebar'
 import { Toaster } from '@Docify/ui/components/sonner'
 
 import AppSidebar from '@/components/app-sidebar'
-import { OrganizationSelectProvider } from '@/components/organization-select/organization-select-store'
+import { CompanySelectProvider } from '@/components/company-select/company-select-store'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -10,7 +10,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <OrganizationSelectProvider>
+    <CompanySelectProvider>
       <SidebarProvider>
         <AppSidebar />
         <main className="w-full">
@@ -19,6 +19,6 @@ export default function Layout({ children }: LayoutProps) {
         </main>
         <Toaster />
       </SidebarProvider>
-    </OrganizationSelectProvider>
+    </CompanySelectProvider>
   )
 }

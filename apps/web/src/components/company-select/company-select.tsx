@@ -12,20 +12,20 @@ import {
 import { Building03Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 
-import { DEFAULT_ORGANIZATION_TYPE } from '@/lib/constants'
-import type { Organization } from '@/types/organization.type'
+import { DEFAULT_COMPANY_TYPE } from '@/lib/constants'
+import type { Company } from '@/types/company.type'
 
-import { useOrganizationSelect } from './organization-select-store'
+import { useCompanySelect } from './company-select-store'
 
 export default function OrganizationSelect() {
-  const { organization, setOrganization } = useOrganizationSelect()
+  const { company, setCompany } = useCompanySelect()
 
   return (
     <>
       <Select
-        value={organization}
+        value={company}
         onValueChange={(value) => {
-          setOrganization((value ?? DEFAULT_ORGANIZATION_TYPE) as Organization)
+          setCompany((value ?? DEFAULT_COMPANY_TYPE) as Company)
         }}
       >
         <SelectTrigger className="w-full">
