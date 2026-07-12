@@ -1,4 +1,9 @@
-import { DocumentAttachmentIcon, Home01Icon, User02Icon } from '@hugeicons/core-free-icons'
+import {
+  DocumentAttachmentIcon,
+  Home01Icon,
+  PlusSignSquareIcon,
+  User02Icon
+} from '@hugeicons/core-free-icons'
 
 import type { DocumentAction } from '@/types/document-action.type'
 import type { SidebarItem } from '@/types/sidebar-items.type'
@@ -38,6 +43,14 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Клиенты',
     icon: User02Icon,
     href: '/customers'
+  }
+]
+
+export const SIDEBAR_ITEMS_DOCUMENTS: SidebarItem[] = [
+  {
+    label: 'Создать документ',
+    icon: PlusSignSquareIcon,
+    href: '/create-document'
   }
 ]
 

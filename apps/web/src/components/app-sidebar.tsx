@@ -12,7 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '@Docify/ui/components/sidebar'
-import { PlusSignIcon, Settings03Icon } from '@hugeicons/core-free-icons'
+import { Settings03Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import type { Route } from 'next'
 import Image from 'next/image'
@@ -20,7 +20,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { Logout } from '@/actions/auth/auth'
-import { SIDEBAR_ITEMS } from '@/lib/constants'
+import { SIDEBAR_ITEMS, SIDEBAR_ITEMS_DOCUMENTS } from '@/lib/constants'
 
 import OrganizationSelect from './company-select/company-select'
 import LogoutSubmitButton from './logout-submit-button'
@@ -69,15 +69,17 @@ export default function AppSidebar() {
           <SidebarGroupLabel>Документы</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  isActive={'/create-document' === pathname}
-                  render={<Link href={'/create-document'} />}
-                >
-                  <HugeiconsIcon icon={PlusSignIcon} className="h-5 w-5" />
-                  <span>Создать документ</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+              {SIDEBAR_ITEMS_DOCUMENTS.map((item) => (
+                <SidebarMenuItem key={item.label}>
+                  <SidebarMenuButton
+                    isActive={item.href === pathname}
+                    render={<Link href={item.href} />}
+                  >
+                    <HugeiconsIcon icon={item.icon} className="h-5 w-5" />
+                    <span>{item.label}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
