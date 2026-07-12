@@ -22,6 +22,7 @@ export default async function TotalDocumentsIncome() {
 
   const percentage =
     prevMonthSum === 0 ? (totalSum > 0 ? 100 : 0) : ((totalSum - prevMonthSum) / prevMonthSum) * 100
+  const formattedPercentage = `${percentage >= 0 ? '+' : ''}${percentage.toFixed(1)}%`
 
   const formattedTotalSum = formatNumber(totalSum)
 
@@ -35,7 +36,7 @@ export default async function TotalDocumentsIncome() {
         <CardAction>
           <Badge variant="outline">
             <HugeiconsIcon icon={getStatisticIcon(percentage)} strokeWidth={2} />
-            +4.5%
+            {formattedPercentage}
           </Badge>
         </CardAction>
       </CardHeader>
