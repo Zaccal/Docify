@@ -41,7 +41,7 @@ export async function createNewOrderController(data: DocumentFormSchema) {
       documentId: document.id,
       amount: organization.totalCost,
       snapshot,
-      ip: data.company,
+      company: data.company,
       reason: 'NEW_ORDER',
       status: 'POSTED'
     })
