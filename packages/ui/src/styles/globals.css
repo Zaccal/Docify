@@ -182,4 +182,8 @@
   .wrapper {
     @apply mx-auto px-4 sm:px-6 lg:px-8;
   }
+
+  .muted-headers th {
+    @apply text-muted-foreground!;
+  }
 }

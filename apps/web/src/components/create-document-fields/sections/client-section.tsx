@@ -85,6 +85,8 @@ export default function ClientSection() {
               defaultValue={values?.iin}
               placeholder="12-значный иин"
             />
+
+            <FieldError errors={errors?.costPerDay} />
           </Field>
         </div>
         <Field>

@@ -1,5 +1,6 @@
 import {
   DocumentAttachmentIcon,
+  HistoryIcon,
   Home01Icon,
   PlusSignSquareIcon,
   User02Icon
@@ -33,6 +34,11 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Главная',
     icon: Home01Icon,
     href: '/dashboard'
+  },
+  {
+    label: 'Операции',
+    icon: HistoryIcon,
+    href: '/operations'
   },
   {
     label: 'Документы',

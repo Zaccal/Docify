@@ -3,7 +3,7 @@
 import { z } from 'zod/mini'
 
 import { documentFormSchema } from '@/schemas/document-schema/document.schema'
-import { createNewOrderController } from '@/server/applications/orders/create-new-order-application'
+import { processNewOrder } from '@/server/applications/orders/process-new-order'
 import type { CreateDocumentState, CreateDocumentValues } from '@/types/create-document-state.type'
 import { getDocumentFormData } from '@/utils/create-document-formater'
 import { formatPostgresError } from '@/utils/format-postgres-error'
@@ -25,7 +25,7 @@ export async function createDocuments(
   const data = result.data
 
   try {
-    const { document } = await createNewOrderController(data)
+    const { document } = await processNewOrder(data)
 
     return { success: true, values: data, documentId: document.id }
   } catch (error) {

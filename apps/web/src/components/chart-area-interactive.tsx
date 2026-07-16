@@ -33,12 +33,10 @@ import { useCompanySelect } from './company-select/company-select-store'
 
 export const description = 'An interactive area chart'
 
-// { date: '2024-04-01', desktop: 222, mobile: 150 },
-
 const chartConfig = {
-  visitors: {
-    label: 'Visitors'
-  },
+  // visitors: {
+  //   label: 'Visitors'
+  // },
   amount: {
     label: 'Сумма',
     color: 'var(--primary)'

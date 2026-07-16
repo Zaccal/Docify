@@ -8,7 +8,7 @@ import { upsertDocument } from '../../repositories/documents/upsert-document'
 import { createChargeTransaction } from '../../repositories/transactions/create-transactions'
 import { findTransactionsByOperationId } from '../../repositories/transactions/find-transactions-by-operation-id'
 
-export async function createNewOrderController(data: DocumentFormSchema) {
+export async function processNewOrder(data: DocumentFormSchema) {
   const { operationId, ...rest } = data
 
   return db.transaction(async (tx) => {

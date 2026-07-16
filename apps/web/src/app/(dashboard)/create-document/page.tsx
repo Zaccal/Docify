@@ -72,6 +72,8 @@ export default function CreateDocumentPage() {
     values: {}
   })
 
+  console.log(state)
+
   const values = selectedDocument ? documentToFormValues(selectedDocument) : state.values
 
   return (

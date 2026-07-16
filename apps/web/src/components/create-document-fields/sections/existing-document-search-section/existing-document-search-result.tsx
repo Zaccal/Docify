@@ -1,8 +1,8 @@
 import { format } from 'date-fns'
+import { truncate } from 'es-toolkit/compat'
 
 import Lists from '@/components/lists'
 import type { SearchState } from '@/types/search-state.type'
-import { cutText } from '@/utils/cut-text'
 
 interface ExistingDocumentSearchResultProps {
   isShowList: boolean
@@ -27,8 +27,10 @@ export default function ExistingDocumentSearchResult({
                   className="mt-1 text-sm text-neutral-400"
                   title={document.organization.organization}
                 >
-                  {cutText(document.organization.organization, 50)} · №{document.enumeration} ·{' '}
-                  {format(document.updatedAt, 'dd.MM.yyyy')}
+                  {truncate(document.organization.organization, {
+                    length: 50
+                  })}{' '}
+                  · №{document.enumeration} · {format(document.updatedAt, 'dd.MM.yyyy')}
                 </p>
               </div>
             </Lists.Item>

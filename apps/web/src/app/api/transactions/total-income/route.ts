@@ -14,6 +14,5 @@ export async function GET(req: NextRequest) {
     sumTotalAmountForPrevMonth(company)
   ])
 
-  console.log(result)
   return NextResponse.json(result, { status: 200 })
 }

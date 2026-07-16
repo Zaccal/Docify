@@ -1,1 +1,5 @@
 export { Area, AreaChart, CartesianGrid, XAxis } from 'recharts'
+export * from '@dnd-kit/core'
+export * from '@dnd-kit/sortable'
+export * from '@dnd-kit/modifiers'
+export * from '@dnd-kit/utilities'
