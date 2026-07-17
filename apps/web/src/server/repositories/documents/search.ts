@@ -13,7 +13,6 @@ export async function searchDocuments(query: string) {
             .from(OrganizationsTable)
             .where(
               and(
-                eq(OrganizationsTable.id, documents.organizationId),
                 or(
                   ilike(OrganizationsTable.organization, `%${query}%`),
                   eq(OrganizationsTable.bin, query)
@@ -39,8 +38,11 @@ export async function searchDocuments(query: string) {
         )
       ),
     with: {
-      organization: true,
-      customer: true
+      customer: {
+        with: {
+          organization: true
+        }
+      }
     }
   })
 }

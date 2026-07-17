@@ -70,23 +70,18 @@ export const DocumentsTable = pgTable(
     cellsLine: jsonb('cells_line').$type<Record<string, string>>().notNull(),
 
     customerId: uuid('customer_id')
-      .references(() => CustomersTable.id, { onDelete: 'cascade' })
-      .unique()
-      .notNull(),
-    organizationId: uuid('organization_id')
-      .references(() => OrganizationsTable.id, { onDelete: 'cascade' })
+      .references(() => CustomersTable.id, { onDelete: 'restrict' })
       .notNull()
+      .unique()
   },
   (table) => [
     index('documents_table_customer_id_idx').on(table.customerId),
-    index('documents_table_organization_id_idx').on(table.organizationId),
     index('documents_table_enumeration_idx').on(table.enumeration)
   ]
 )
 
 export const organizationRelations = relations(OrganizationsTable, ({ many }) => ({
-  customers: many(CustomersTable),
-  documents: many(DocumentsTable)
+  customers: many(CustomersTable)
 }))
 
 export const customerRelations = relations(CustomersTable, ({ one }) => ({
@@ -94,17 +89,13 @@ export const customerRelations = relations(CustomersTable, ({ one }) => ({
     fields: [CustomersTable.organizationId],
     references: [OrganizationsTable.id]
   }),
-  documents: one(DocumentsTable)
+  document: one(DocumentsTable)
 }))
 
 export const documentRelations = relations(DocumentsTable, ({ one, many }) => ({
   customer: one(CustomersTable, {
     fields: [DocumentsTable.customerId],
     references: [CustomersTable.id]
-  }),
-  organization: one(OrganizationsTable, {
-    fields: [DocumentsTable.organizationId],
-    references: [OrganizationsTable.id]
   }),
   costTransactions: many(CostTransactionsTable)
 }))

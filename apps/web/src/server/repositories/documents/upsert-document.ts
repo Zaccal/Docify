@@ -70,8 +70,7 @@ export async function upsertDocument(
     enumeration: data.enumeration,
     documentDate: data.documentDate,
     cellsLine: data.cellsLine ?? {},
-    customerId: customer.id,
-    organizationId: organization.id
+    customerId: customer.id
   }
 
   const [document] = await tx
@@ -83,7 +82,6 @@ export async function upsertDocument(
         enumeration: data.enumeration,
         documentDate: data.documentDate,
         cellsLine: data.cellsLine ?? {},
-        organizationId: organization.id,
         updatedAt: new Date()
       }
     })

@@ -2,7 +2,7 @@ import type { CreateDocumentValues } from '@/types/create-document-state.type'
 import type { SearchResultDocument } from '@/types/search-state.type'
 
 export function documentToFormValues(document: SearchResultDocument): CreateDocumentValues {
-  const { customer, organization } = document
+  const { customer } = document
 
   return {
     enumeration: document.enumeration,
@@ -18,16 +18,16 @@ export function documentToFormValues(document: SearchResultDocument): CreateDocu
     clientIdType: customer.clientIdType,
     iin: customer.iin,
 
-    organization: organization.organization,
-    bin: organization.bin,
-    city: organization.city,
-    index: organization.index,
-    address: organization.address,
-    costPerDay: organization.costPerDay,
-    iik: organization.iik,
-    bik: organization.bik,
-    bank: organization.bank,
-    knp: organization.knp ?? '',
-    kbe: organization.kbe ?? ''
+    organization: customer.organization.organization,
+    bin: customer.organization.bin,
+    city: customer.organization.city,
+    index: customer.organization.index,
+    address: customer.organization.address,
+    costPerDay: customer.organization.costPerDay,
+    iik: customer.organization.iik,
+    bik: customer.organization.bik,
+    bank: customer.organization.bank,
+    knp: customer.organization.knp ?? '',
+    kbe: customer.organization.kbe ?? ''
   }
 }

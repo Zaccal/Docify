@@ -1,0 +1,1 @@
+ALTER TABLE "documents_table" ADD CONSTRAINT "documents_table_customer_id_unique" UNIQUE("customer_id");

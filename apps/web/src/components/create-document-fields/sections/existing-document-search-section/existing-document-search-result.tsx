@@ -25,9 +25,9 @@ export default function ExistingDocumentSearchResult({
                 <h3 className="font-semibold">{document.customer.fullnameClient}</h3>
                 <p
                   className="mt-1 text-sm text-neutral-400"
-                  title={document.organization.organization}
+                  title={document.customer.organization.organization}
                 >
-                  {truncate(document.organization.organization, {
+                  {truncate(document.customer.organization.organization, {
                     length: 50
                   })}{' '}
                   · №{document.enumeration} · {format(document.updatedAt, 'dd.MM.yyyy')}

@@ -34,7 +34,7 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 		return result, err
 	}
 
-	costPerDayRaw := normalizeNumericString(data.Organization.CostPerDay)
+	costPerDayRaw := normalizeNumericString(data.Customer.Organization.CostPerDay)
 	costPerDay, err := strconv.Atoi(costPerDayRaw)
 	if err != nil {
 		return result, fmt.Errorf("parse costPerDay: %w", err)
@@ -46,14 +46,14 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 	}
 
 
-	totalCostRu, err := utils.NumbersToWordsRu(data.Organization.TotalCost)
+	totalCostRu, err := utils.NumbersToWordsRu(data.Customer.Organization.TotalCost)
 	if err != nil {
 		return result, err
 	}
 
 	result.Generated = make(map[string]string)
 
-	result.Generated["totalCost"] = utils.FormatCost(strconv.Itoa(data.Organization.TotalCost))
+	result.Generated["totalCost"] = utils.FormatCost(strconv.Itoa(data.Customer.Organization.TotalCost))
 	result.Generated["totalCostRu"] = utils.Capitalize(totalCostRu)
 	result.Generated["nights"] = strconv.Itoa(nights)
 
@@ -63,12 +63,12 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 	result.Generated["costPerDayFormatted"] = utils.FormatCost(costPerDayRaw)
 	result.Generated["costPerDayRu"] = utils.Capitalize(costPerDayWords)
 
-	if data.Organization.Knp != "" {
-		result.Organization.Knp = "КНП: " + data.Organization.Knp
+	if data.Customer.Organization.Knp != "" {
+		result.Customer.Organization.Knp = "КНП: " + data.Customer.Organization.Knp
 	}
 
-	if data.Organization.Kbe != "" {
-		result.Organization.Kbe = "КБЕ: " + data.Organization.Kbe
+	if data.Customer.Organization.Kbe != "" {
+		result.Customer.Organization.Kbe = "КБЕ: " + data.Customer.Organization.Kbe
 	}
 
 	return result, nil

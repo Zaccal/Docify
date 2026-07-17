@@ -35,18 +35,21 @@ function formatLeaseAgreement(data: NonNullable<FindDocumentByIdData>) {
 
   const nights = getNightsCount(dateFrom, dateTo)
 
-  const costPerDayRu = numberToWordsRu(Number(data.organization.costPerDay))
+  const costPerDayRu = numberToWordsRu(Number(data.customer.organization.costPerDay))
 
   return flattenObject({
     ...data,
-    organization: {
-      ...data.organization,
-      costPerDay: formatNumber(data.organization.costPerDay)
+    customer: {
+      ...data.customer,
+      organization: {
+        ...data.customer.organization,
+        costPerDay: formatNumber(data.customer.organization.costPerDay)
+      }
     },
     formattedDateFrom,
     formattedDateTo,
-    totalCost: formatNumber(data.organization.totalCost),
-    totalCostRu: numberToWordsRu(data.organization.totalCost),
+    totalCost: formatNumber(data.customer.organization.totalCost),
+    totalCostRu: numberToWordsRu(data.customer.organization.totalCost),
     costPerDayRu,
     nightsCount: nights
   })

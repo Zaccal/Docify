@@ -70,7 +70,7 @@ export const transactionsColumns: ColumnDef<Transactions>[] = [
   },
   {
     id: 'organizationName',
-    accessorFn: (row) => row.documentsTable?.organization.organization ?? '—',
+    accessorFn: (row) => row.documentsTable?.customer.organization.organization ?? '—',
     header: ({ column }) => (
       <SortingButton sorted={column.getIsSorted() === 'asc'} column={column}>
         Название организации
@@ -78,8 +78,8 @@ export const transactionsColumns: ColumnDef<Transactions>[] = [
     ),
     sortingFn: 'alphanumeric',
     cell: ({ row }) => (
-      <span title={row.original.documentsTable?.organization.organization ?? '—'}>
-        {truncate(row.original.documentsTable?.organization.organization ?? '—')}
+      <span title={row.original.documentsTable?.customer.organization.organization ?? '—'}>
+        {truncate(row.original.documentsTable?.customer.organization.organization ?? '—')}
       </span>
     )
   },

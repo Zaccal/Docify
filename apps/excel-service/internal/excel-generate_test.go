@@ -26,7 +26,7 @@ func TestGenerateExcelDocumentsArchive(t *testing.T) {
 
 	var payload Payload
 	payload.DocumentDate = []string{"10-06-2026", "13-06-2026"}
-	payload.Organization.CostPerDay = 10000
+	payload.Customer.Organization.CostPerDay = 10000
 
 	archive, err := GenerateExcelDocumentsArchive(xansha, payload, "APARTMENT")
 	if err != nil {

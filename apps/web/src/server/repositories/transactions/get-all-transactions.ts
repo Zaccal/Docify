@@ -5,8 +5,11 @@ export async function getAllTransactions() {
     with: {
       documentsTable: {
         with: {
-          customer: true,
-          organization: true
+          customer: {
+            with: {
+              organization: true
+            }
+          }
         }
       }
     }

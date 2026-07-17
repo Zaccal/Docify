@@ -5,7 +5,7 @@ import "testing"
 func TestFormatPayloadAddsGeneratedValues(t *testing.T) {
 	var payload Payload
 	payload.DocumentDate = []string{"2026-06-10", "2026-06-13"}
-	payload.Organization.CostPerDay = 10000
+	payload.Customer.Organization.CostPerDay = 10000
 	payload.CellsLine = map[string]string{
 		"userValue": "kept",
 	}
@@ -29,8 +29,8 @@ func TestFormatPayloadAddsGeneratedValues(t *testing.T) {
 		t.Fatalf("expected computed values not to be written into cellsLine")
 	}
 
-	if result.Organization.CostPerDay != 10000 {
-		t.Fatalf("expected formatted cost per day, got %q", result.Organization.CostPerDay)
+	if result.Customer.Organization.CostPerDay != 10000 {
+		t.Fatalf("expected formatted cost per day, got %q", result.Customer.Organization.CostPerDay)
 	}
 }
 
