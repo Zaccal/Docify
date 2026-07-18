@@ -42,14 +42,7 @@ ADD CONSTRAINT
 FOREIGN KEY ("customer_id")
 REFERENCES "public"."customers_table" ("id")
 ON DELETE restrict
-ON UPDATE no action
-NOT VALID;
-
---> statement-breakpoint
-
-ALTER TABLE "documents_table"
-VALIDATE CONSTRAINT
-"documents_table_customer_id_customers_table_id_fk";
+ON UPDATE no action;
 
 --> statement-breakpoint
 
