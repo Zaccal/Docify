@@ -1,4 +1,4 @@
-import { cacheTag } from 'next/cache'
+import { connection } from 'next/server'
 import { Suspense } from 'react'
 
 import DataTable from '@/components/data-table/data-table'
@@ -7,9 +7,7 @@ import { DataTableSkeleton } from '@/components/data-table/data-table-skeleton'
 import { getAllTransactions } from '@/server/repositories/transactions/get-all-transactions'
 
 async function TransactionsTable() {
-  'use cache'
-
-  cacheTag('transactions')
+  await connection()
 
   const data = await getAllTransactions()
 

@@ -170,11 +170,6 @@ export const HUNDREDS = [
 export const DEFAULT_TEMPLATE_TYPE = 'APARTMENT'
 export const DEFAULT_COMPANY_TYPE = 'XANSHA'
 
-const now = new Date()
-export const START_OF_THIS_MONTH = new Date(now.getFullYear(), now.getMonth(), 1)
-export const START_OF_NEXT_MONTH = new Date(now.getFullYear(), now.getMonth() + 1, 1)
-export const START_OF_PREV_MONTH = new Date(now.getFullYear(), now.getMonth() - 1, 1)
-
 export const ACTIONS: Array<{
   value: DocumentAction
   title: string

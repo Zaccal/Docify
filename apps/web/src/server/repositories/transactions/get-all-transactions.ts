@@ -1,3 +1,4 @@
+import 'server-only'
 import { db } from '@Docify/db'
 
 export async function getAllTransactions() {

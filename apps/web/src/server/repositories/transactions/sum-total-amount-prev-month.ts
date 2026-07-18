@@ -1,10 +1,13 @@
 import { and, db, eq, gte, lt, sum } from '@Docify/db'
 import { CostTransactionsTable } from '@Docify/db/schema'
 
-import { DEFAULT_COMPANY_TYPE, START_OF_NEXT_MONTH, START_OF_PREV_MONTH } from '@/lib/constants'
+import { DEFAULT_COMPANY_TYPE } from '@/lib/constants'
 import type { Company } from '@/types/company.type'
+import { getMonthBounds } from '@/utils/get-month-bounds'
 
 export async function sumTotalAmountForPrevMonth(company: Company = DEFAULT_COMPANY_TYPE) {
+  const { startOfPrevMonth, startOfNextMonth } = getMonthBounds()
+
   const result = await db
     .select({
       totalAmount: sum(CostTransactionsTable.amount)
@@ -12,8 +15,8 @@ export async function sumTotalAmountForPrevMonth(company: Company = DEFAULT_COMP
     .from(CostTransactionsTable)
     .where(
       and(
-        gte(CostTransactionsTable.transactionDate, START_OF_PREV_MONTH),
-        lt(CostTransactionsTable.transactionDate, START_OF_NEXT_MONTH),
+        gte(CostTransactionsTable.transactionDate, startOfPrevMonth),
+        lt(CostTransactionsTable.transactionDate, startOfNextMonth),
         eq(CostTransactionsTable.company, company)
       )
     )

@@ -1,5 +1,3 @@
-import { db } from '@Docify/db'
-import { OrganizationsTable } from '@Docify/db/schema'
 import { Badge } from '@Docify/ui/components/badge'
 import {
   Card,
@@ -10,32 +8,14 @@ import {
   CardTitle
 } from '@Docify/ui/components/card'
 import { HugeiconsIcon } from '@hugeicons/react'
+import { connection } from 'next/server'
 
-import { START_OF_NEXT_MONTH, START_OF_PREV_MONTH, START_OF_THIS_MONTH } from '@/lib/constants'
-import { activityDateFilter } from '@/utils/activity-date-filter'
+import { getOrganizationsStatistics } from '@/server/repositories/organizations/get-organizations-statistics'
 import { getStatisticIcon, getStatisticText } from '@/utils/get-statistic-text'
 
 export default async function TotalOrganization() {
-  const [thisMonthCount, prevMonthCount] = await Promise.all([
-    db.$count(
-      OrganizationsTable,
-      activityDateFilter(
-        OrganizationsTable.createdAt,
-        OrganizationsTable.updatedAt,
-        START_OF_THIS_MONTH,
-        START_OF_NEXT_MONTH
-      )
-    ),
-    db.$count(
-      OrganizationsTable,
-      activityDateFilter(
-        OrganizationsTable.createdAt,
-        OrganizationsTable.updatedAt,
-        START_OF_PREV_MONTH,
-        START_OF_NEXT_MONTH
-      )
-    )
-  ])
+  await connection()
+  const { thisMonthCount, prevMonthCount } = await getOrganizationsStatistics()
 
   const percentage =
     prevMonthCount === 0

@@ -1,7 +1,3 @@
-'use cache'
-
-import { db } from '@Docify/db'
-import { DocumentsTable } from '@Docify/db/schema'
 import { Badge } from '@Docify/ui/components/badge'
 import {
   Card,
@@ -12,33 +8,15 @@ import {
   CardTitle
 } from '@Docify/ui/components/card'
 import { HugeiconsIcon } from '@hugeicons/react'
+import { connection } from 'next/server'
 
-import { START_OF_NEXT_MONTH, START_OF_PREV_MONTH, START_OF_THIS_MONTH } from '@/lib/constants'
-import { activityDateFilter } from '@/utils/activity-date-filter'
+import { getDocumentsStatistics } from '@/server/repositories/documents/get-documents-statistics'
 import { formatNumber } from '@/utils/format-number'
 import { getStatisticIcon, getStatisticText } from '@/utils/get-statistic-text'
 
 export default async function TotalDocuments() {
-  const [thisMonthCount, prevMonthCount] = await Promise.all([
-    db.$count(
-      DocumentsTable,
-      activityDateFilter(
-        DocumentsTable.createdAt,
-        DocumentsTable.updatedAt,
-        START_OF_THIS_MONTH,
-        START_OF_NEXT_MONTH
-      )
-    ),
-    db.$count(
-      DocumentsTable,
-      activityDateFilter(
-        DocumentsTable.createdAt,
-        DocumentsTable.updatedAt,
-        START_OF_PREV_MONTH,
-        START_OF_NEXT_MONTH
-      )
-    )
-  ])
+  await connection()
+  const { thisMonthCount, prevMonthCount } = await getDocumentsStatistics()
 
   const percentage =
     prevMonthCount === 0
