@@ -33,7 +33,7 @@ export default function DataTable<TData, TValue>({ columns, data }: DataTablePro
   const [sorting, setSorting] = useState<SortingState>([
     {
       id: 'transactionDate',
-      desc: false
+      desc: true
     }
   ])
   const [globalFilter, setGlobalFileter] = useState('')
