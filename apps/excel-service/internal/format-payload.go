@@ -45,7 +45,6 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 		return result, err
 	}
 
-
 	totalCostRu, err := utils.NumbersToWordsRu(data.Customer.Organization.TotalCost)
 	if err != nil {
 		return result, err
@@ -69,6 +68,10 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 
 	if data.Customer.Organization.Kbe != "" {
 		result.Customer.Organization.Kbe = "КБЕ: " + data.Customer.Organization.Kbe
+	}
+
+	if data.Customer.Organization.Index != "" {
+		result.Customer.Organization.Index = data.Customer.Organization.Index + ","
 	}
 
 	return result, nil

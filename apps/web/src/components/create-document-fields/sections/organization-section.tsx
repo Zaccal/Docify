@@ -53,7 +53,7 @@ export default function OrganizationSection() {
               <FieldError errors={errors?.city} />
             </Field>
             <Field>
-              <FieldLabel htmlFor="index">Индекс</FieldLabel>
+              <FieldLabel htmlFor="index">Индекс (Опционально)</FieldLabel>
               <Input
                 aria-invalid={Boolean(errors?.index)}
                 defaultValue={values?.index}
