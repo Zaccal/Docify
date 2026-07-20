@@ -6,8 +6,7 @@ import {
   COST_PER_DAY_REGEX,
   DD_MM_YYYY_DATE_REGEX,
   ENUMERATION_REGEX,
-  FULLNAME_CLIENT_REGEX,
-  ORGANIZATION_REGEX
+  FULLNAME_CLIENT_REGEX
 } from '@/lib/constants'
 import type { FieldError } from '@/types/field-error'
 import {
@@ -39,14 +38,7 @@ export const fullnameClientSchema = z
 
 export const organizationSchema = z
   .string('Организация должна быть строкой')
-  .check(
-    z.trim(),
-    z.minLength(3, 'Название организации должно быть не менее 3 символов'),
-    z.regex(
-      ORGANIZATION_REGEX,
-      'В названии организации допустимы буквы, цифры, кавычки, дефисы, пробелы и точки'
-    )
-  )
+  .check(z.trim(), z.minLength(3, 'Название организации должно быть не менее 3 символов'))
 
 export const clientIdNumberSchema = z
   .string('Номер удостоверения должен быть строкой')
