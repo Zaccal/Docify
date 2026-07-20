@@ -1,12 +1,14 @@
+import { isArray, isPlainObject, isString } from 'es-toolkit/compat'
+
 function parseCellsLine(value: FormDataEntryValue | undefined) {
-  if (typeof value !== 'string') {
+  if (!isString(value)) {
     return {}
   }
 
   try {
     const parsedValue = JSON.parse(value)
 
-    if (parsedValue && typeof parsedValue === 'object' && !Array.isArray(parsedValue)) {
+    if (isPlainObject(parsedValue) && !isArray(parsedValue)) {
       return parsedValue
     }
   } catch {
@@ -17,7 +19,7 @@ function parseCellsLine(value: FormDataEntryValue | undefined) {
 }
 
 function parseDocumentDate(value: FormDataEntryValue | undefined) {
-  if (typeof value !== 'string') {
+  if (!isString(value)) {
     return []
   }
 
@@ -25,7 +27,7 @@ function parseDocumentDate(value: FormDataEntryValue | undefined) {
     const parsedValue = JSON.parse(value)
 
     if (
-      Array.isArray(parsedValue) &&
+      isArray(parsedValue) &&
       parsedValue.length === 2 &&
       parsedValue.every((date) => typeof date === 'string')
     ) {
