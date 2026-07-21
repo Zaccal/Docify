@@ -48,6 +48,8 @@ export async function processNewOrder(data: DocumentFormSchema) {
 
     return {
       document,
+      customer,
+      organization,
       transaction,
       dublicatedRequest: false
     }

@@ -10,17 +10,14 @@ import { useMemo } from 'react'
 
 import { useArray } from '@/hooks/useArray'
 import type { Cell } from '@/types/cells.type'
+import { toCellsEntries } from '@/utils/to-cells-entries'
 
 import CreateDocumentCard from '../../create-document-card/index'
 import { useCreateDocumentFields } from '../create-document-fields-store'
 
 export default function CellsSection() {
   const { errors, values } = useCreateDocumentFields()
-  const initialCells = Object.entries(values?.cellsLine ?? {}).map(([key, value]) => ({
-    id: crypto.randomUUID(),
-    key,
-    value
-  }))
+  const initialCells = toCellsEntries(values?.cellsLine ?? {})
   const { value, push, edit, remove } = useArray<Cell>(initialCells)
   const cellsLineValue = useMemo(
     () =>

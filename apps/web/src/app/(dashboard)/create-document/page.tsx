@@ -11,20 +11,23 @@ import { useCompanySelect } from '@/components/company-select/company-select-sto
 import CreateDocumentFields from '@/components/create-document-fields/create-document-fields'
 import ExistingDocumentSearchSection from '@/components/create-document-fields/sections/existing-document-search-section/existing-document-search-section'
 import { useDownload } from '@/hooks/useDownload'
-import { DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
-import { templateTypeSchema } from '@/schemas/document-schema/document.schema'
 import type { CreateDocumentState } from '@/types/create-document-state.type'
-import type { SearchResultDocument } from '@/types/search-state.type'
 import { documentToFormValues } from '@/utils/documents-to-form-values'
 import { getUrlDownloadDocument } from '@/utils/get-url-download-document'
+import { validateTemplateType } from '@/utils/templateValidation'
 
 export default function CreateDocumentPage() {
   const operationIdRef = useRef<null | string>(null)
   const { company } = useCompanySelect()
   const { download } = useDownload()
-  const [selectedDocument, setSelectedDocument] = useState<SearchResultDocument | undefined>(
-    undefined
-  )
+
+  const [state, formAction, pending] = useActionState(handleCreateDocument, {
+    success: false,
+    values: {}
+  })
+  const [values, setValues] = useState(state.values)
+  const [formRevision, setFormRevision] = useState(0)
+
   async function handleCreateDocument(prevState: CreateDocumentState, formData: FormData) {
     operationIdRef.current ??= crypto.randomUUID()
 
@@ -47,12 +50,10 @@ export default function CreateDocumentPage() {
     if (result.success && result.documentId) {
       operationIdRef.current = null
 
-      // TODO: Move to utils
+      setValues(result.values)
+
       const templateTypeRaw = formData.get('templateType')
-      const parsedTemplateType = templateTypeSchema.safeParse(templateTypeRaw)
-      const templateType = parsedTemplateType.success
-        ? parsedTemplateType.data
-        : DEFAULT_TEMPLATE_TYPE
+      const templateType = validateTemplateType(templateTypeRaw)
 
       const url = getUrlDownloadDocument(result.documentId, company, templateType)
       const { success } = await download(url)
@@ -67,26 +68,20 @@ export default function CreateDocumentPage() {
     return result
   }
 
-  const [state, formAction, pending] = useActionState(handleCreateDocument, {
-    success: false,
-    values: {}
-  })
-
-  const values = selectedDocument ? documentToFormValues(selectedDocument) : state.values
-
   return (
     <div className="mx-auto max-w-4xl px-4">
       {/* Search */}
 
-      <ExistingDocumentSearchSection onSelect={(document) => setSelectedDocument(document)} />
+      <ExistingDocumentSearchSection
+        onSelect={(document) => {
+          setValues(documentToFormValues(document))
+          setFormRevision(formRevision + 1)
+        }}
+      />
 
       {/* Create Document */}
       <form action={formAction}>
-        <CreateDocumentFields
-          key={selectedDocument?.id ?? 'new-document'}
-          errors={state.error}
-          values={values}
-        />
+        <CreateDocumentFields key={formRevision} errors={state.error} values={values} />
         {state.message && (
           <div className="bg-destructive/10 text-destructive mt-8 rounded-lg px-6 py-4 text-lg">
             <div className="flex items-center gap-2">
@@ -102,7 +97,7 @@ export default function CreateDocumentPage() {
               type="reset"
               variant={'secondary'}
               className="w-full md:w-auto"
-              onClick={() => setSelectedDocument(undefined)}
+              onClick={() => setValues({})}
             >
               Сбросить
             </Button>
