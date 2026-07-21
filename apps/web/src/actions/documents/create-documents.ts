@@ -1,5 +1,6 @@
 'use server'
 
+import { mapValues } from 'es-toolkit/compat'
 import { z } from 'zod/mini'
 
 import { documentFormSchema } from '@/schemas/document-schema/document.schema'
@@ -7,7 +8,6 @@ import { processNewOrder } from '@/server/applications/orders/process-new-order'
 import type { CreateDocumentState, CreateDocumentValues } from '@/types/create-document-state.type'
 import { getDocumentFormData } from '@/utils/create-document-formater'
 import { formatPostgresError } from '@/utils/format-postgres-error'
-import { toFieldErrors } from '@/utils/to-field-errors'
 
 export async function createDocuments(
   _prevState: CreateDocumentState,
@@ -18,7 +18,9 @@ export async function createDocuments(
 
   if (!result.success) {
     const flattenedErrors = z.flattenError(result.error).fieldErrors
-    const error = toFieldErrors(flattenedErrors)
+    const error = mapValues(flattenedErrors, (errors) =>
+      errors?.length ? errors.map((e) => ({ message: e })) : undefined
+    )
     return { success: false, error, values }
   }
 

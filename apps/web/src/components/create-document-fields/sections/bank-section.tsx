@@ -33,7 +33,7 @@ export default function BankSection() {
             <FieldLabel htmlFor="iik">ИИК</FieldLabel>
             <Input
               aria-invalid={Boolean(errors?.iik?.length)}
-              defaultValue={values?.iik}
+              defaultValue={values?.iik ? values?.iik : 'KZ'}
               name="iik"
               id="iik"
               placeholder="20-значный ИИК"
