@@ -159,9 +159,18 @@ export const dynamicKeyValueSchema = z.optional(
   )
 )
 
-export const indexSchema = z
-  .string('Почтовый индекс должен быть строкой')
-  .check(z.trim(), z.length(6, 'Почтовый индекс Казахстана должен состоять из 6 цифр'))
+export const indexSchema = z.optional(
+  z._default(
+    z.string().check(
+      z.trim(),
+      z.refine(
+        (value) => value === '' || /^\d{6}$/.test(value),
+        'Почтовый индекс Казахстана должен состоять из 6 цифр'
+      )
+    ),
+    ''
+  )
+)
 
 export const knpSchema = z.optional(
   z.union([

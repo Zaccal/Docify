@@ -1,4 +1,7 @@
 export function formatDateInput(value: string): string {
+  if (/^\d{2}\.\d{2}\.\d{4}$/.test(value)) {
+    return value
+  }
   const digits = value.replace(/\D/g, '').slice(0, 8)
 
   if (digits.length <= 2) {

@@ -12,7 +12,7 @@ export const OrganizationsTable = pgTable(
     organization: text('organization').notNull().unique(),
     bin: varchar('bin', { length: 12 }).notNull().unique(),
     city: text('city').notNull(),
-    index: text('index').notNull(),
+    index: text('index').notNull().default(''),
     address: text('address').notNull(),
     costPerDay: numeric('cost_per_day', {
       precision: 10,

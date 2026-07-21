@@ -17,6 +17,7 @@ import type { SearchResultDocument } from '@/types/search-state.type'
 
 import ExistingDocumentSearchNotice from './existing-document-search-notice'
 import ExistingDocumentSearchResult from './existing-document-search-result'
+import { useExistingDocumentSearchStore } from './store'
 
 interface ExistingDocumentSearchSectionProps {
   onSelect: (document: SearchResultDocument) => void
@@ -25,8 +26,9 @@ interface ExistingDocumentSearchSectionProps {
 export default function ExistingDocumentSearchSection({
   onSelect
 }: ExistingDocumentSearchSectionProps) {
-  const [query, setQuery] = useState('')
-  const [selected, setSelected] = useState<SearchResultDocument | null>(null)
+  const { query, setQuery, selected, setSelected } = useExistingDocumentSearchStore(
+    (state) => state
+  )
   const [debouncedQuery, setDebouncedQuery] = useState('')
 
   const { error, data } = useQuery(

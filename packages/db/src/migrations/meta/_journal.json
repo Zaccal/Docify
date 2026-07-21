@@ -162,6 +162,13 @@
       "when": 1784310797064,
       "tag": "0022_nappy_gladiator",
       "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1784570739410,
+      "tag": "0023_past_stick",
+      "breakpoints": true
     }
   ]
 }
