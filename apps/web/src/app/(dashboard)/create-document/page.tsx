@@ -11,6 +11,7 @@ import { useCompanySelect } from '@/components/company-select/company-select-sto
 import CreateDocumentFields from '@/components/create-document-fields/create-document-fields'
 import ExistingDocumentSearchSection from '@/components/create-document-fields/sections/existing-document-search-section/existing-document-search-section'
 import { useExistingDocumentSearchStore } from '@/components/create-document-fields/sections/existing-document-search-section/store'
+import { useDidUpdate } from '@/hooks/useDidUpdate'
 import { useDownload } from '@/hooks/useDownload'
 import type { CreateDocumentState } from '@/types/create-document-state.type'
 import { documentToFormValues } from '@/utils/documents-to-form-values'
@@ -29,6 +30,10 @@ export default function CreateDocumentPage() {
   const [values, setValues] = useState(state.values)
   const [formRevision, setFormRevision] = useState(0)
   const { setQuery, setSelected } = useExistingDocumentSearchStore((state) => state)
+
+  useDidUpdate(() => {
+    setValues(state.values)
+  }, [state.values])
 
   async function handleCreateDocument(prevState: CreateDocumentState, formData: FormData) {
     operationIdRef.current ??= crypto.randomUUID()
@@ -53,6 +58,7 @@ export default function CreateDocumentPage() {
       operationIdRef.current = null
 
       setValues(result.values)
+      setFormRevision(formRevision + 1)
 
       const templateTypeRaw = formData.get('templateType')
       const templateType = validateTemplateType(templateTypeRaw)
