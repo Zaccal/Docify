@@ -1,21 +1,6 @@
 'use client'
 
 import { Badge } from '@Docify/ui/components/badge'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@Docify/ui/components/dropdown-menu'
-import {
-  DeliveryReturn02Icon,
-  Edit03Icon,
-  EllipsisIcon,
-  Repeat,
-  ViewIcon
-} from '@hugeicons/core-free-icons'
-import { HugeiconsIcon } from '@hugeicons/react'
 import type { ColumnDef } from '@tanstack/react-table'
 import { truncate } from 'es-toolkit/compat'
 
@@ -23,6 +8,7 @@ import type { Transactions } from '@/server/repositories/transactions/get-all-tr
 
 import CopyButton from '../../copy-button'
 import SortingButton from '../sorting-button'
+import TransactionsActions from './transactions-actions/components/transactions-actions'
 
 export const transactionsColumns: ColumnDef<Transactions>[] = [
   {
@@ -126,34 +112,6 @@ export const transactionsColumns: ColumnDef<Transactions>[] = [
     meta: {
       align: 'center'
     },
-    cell: () => (
-      <div className="flex justify-center">
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <HugeiconsIcon icon={EllipsisIcon} />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="center">
-            <DropdownMenuGroup>
-              <DropdownMenuItem className={'text-sm'}>
-                <HugeiconsIcon icon={ViewIcon} />
-                Посмотреть
-              </DropdownMenuItem>
-              <DropdownMenuItem className={'text-sm'}>
-                <HugeiconsIcon icon={DeliveryReturn02Icon} />
-                Вренуть документ
-              </DropdownMenuItem>
-              <DropdownMenuItem className={'text-sm'}>
-                <HugeiconsIcon icon={Edit03Icon} />
-                Исправить
-              </DropdownMenuItem>
-              <DropdownMenuItem className={'text-sm'}>
-                <HugeiconsIcon icon={Repeat} />
-                Создать заново
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    )
+    cell: ({ row }) => <TransactionsActions transaction={row.original} />
   }
 ]
