@@ -21,8 +21,8 @@ import { truncate } from 'es-toolkit/compat'
 
 import type { Transactions } from '@/server/repositories/transactions/get-all-transactions'
 
-import CopyButton from '../copy-button'
-import SortingButton from './sorting-button'
+import CopyButton from '../../copy-button'
+import SortingButton from '../sorting-button'
 
 export const transactionsColumns: ColumnDef<Transactions>[] = [
   {
@@ -56,11 +56,11 @@ export const transactionsColumns: ColumnDef<Transactions>[] = [
         Номер документа
       </SortingButton>
     ),
-    cell: ({ row }) => `№${row.original.documentsTable?.enumeration}`
+    cell: ({ row }) => `№${row.original.snapshot.document.enumeration}`
   },
   {
     id: 'customerName',
-    accessorFn: (row) => row.documentsTable?.customer?.fullnameClient ?? '—',
+    accessorFn: (row) => row.snapshot.customer.fullnameClient ?? '—',
     header: ({ column }) => (
       <SortingButton sorted={column.getIsSorted() === 'asc'} column={column}>
         ФИО клиента
@@ -70,7 +70,7 @@ export const transactionsColumns: ColumnDef<Transactions>[] = [
   },
   {
     id: 'organizationName',
-    accessorFn: (row) => row.documentsTable?.customer.organization.organization ?? '—',
+    accessorFn: (row) => row.snapshot.organization.organization ?? '—',
     header: ({ column }) => (
       <SortingButton sorted={column.getIsSorted() === 'asc'} column={column}>
         Название организации
@@ -78,8 +78,8 @@ export const transactionsColumns: ColumnDef<Transactions>[] = [
     ),
     sortingFn: 'alphanumeric',
     cell: ({ row }) => (
-      <span title={row.original.documentsTable?.customer.organization.organization ?? '—'}>
-        {truncate(row.original.documentsTable?.customer.organization.organization ?? '—')}
+      <span title={row.original.snapshot.organization.organization ?? '—'}>
+        {truncate(row.original.snapshot.organization.organization ?? '—')}
       </span>
     )
   },
