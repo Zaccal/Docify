@@ -1,7 +1,7 @@
 import { connection } from 'next/server'
 import { Suspense } from 'react'
 
-import { transactionsColumns } from '@/components/data-table/columns/columns-transactions'
+import { transactionsColumns } from '@/components/data-table/columns/columns-transactions/columns-transactions'
 import DataTable from '@/components/data-table/data-table'
 import { DataTableSkeleton } from '@/components/data-table/data-table-skeleton'
 import { getAllTransactions } from '@/server/repositories/transactions/get-all-transactions'
@@ -14,7 +14,7 @@ async function TransactionsTable() {
   return <DataTable columns={transactionsColumns} data={data} />
 }
 
-export default function Operations() {
+export default function Transactions() {
   return (
     <div className="wrapper">
       <h1 className="mt-8 text-4xl font-bold">Операции</h1>

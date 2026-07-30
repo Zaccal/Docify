@@ -6,8 +6,8 @@ import { truncate } from 'es-toolkit/compat'
 
 import type { Transactions } from '@/server/repositories/transactions/get-all-transactions'
 
-import CopyButton from '../../copy-button'
-import SortingButton from '../sorting-button'
+import CopyButton from '../../../copy-button'
+import SortingButton from '../../sorting-button'
 import TransactionsActions from './transactions-actions/components/transactions-actions'
 
 export const transactionsColumns: ColumnDef<Transactions>[] = [

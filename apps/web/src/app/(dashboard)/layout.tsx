@@ -1,5 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from '@Docify/ui/components/sidebar'
+import { Skeleton } from '@Docify/ui/components/skeleton'
 import { Toaster } from '@Docify/ui/components/sonner'
+import { Suspense } from 'react'
 
 import AppSidebar from '@/components/app-sidebar'
 import { CompanySelectProvider } from '@/components/company-select/company-select-store'
@@ -12,7 +14,9 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <CompanySelectProvider>
       <SidebarProvider>
-        <AppSidebar />
+        <Suspense fallback={<Skeleton className="mr-4 h-screen w-sm rounded-none" />}>
+          <AppSidebar />
+        </Suspense>
         <main className="w-full">
           <SidebarTrigger />
           {children}

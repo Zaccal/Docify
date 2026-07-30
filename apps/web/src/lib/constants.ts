@@ -37,7 +37,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   {
     label: 'Операции',
     icon: HistoryIcon,
-    href: '/operations'
+    href: '/transactions'
   },
   {
     label: 'Документы',
