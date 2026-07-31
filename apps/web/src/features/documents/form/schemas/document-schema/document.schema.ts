@@ -1,6 +1,14 @@
 import * as z from 'zod/mini'
 
 import {
+  isDateRangeOrdered,
+  isNotFutureDdMmYyyyDate,
+  isValidBin,
+  isValidDate,
+  isValidDdMmYyyyDate,
+  isValidIin
+} from '@/features/documents/utils/document-validation'
+import {
   ADDRESS_REGEX,
   CITY_REGEX,
   COST_PER_DAY_REGEX,
@@ -9,14 +17,6 @@ import {
   FULLNAME_CLIENT_REGEX
 } from '@/lib/constants'
 import type { FieldError } from '@/types/field-error'
-import {
-  isDateRangeOrdered,
-  isNotFutureDdMmYyyyDate,
-  isValidBin,
-  isValidDate,
-  isValidDdMmYyyyDate,
-  isValidIin
-} from '@/utils/document-validation'
 
 export const enumerationSchema = z
   .string('Номер/пункт документа должен быть строкой')
