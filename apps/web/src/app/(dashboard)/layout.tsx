@@ -3,7 +3,7 @@ import { Skeleton } from '@Docify/ui/components/skeleton'
 import { Toaster } from '@Docify/ui/components/sonner'
 import { Suspense } from 'react'
 
-import AppSidebar from '@/components/app-sidebar'
+import AppSidebar from '@/components/app-shell/app-sidebar/app-sidebar'
 import { CompanySelectProvider } from '@/components/company-select/company-select-store'
 
 interface LayoutProps {

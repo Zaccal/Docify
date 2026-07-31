@@ -1,7 +1,8 @@
-import type { CreateDocumentValues } from '@/types/create-document-state.type'
 import type { SearchResultDocument } from '@/types/search-state.type'
 
-export function documentToFormValues(document: SearchResultDocument): CreateDocumentValues {
+import type { DocumentValues } from '../form/types/document-state.type'
+
+export function documentToFormValues(document: SearchResultDocument): DocumentValues {
   const { customer } = document
 
   return {
