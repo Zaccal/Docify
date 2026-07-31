@@ -3,7 +3,7 @@
 import { mapValues } from 'es-toolkit/compat'
 import { z } from 'zod/mini'
 
-import { documentFormSchema } from '@/schemas/document-schema/document.schema'
+import { documentFormSchema } from '@/features/documents/form/schemas/document-schema/document.schema'
 import { processNewOrder } from '@/server/applications/orders/process-new-order'
 
 import type { DocumentState, DocumentValues } from '../../form/types/document-state.type'

@@ -3,7 +3,7 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-import { COOKIE_NAME } from '@/lib/constants'
+import { COOKIE_NAME } from '../lib/constant'
 
 export async function logout() {
   const cookieStore = await cookies()

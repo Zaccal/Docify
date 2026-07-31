@@ -4,9 +4,9 @@ import { env } from '@Docify/env/server'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-import { COOKIE_NAME } from '@/lib/constants'
-import { loginSchema } from '@/schemas/login.schema'
-import type { LoginState } from '@/types/login-state.type'
+import { COOKIE_NAME } from '@/features/auth/lib/constant'
+import { loginSchema } from '@/features/auth/schemas/login.schema'
+import type { LoginState } from '@/features/auth/types/login-state.type'
 
 export async function login(_prevState: LoginState, formData: FormData): Promise<LoginState> {
   const result = loginSchema.safeParse(Object.fromEntries(formData.entries()))

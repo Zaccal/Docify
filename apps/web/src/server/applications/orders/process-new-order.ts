@@ -1,6 +1,6 @@
 import { db } from '@Docify/db'
 
-import type { DocumentFormSchema } from '@/schemas/document-schema/document.schema'
+import type { DocumentFormSchema } from '@/features/documents/form/schemas/document-schema/document.schema'
 import { createTransactionSnapshot } from '@/utils/create-transaction-snapshot'
 
 import { findDocumentById } from '../../repositories/documents/find-document-by-id'

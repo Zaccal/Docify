@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 
+import type { TemplateType } from '@/features/documents/form/schemas/document-schema/document.schema'
 import { DEFAULT_COMPANY_TYPE, DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
-import type { TemplateType } from '@/schemas/document-schema/document.schema'
 import { findDocumentById } from '@/server/repositories/documents/find-document-by-id'
 import { GenerateDocumentsController } from '@/services/documents/generate-documents'
 import type { Company } from '@/types/company.type'

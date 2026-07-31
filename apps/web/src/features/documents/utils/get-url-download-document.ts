@@ -1,6 +1,7 @@
 import { DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
-import type { TemplateType } from '@/schemas/document-schema/document.schema'
 import type { Company } from '@/types/company.type'
+
+import type { TemplateType } from '../form/schemas/document-schema/document.schema'
 
 export function getUrlDownloadDocument(
   documentId: string,

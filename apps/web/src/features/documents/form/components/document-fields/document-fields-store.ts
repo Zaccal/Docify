@@ -1,7 +1,6 @@
 import { createContext, createElement, useContext } from 'react'
 
-import type { DocumentFormError } from '@/schemas/document-schema/document.schema'
-
+import type { DocumentFormError } from '../../schemas/document-schema/document.schema'
 import type { DocumentValues } from '../../types/document-state.type'
 
 interface DocumentFieldsContextValue {

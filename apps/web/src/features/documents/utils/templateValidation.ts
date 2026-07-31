@@ -1,5 +1,6 @@
 import { DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
-import { templateTypeSchema } from '@/schemas/document-schema/document.schema'
+
+import { templateTypeSchema } from '../form/schemas/document-schema/document.schema'
 
 export function validateTemplateType(templateTypeRaw: FormDataEntryValue | null) {
   const parsedTemplateType = templateTypeSchema.safeParse(templateTypeRaw)

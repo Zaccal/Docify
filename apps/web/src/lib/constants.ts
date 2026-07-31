@@ -9,8 +9,6 @@ import {
 import type { DocumentAction } from '@/types/document-action.type'
 import type { SidebarItem } from '@/types/sidebar-items.type'
 
-export const COOKIE_NAME = 'auth'
-
 export const PUBLIC_ROUTES = ['/']
 
 export const CYRILLIC_UPPER = 'А-ЯЁӘҒҚҢӨҰҮҺІ'

@@ -1,7 +1,7 @@
 import type {
   DocumentFormError,
   DocumentFormSchema
-} from '@/schemas/document-schema/document.schema'
+} from '../schemas/document-schema/document.schema'
 
 export type DocumentValues = Partial<DocumentFormSchema>
 

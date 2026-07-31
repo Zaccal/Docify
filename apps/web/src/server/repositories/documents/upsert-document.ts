@@ -1,7 +1,7 @@
 import { eq, type TransactionType } from '@Docify/db'
 import { CustomersTable, DocumentsTable, OrganizationsTable } from '@Docify/db/schema'
 
-import type { DocumentFormSchema } from '@/schemas/document-schema/document.schema'
+import type { DocumentFormSchema } from '@/features/documents/form/schemas/document-schema/document.schema'
 import { getNightsCount } from '@/utils/format-document-template-data/subutils/get-nights-count'
 
 export async function upsertDocument(

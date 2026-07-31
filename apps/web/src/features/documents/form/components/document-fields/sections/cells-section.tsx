@@ -8,9 +8,9 @@ import { Plus, Table, Trash } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useMemo } from 'react'
 
+import type { Cell } from '@/features/documents/form/types/cells.type'
+import { toCellsEntries } from '@/features/documents/utils/to-cells-entries'
 import { useArray } from '@/hooks/useArray'
-import type { Cell } from '@/types/cells.type'
-import { toCellsEntries } from '@/utils/to-cells-entries'
 
 import DocumentFieldCard from '../../document-field-card/index'
 import { useDocumentFields } from '../document-fields-store'

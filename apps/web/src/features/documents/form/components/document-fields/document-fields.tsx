@@ -1,5 +1,4 @@
-import type { DocumentFormError } from '@/schemas/document-schema/document.schema'
-
+import type { DocumentFormError } from '../../schemas/document-schema/document.schema'
 import type { DocumentValues } from '../../types/document-state.type'
 import { DocumentFieldsProvider } from './document-fields-store'
 import BankSection from './sections/bank-section'
