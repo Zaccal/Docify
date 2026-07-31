@@ -1,9 +1,9 @@
 import { connection } from 'next/server'
 import { Suspense } from 'react'
 
-import { transactionsColumns } from '@/components/data-table/columns/columns-transactions/columns-transactions'
 import DataTable from '@/components/data-table/data-table'
 import { DataTableSkeleton } from '@/components/data-table/data-table-skeleton'
+import { transactionsColumns } from '@/features/transactions/components/transactions-table/columns-transactions'
 import { getAllTransactions } from '@/server/repositories/transactions/get-all-transactions'
 
 async function TransactionsTable() {

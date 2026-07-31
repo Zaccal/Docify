@@ -2,11 +2,11 @@ import { notFound } from 'next/navigation'
 import { connection } from 'next/server'
 import { Suspense } from 'react'
 
-import TransactionsCustomerDetails from '@/components/transactions/transactions-customer-details'
-import TransactionsDocumentDetails from '@/components/transactions/transactions-document-details'
-import TransactionsHeader from '@/components/transactions/transactions-header'
-import TransactionsOrganizationDetails from '@/components/transactions/transactions-organization-details'
-import TransactionsSummary from '@/components/transactions/transactions-summary'
+import TransactionsCustomerDetails from '@/features/transactions/components/transactions-details/transactions-customer-details'
+import TransactionsDocumentDetails from '@/features/transactions/components/transactions-details/transactions-document-details'
+import TransactionsHeader from '@/features/transactions/components/transactions-details/transactions-header'
+import TransactionsOrganizationDetails from '@/features/transactions/components/transactions-details/transactions-organization-details'
+import TransactionsSummary from '@/features/transactions/components/transactions-details/transactions-summary'
 import getTransactionWithDocument from '@/server/repositories/transactions/get-transaction-with-document'
 
 interface Params {

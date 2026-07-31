@@ -1,0 +1,114 @@
+'use client'
+
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem
+} from '@Docify/ui/components/sidebar'
+import { Settings03Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
+import type { Route } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+
+import CompanySelect from '@/components/company-select/company-select'
+import { logout } from '@/features/auth/actions/logout'
+import { SIDEBAR_ITEMS, SIDEBAR_ITEMS_DOCUMENTS } from '@/lib/constants'
+
+import LogoutSubmitButton from './logout-submit-button'
+
+export default function AppSidebar() {
+  const pathname = usePathname()
+
+  return (
+    <Sidebar>
+      <SidebarHeader>
+        <div className="flex items-center gap-2.5">
+          <Image
+            src="/Logo.webp"
+            alt="Docify"
+            loading="eager"
+            width={560}
+            height={630}
+            className="h-auto w-8"
+          />
+          <div className="">
+            <h1 className="text-lg font-semibold">Docify</h1>
+            <p className="text-sm">Генерация документов</p>
+          </div>
+        </div>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Меню</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {SIDEBAR_ITEMS.map((item) => (
+                <SidebarMenuItem key={item.label}>
+                  <SidebarMenuButton
+                    isActive={item.href === pathname}
+                    render={<Link href={item.href} />}
+                  >
+                    <HugeiconsIcon icon={item.icon} className="h-5 w-5" />
+                    <span>{item.label}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Документы</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {SIDEBAR_ITEMS_DOCUMENTS.map((item) => (
+                <SidebarMenuItem key={item.label}>
+                  <SidebarMenuButton
+                    isActive={item.href === pathname}
+                    render={<Link href={item.href} />}
+                  >
+                    <HugeiconsIcon icon={item.icon} className="h-5 w-5" />
+                    <span>{item.label}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Аккаунт</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={'/settings' === pathname}
+                  render={<Link href={'settings' as Route} />}
+                >
+                  <HugeiconsIcon icon={Settings03Icon} className="h-5 w-5" />
+                  <span>Настройки</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter>
+        <div className="">
+          <span className="mb-2 text-xs">Организация</span>
+          <CompanySelect />
+        </div>
+        <form action={logout}>
+          <LogoutSubmitButton />
+        </form>
+      </SidebarFooter>
+    </Sidebar>
+  )
+}

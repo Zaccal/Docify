@@ -6,17 +6,17 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { useActionState, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
-import { createDocuments } from '@/actions/documents/create-documents'
 import { useCompanySelect } from '@/components/company-select/company-select-store'
-import CreateDocumentFields from '@/components/create-document-fields/create-document-fields'
-import ExistingDocumentSearchSection from '@/components/create-document-fields/sections/existing-document-search-section/existing-document-search-section'
-import { useExistingDocumentSearchStore } from '@/components/create-document-fields/sections/existing-document-search-section/store'
+import { createDocuments } from '@/features/documents/create/actions/create-documents'
+import DocumentFields from '@/features/documents/form/components/document-fields/document-fields'
+import ExistingDocumentSearchSection from '@/features/documents/form/components/document-fields/sections/existing-document-search-section/existing-document-search-section'
+import { useExistingDocumentSearchStore } from '@/features/documents/form/components/document-fields/sections/existing-document-search-section/store'
+import type { DocumentState } from '@/features/documents/form/types/document-state.type'
+import { documentToFormValues } from '@/features/documents/utils/documents-to-form-values'
+import { getUrlDownloadDocument } from '@/features/documents/utils/get-url-download-document'
+import { validateTemplateType } from '@/features/documents/utils/templateValidation'
 import { useDidUpdate } from '@/hooks/useDidUpdate'
 import { useDownload } from '@/hooks/useDownload'
-import type { CreateDocumentState } from '@/types/create-document-state.type'
-import { documentToFormValues } from '@/utils/documents-to-form-values'
-import { getUrlDownloadDocument } from '@/utils/get-url-download-document'
-import { validateTemplateType } from '@/utils/templateValidation'
 
 export default function CreateDocumentPage() {
   const operationIdRef = useRef<null | string>(null)
@@ -35,13 +35,13 @@ export default function CreateDocumentPage() {
     setValues(state.values)
   }, [state.values])
 
-  async function handleCreateDocument(prevState: CreateDocumentState, formData: FormData) {
+  async function handleCreateDocument(prevState: DocumentState, formData: FormData) {
     operationIdRef.current ??= crypto.randomUUID()
 
     formData.set('operationId', operationIdRef.current)
     formData.set('company', company)
 
-    let result: CreateDocumentState
+    let result: DocumentState
     try {
       result = await createDocuments(prevState, formData)
     } catch (err) {
@@ -96,7 +96,7 @@ export default function CreateDocumentPage() {
 
       {/* Create Document */}
       <form action={formAction}>
-        <CreateDocumentFields key={formRevision} errors={state.error} values={values} />
+        <DocumentFields key={formRevision} errors={state.error} values={values} />
         {state.message && (
           <div className="bg-destructive/10 text-destructive mt-8 rounded-lg px-6 py-4 text-lg">
             <div className="flex items-center gap-2">

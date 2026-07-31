@@ -1,56 +1,9 @@
-'use client'
+import { LoginCard } from '@/features/auth/components/login-card'
 
-import { Button } from '@Docify/ui/components/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle
-} from '@Docify/ui/components/card'
-import { Separator } from '@Docify/ui/components/separator'
-import Image from 'next/image'
-import { useActionState } from 'react'
-
-import { Login } from '@/actions/auth/auth'
-
-import { PasswordField } from '../../components/password-field'
-
-export default function Auth() {
-  const [state, formAction, pending] = useActionState(Login, {
-    success: false
-  })
-
+export default function AuthPage() {
   return (
-    <div className="wrapper pt-20">
-      <Card className="mx-auto w-full max-w-md">
-        <CardHeader>
-          <div className="mx-auto flex size-24 items-center justify-center overflow-hidden rounded-lg">
-            <Image
-              width={560}
-              height={630}
-              src="/Logo.webp"
-              loading="eager"
-              alt="Docify logo"
-              priority
-              className="h-auto w-24"
-            />
-          </div>
-          <CardTitle className="text-center text-4xl">Docify</CardTitle>
-          <CardDescription className="text-center">
-            Введите данные — и готовый документ у вас через секунды. Без сложной терминологии.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Separator className="mb-4 h-px" />
-          <form action={formAction}>
-            <PasswordField errors={state.error} disabled={pending} />
-            <Button loading={pending} fullWidth className={'mt-4'} type="submit">
-              Войти
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
+    <main className="wrapper pt-20">
+      <LoginCard />
+    </main>
   )
 }
