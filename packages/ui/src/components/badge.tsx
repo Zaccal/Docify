@@ -15,7 +15,7 @@ const badgeVariants = cva(
         success:
           'bg-emerald-100 text-emerald-700 focus-visible:ring-emerald-500/25 dark:bg-emerald-500/20 dark:text-emerald-300 [a]:hover:bg-emerald-200 dark:[a]:hover:bg-emerald-500/30',
         outline:
-          'border-border bg-surface-container-high/30 text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground',
+          'border-border bg-surface-container-high/30 text-on-surface-variant [a]:hover:bg-muted [a]:hover:text-muted-foreground',
         ghost: 'hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50',
         link: 'text-primary underline-offset-4 hover:underline'
       },

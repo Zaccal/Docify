@@ -26,7 +26,7 @@ function Card({
       className={cn(
         [
           'group/card relative flex flex-col',
-          'border',
+          'border border-outline-variant/40',
           'gap-(--card-spacing) overflow-hidden',
           'rounded-(--shape-extra-large,1.75rem)',
           'py-(--card-spacing)',
