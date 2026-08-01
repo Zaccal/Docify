@@ -51,10 +51,7 @@ export default function CellsSection() {
             <p className="text-muted-foreground py-4 text-sm">Нет данных</p>
           ) : (
             value.map((cell, index) => (
-              <div
-                key={cell.id}
-                className="grid w-full grid-cols-[1fr_1fr_auto] items-center gap-4"
-              >
+              <div key={cell.id} className="grid w-full grid-cols-[1fr_1fr_auto] items-end gap-4">
                 <Field>
                   <FieldLabel htmlFor={`cellsLineKeys[${index}]`}>Ключ</FieldLabel>
                   <Input
