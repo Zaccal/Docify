@@ -56,7 +56,7 @@ export default function DataTable<TData, TValue>({ columns, data }: DataTablePro
   return (
     <div>
       <div className="flex items-center py-4">
-        <InputGroup className="border-muted-foreground max-w-md">
+        <InputGroup className="max-w-md">
           <InputGroupAddon align="inline-start">
             <HugeiconsIcon icon={Search} />
           </InputGroupAddon>
@@ -67,7 +67,7 @@ export default function DataTable<TData, TValue>({ columns, data }: DataTablePro
           />
         </InputGroup>
       </div>
-      <div className="muted-headers overflow-hidden rounded-md border">
+      <div className="muted-headers overflow-hidden">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

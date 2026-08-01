@@ -1,4 +1,4 @@
-import { cn } from '@Docify/ui/lib/utils'
+import { CardDescription } from '@Docify/ui/components/card'
 import type { DetailedHTMLProps, HTMLAttributes } from 'react'
 
 export default function MetaCardDescription({
@@ -7,8 +7,8 @@ export default function MetaCardDescription({
   ...props
 }: DetailedHTMLProps<HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement>) {
   return (
-    <p {...props} className={cn('text-muted-foreground text-sm font-semibold', className)}>
+    <CardDescription {...props} className={className}>
       {children}
-    </p>
+    </CardDescription>
   )
 }

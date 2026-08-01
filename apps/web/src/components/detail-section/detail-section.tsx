@@ -8,6 +8,13 @@ interface DetailSectionProps {
 
 export function DetailSection({ children, className }: DetailSectionProps) {
   return (
-    <div className={cn('border-border rounded-md border px-5 py-4', className)}>{children}</div>
+    <div
+      className={cn(
+        'border-border rounded-2xl border px-5 py-4 bg-surface-container-lowest',
+        className
+      )}
+    >
+      {children}
+    </div>
   )
 }

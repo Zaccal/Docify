@@ -16,18 +16,17 @@ export default function TransactionsSummary({ transactionWithDocument }: Transac
     <>
       <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <MetaCard.Root>
-          <MetaCard.Icon icon={TextNumberSignIcon} color="blue" />
+          <MetaCard.Icon icon={TextNumberSignIcon} c />
           <MetaCard.Description>Номер</MetaCard.Description>
           <MetaCard.Title>{transaction.snapshot.document.enumeration}</MetaCard.Title>
         </MetaCard.Root>
         <MetaCard.Root>
-          <MetaCard.Icon icon={UserIcon} color="purple" />
+          <MetaCard.Icon icon={UserIcon} />
           <MetaCard.Description>Клиент</MetaCard.Description>
           <MetaCard.Title>{transaction.snapshot.customer.fullnameClient}</MetaCard.Title>
-          <MetaCard.SecondaryLine>ИИН: {transaction.snapshot.customer.iin}</MetaCard.SecondaryLine>
         </MetaCard.Root>
         <MetaCard.Root>
-          <MetaCard.Icon icon={BuildingIcon} color="green" />
+          <MetaCard.Icon icon={BuildingIcon} />
           <MetaCard.Description>Оргонизация</MetaCard.Description>
           <MetaCard.Title
             className="text-sm"
@@ -35,19 +34,13 @@ export default function TransactionsSummary({ transactionWithDocument }: Transac
           >
             {truncate(transaction.snapshot.organization.organization)}
           </MetaCard.Title>
-          <MetaCard.SecondaryLine>
-            БИН: {transaction.snapshot.organization.bin}
-          </MetaCard.SecondaryLine>
         </MetaCard.Root>
         <MetaCard.Root>
-          <MetaCard.Icon icon={Money01Icon} color="yellow" />
+          <MetaCard.Icon icon={Money01Icon} />
           <MetaCard.Description>Сумма</MetaCard.Description>
           <MetaCard.Title>
             {formatNumber(transaction.snapshot.organization.totalCost)} ₸
           </MetaCard.Title>
-          <MetaCard.SecondaryLine>
-            Сутки: {formatNumber(transaction.snapshot.organization.costPerDay)} ₸
-          </MetaCard.SecondaryLine>
         </MetaCard.Root>
       </div>
     </>

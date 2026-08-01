@@ -15,7 +15,7 @@ export default function TrunsactionsOrganizationDetails({
   return (
     <DetailSection.Root className="h-full">
       <DetailSection.Header>
-        <DetailSection.Icon icon={BuildingIcon} color="purple" />
+        <DetailSection.Icon icon={BuildingIcon} />
         <DetailSection.Title>Сведения о организаций</DetailSection.Title>
       </DetailSection.Header>
       <DetailSection.Content>

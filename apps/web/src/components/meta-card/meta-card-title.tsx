@@ -1,4 +1,4 @@
-import { cn } from '@Docify/ui/lib/utils'
+import { CardTitle } from '@Docify/ui/components/card'
 import type { DetailedHTMLProps, HTMLAttributes } from 'react'
 
 export default function MetaCardTitle({
@@ -7,8 +7,8 @@ export default function MetaCardTitle({
   ...props
 }: DetailedHTMLProps<HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement>) {
   return (
-    <h4 {...props} className={cn('text-xl font-semibold', className)}>
+    <CardTitle {...props} className={className}>
       {children}
-    </h4>
+    </CardTitle>
   )
 }

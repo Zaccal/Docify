@@ -19,7 +19,7 @@ export default function TrunsactionsHeader({ transactionWithDocument }: Trunsact
   const document = transactionWithDocument.documents_table
 
   return (
-    <>
+    <header>
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>Главная</BreadcrumbItem>
@@ -29,7 +29,7 @@ export default function TrunsactionsHeader({ transactionWithDocument }: Trunsact
           <BreadcrumbItem>{truncate(trunsaction.operationId)}</BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <div className="flex items-center justify-between">
+      <div className="space-y-2">
         <div className="mt-6 flex items-center gap-4">
           <h1 className="text-2xl font-bold">
             Документ №{trunsaction.snapshot.document.enumeration}
@@ -40,15 +40,15 @@ export default function TrunsactionsHeader({ transactionWithDocument }: Trunsact
         </div>
 
         <div className="flex items-center gap-4">
-          <p className="text-muted-foreground">
+          <span className="text-muted-foreground">
             Создоно: {document?.createdAt ? format(document.createdAt, 'dd-mm-yyyy') : '--'}
-          </p>
-          <p className="text-muted-foreground">
+          </span>
+          <span className="text-muted-foreground">
             Последния активность:{' '}
             {document?.updatedAt ? format(document.updatedAt, 'dd-mm-yyyy') : '--'}
-          </p>
+          </span>
         </div>
       </div>
-    </>
+    </header>
   )
 }

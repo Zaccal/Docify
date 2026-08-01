@@ -19,7 +19,7 @@ export default function TransactionsDocumentDetails({
     <>
       <DetailSection.Root className="h-full">
         <DetailSection.Header>
-          <DetailSection.Icon icon={DocumentAttachmentIcon} color="blue" />
+          <DetailSection.Icon icon={DocumentAttachmentIcon} />
           <DetailSection.Title>Сведения о документе</DetailSection.Title>
         </DetailSection.Header>
         <DetailSection.Content>
@@ -40,8 +40,12 @@ export default function TransactionsDocumentDetails({
                 <TableBody>
                   {Object.entries(transaction.snapshot.document.cellsLine).map(([label, value]) => (
                     <TableRow key={label}>
-                      <TableCell className="text-muted-foreground border">{label}</TableCell>
-                      <TableCell className="border whitespace-normal">{value}</TableCell>
+                      <TableCell className="text-muted-foreground border text-center">
+                        {label}
+                      </TableCell>
+                      <TableCell className="border text-center whitespace-normal">
+                        {value}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

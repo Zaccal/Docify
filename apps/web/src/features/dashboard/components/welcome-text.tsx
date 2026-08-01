@@ -12,7 +12,7 @@ export default async function WelcomeText() {
   return (
     <div>
       <div className="flex items-center gap-4">
-        <h1 className="text-4xl font-bold">{getWelcomeText()}</h1>
+        <h1 className="text-3xl font-medium">{getWelcomeText()}</h1>
         <div className="bg-primary text-primary-foreground rounded-full p-2">
           <HugeiconsIcon icon={getWelcomeIcon()} />
         </div>

@@ -15,7 +15,7 @@ export default function TransactionsCustomerDetails({
   return (
     <DetailSection.Root className="h-full">
       <DetailSection.Header>
-        <DetailSection.Icon icon={UserIcon} color="green" />
+        <DetailSection.Icon icon={UserIcon} />
         <DetailSection.Title>Сведения о клиенте</DetailSection.Title>
       </DetailSection.Header>
       <DetailSection.Content>
