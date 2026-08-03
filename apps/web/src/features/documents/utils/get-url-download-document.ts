@@ -10,3 +10,11 @@ export function getUrlDownloadDocument(
 ) {
   return `/api/documents/generate/${documentId}?company=${encodeURIComponent(company)}&templateType=${encodeURIComponent(templateType)}`
 }
+
+export function getUrlDownloadDocumentSnapshot(
+  operationID: string,
+  company: Company,
+  templateType: TemplateType = DEFAULT_TEMPLATE_TYPE
+) {
+  return `/api/documents/generate/snapshot/${operationID}?company=${encodeURIComponent(company)}&templateType=${encodeURIComponent(templateType)}`
+}
