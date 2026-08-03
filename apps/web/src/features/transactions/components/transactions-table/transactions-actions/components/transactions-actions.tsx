@@ -8,9 +8,10 @@ import {
 import { EllipsisIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import type { Route } from 'next'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 
+import { useRecreate } from '@/features/transactions/hooks/use-recreate'
 import type { Transactions } from '@/server/repositories/transactions/get-all-transactions'
 
 import { getTransactionActions } from '../models/get-transactions-actions'
@@ -30,8 +31,8 @@ export default function TransactionsActions({ transaction }: TransactionsActions
     canRecreate: true,
     canReturn: true
   })
-
-  // const { download, isError } = useDownload()
+  const router = useRouter()
+  const recreateHandler = useRecreate(transaction)
 
   function executeAction(action: TransactionAction) {
     if (action.requiresConfirmation) {
@@ -46,12 +47,15 @@ export default function TransactionsActions({ transaction }: TransactionsActions
     startTransition(async () => {
       switch (actionId) {
         case 'recreate':
+          recreateHandler()
           break
         case 'edit':
+          pushHandler(actionId)
           break
         case 'return':
           break
         case 'view':
+          pushHandler(actionId)
           break
       }
 
@@ -59,7 +63,10 @@ export default function TransactionsActions({ transaction }: TransactionsActions
     })
   }
 
-  // function recreateHandler() {}
+  function pushHandler(actionId: string) {
+    const action = actionsItems.find((item) => item.id === actionId)
+    if (action && action.href) router.push(action.href as Route)
+  }
 
   return (
     <>
@@ -72,15 +79,6 @@ export default function TransactionsActions({ transaction }: TransactionsActions
             <DropdownMenuGroup>
               {actionsItems.map((item) => {
                 const Icon = actionIcons[item.id]
-                if (item.href && !item.disabled) {
-                  return (
-                    <DropdownMenuItem key={item.id} render={<Link href={item.href as Route} />}>
-                      <HugeiconsIcon icon={Icon} />
-                      {item.label}
-                    </DropdownMenuItem>
-                  )
-                }
-
                 return (
                   <DropdownMenuItem
                     onClick={() => executeAction(item)}
