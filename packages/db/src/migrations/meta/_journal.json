@@ -169,6 +169,27 @@
       "when": 1784570739410,
       "tag": "0023_past_stick",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1785682601718,
+      "tag": "0024_outgoing_madame_masque",
+      "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1785761448466,
+      "tag": "0025_revert_enums",
+      "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1785761698042,
+      "tag": "0026_watery_maggott",
+      "breakpoints": true
     }
   ]
 }

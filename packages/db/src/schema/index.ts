@@ -1,6 +1,7 @@
 import { relations } from 'drizzle-orm'
 import { index, jsonb, numeric, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 
+import { TemplateType } from './enums'
 import { CostTransactionsTable } from './transactions'
 
 export const OrganizationsTable = pgTable(
@@ -28,7 +29,8 @@ export const OrganizationsTable = pgTable(
     bik: varchar('bik', { length: 8 }).notNull(),
     bank: text('bank').notNull(),
     kbe: varchar('kbe', { length: 2 }),
-    knp: varchar('knp', { length: 3 })
+    knp: varchar('knp', { length: 3 }),
+    templateType: TemplateType('template_type').notNull().default('APARTMENT')
   },
   (table) => [
     index('organizations_table_organization_idx').on(table.organization),

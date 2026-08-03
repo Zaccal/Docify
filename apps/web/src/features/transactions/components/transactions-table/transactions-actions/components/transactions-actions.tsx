@@ -31,6 +31,8 @@ export default function TransactionsActions({ transaction }: TransactionsActions
     canReturn: true
   })
 
+  // const { download, isError } = useDownload()
+
   function executeAction(action: TransactionAction) {
     if (action.requiresConfirmation) {
       setSelectedAction(action)
@@ -52,8 +54,12 @@ export default function TransactionsActions({ transaction }: TransactionsActions
         case 'view':
           break
       }
+
+      setSelectedAction(null)
     })
   }
+
+  // function recreateHandler() {}
 
   return (
     <>

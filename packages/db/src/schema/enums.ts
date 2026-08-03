@@ -11,3 +11,5 @@ export const CostTransactionReasonEnum = pgEnum('cost_transaction_reason', [
 ])
 
 export const CostTransactionStatusEnum = pgEnum('cost_transaction_status', ['POSTED', 'VOID'])
+
+export const TemplateType = pgEnum('template_type', ['HOTEL', 'APARTMENT'])

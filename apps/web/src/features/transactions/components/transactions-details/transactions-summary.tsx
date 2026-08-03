@@ -16,7 +16,7 @@ export default function TransactionsSummary({ transactionWithDocument }: Transac
     <>
       <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <MetaCard.Root>
-          <MetaCard.Icon icon={TextNumberSignIcon} c />
+          <MetaCard.Icon icon={TextNumberSignIcon} />
           <MetaCard.Description>Номер</MetaCard.Description>
           <MetaCard.Title>{transaction.snapshot.document.enumeration}</MetaCard.Title>
         </MetaCard.Root>

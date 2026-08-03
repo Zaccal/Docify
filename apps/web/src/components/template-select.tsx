@@ -7,8 +7,12 @@ import {
 } from '@Docify/ui/components/select'
 import { useState } from 'react'
 
+import type { TemplateType } from '@/features/documents/form/schemas/document-schema/document.schema'
+import { DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
+
 interface TemplateSelectProps {
   name: string
+  defaultValue?: TemplateType
 }
 
 const templates = [
@@ -16,15 +20,15 @@ const templates = [
   { value: 'HOTEL', label: 'Гостиничный' }
 ]
 
-export default function TemplateSelect({ name }: TemplateSelectProps) {
-  const [value, setValue] = useState('APARTMENT')
+export default function TemplateSelect({ name, defaultValue }: TemplateSelectProps) {
+  const [value, setValue] = useState(defaultValue ?? DEFAULT_TEMPLATE_TYPE)
 
   return (
     <Select
       name={name}
       value={value}
-      defaultValue={'APARTMENT'}
-      onValueChange={(value) => setValue(value ?? 'APARTMENT')}
+      defaultValue={defaultValue}
+      onValueChange={(value) => setValue((value ?? 'APARTMENT') as TemplateType)}
     >
       <SelectTrigger>
         <SelectValue placeholder="Выберите шаблон">

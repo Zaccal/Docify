@@ -48,7 +48,7 @@ export default function DocumentSection() {
         {company === DEFAULT_COMPANY_TYPE && (
           <Field>
             <FieldLabel>Шаблон</FieldLabel>
-            <TemplateSelect name="templateType" />
+            <TemplateSelect defaultValue={values?.templateType} name="templateType" />
           </Field>
         )}
       </DocumentFieldCard.Content>

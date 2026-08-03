@@ -29,6 +29,8 @@ export function documentToFormValues(document: SearchResultDocument): DocumentVa
     bik: customer.organization.bik,
     bank: customer.organization.bank,
     knp: customer.organization.knp ?? '',
-    kbe: customer.organization.kbe ?? ''
+    kbe: customer.organization.kbe ?? '',
+
+    templateType: customer.organization.templateType
   }
 }

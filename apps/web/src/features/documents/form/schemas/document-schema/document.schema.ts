@@ -190,9 +190,7 @@ export const kbeSchema = z.optional(
   ])
 )
 
-export const templateTypeSchema = z.optional(
-  z._default(z.enum(['HOTEL', 'APARTMENT']), 'APARTMENT')
-)
+export const templateTypeSchema = z._default(z.enum(['HOTEL', 'APARTMENT']), 'APARTMENT')
 
 export type TemplateType = z.infer<typeof templateTypeSchema>
 
