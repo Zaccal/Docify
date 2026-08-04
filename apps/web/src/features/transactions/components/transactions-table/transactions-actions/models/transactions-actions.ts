@@ -1,4 +1,4 @@
-export type TransactionActionId = 'view' | 'return' | 'edit' | 'recreate'
+export type TransactionActionId = 'view' | 'refund' | 'edit' | 'recreate'
 
 export interface TransactionAction {
   id: TransactionActionId

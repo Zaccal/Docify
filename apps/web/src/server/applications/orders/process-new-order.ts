@@ -7,6 +7,7 @@ import { findDocumentById } from '../../repositories/documents/find-document-by-
 import { upsertDocument } from '../../repositories/documents/upsert-document'
 import { createChargeTransaction } from '../../repositories/transactions/create-transactions'
 import { findTransactionsByOperationIdInTransaction } from '../../repositories/transactions/find-transactions-by-operation-id-in-transaction'
+import 'server-only'
 
 export async function processNewOrder(data: DocumentFormSchema) {
   const { operationId, ...rest } = data

@@ -1,6 +1,7 @@
 'use client'
 
 import { Badge } from '@Docify/ui/components/badge'
+import { cn } from '@Docify/ui/lib/utils'
 import type { ColumnDef } from '@tanstack/react-table'
 import { truncate } from 'es-toolkit/compat'
 
@@ -8,6 +9,7 @@ import CopyButton from '@/components/copy-button'
 import SortingButton from '@/components/data-table/sorting-button'
 import type { Transactions } from '@/server/repositories/transactions/get-all-transactions'
 
+import { getReasonLabel } from '../../utils/get-reason-label'
 import TransactionsActions from './transactions-actions/components/transactions-actions'
 
 export const transactionsColumns: ColumnDef<Transactions>[] = [
@@ -72,15 +74,7 @@ export const transactionsColumns: ColumnDef<Transactions>[] = [
   {
     accessorKey: 'reason',
     header: 'Операция',
-    cell: ({ row }) => (
-      <Badge variant={'outline'}>
-        {row.original.reason === 'CANCELLATION'
-          ? 'Отмена'
-          : row.original.reason === 'NEW_ORDER'
-            ? 'Новый заказ'
-            : 'Исправление'}
-      </Badge>
-    )
+    cell: ({ row }) => <Badge variant={'outline'}>{getReasonLabel(row.original)}</Badge>
   },
   {
     accessorKey: 'status',
@@ -99,12 +93,22 @@ export const transactionsColumns: ColumnDef<Transactions>[] = [
       </SortingButton>
     ),
     sortingFn: 'alphanumeric',
-    cell: ({ row }) =>
-      new Intl.NumberFormat('ru-RU', {
+    cell: ({ row }) => {
+      const amount = row.original.amount
+
+      const formattedAmount = new Intl.NumberFormat('ru-RU', {
         style: 'currency',
         currency: 'KZT',
-        maximumFractionDigits: 0
-      }).format(row.original.amount)
+        maximumFractionDigits: 0,
+        signDisplay: 'always'
+      }).format(amount)
+
+      return (
+        <span className={cn('font-medium', amount < 0 ? 'text-destructive' : 'text-green-600')}>
+          {formattedAmount}
+        </span>
+      )
+    }
   },
   {
     id: 'actions',

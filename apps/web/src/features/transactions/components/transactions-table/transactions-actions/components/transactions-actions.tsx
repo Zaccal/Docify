@@ -10,7 +10,10 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import type { Route } from 'next'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
+import { toast } from 'sonner'
 
+import { useCompanySelect } from '@/components/company-select/company-select-store'
+import { refundAction } from '@/features/transactions/actions/refund-action'
 import { useRecreate } from '@/features/transactions/hooks/use-recreate'
 import type { Transactions } from '@/server/repositories/transactions/get-all-transactions'
 
@@ -33,6 +36,7 @@ export default function TransactionsActions({ transaction }: TransactionsActions
   })
   const router = useRouter()
   const recreateHandler = useRecreate(transaction)
+  const { company } = useCompanySelect()
 
   function executeAction(action: TransactionAction) {
     if (action.requiresConfirmation) {
@@ -52,7 +56,10 @@ export default function TransactionsActions({ transaction }: TransactionsActions
         case 'edit':
           pushHandler(actionId)
           break
-        case 'return':
+        case 'refund':
+          const result = await refundAction(transaction.id, company)
+          if (!result.success) toast.error(result.error)
+          else toast.success('Возврат успешно выполнен')
           break
         case 'view':
           pushHandler(actionId)

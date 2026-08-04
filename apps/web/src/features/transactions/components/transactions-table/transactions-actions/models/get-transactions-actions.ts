@@ -21,7 +21,7 @@ export function getTransactionActions(
       href: `/transactions/${transaction.operationId}`
     },
     {
-      id: 'return',
+      id: 'refund',
       label: 'Возврат',
       requiresConfirmation: true,
       disabled: !permissions.canReturn || !canModifyPostedTransaction,
@@ -36,7 +36,7 @@ export function getTransactionActions(
     },
     {
       id: 'recreate',
-      label: 'Создать заново',
+      label: 'Пересоздать',
       requiresConfirmation: true,
       disabled: !permissions.canRecreate
     }

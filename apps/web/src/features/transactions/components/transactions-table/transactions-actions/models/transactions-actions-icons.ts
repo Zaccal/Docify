@@ -4,7 +4,7 @@ import type { TransactionActionId } from './transactions-actions'
 
 export const actionIcons = {
   view: ViewIcon,
-  return: DeliveryReturn02Icon,
+  refund: DeliveryReturn02Icon,
   edit: Edit03Icon,
   recreate: Repeat
 } satisfies Record<TransactionActionId, typeof ViewIcon>
