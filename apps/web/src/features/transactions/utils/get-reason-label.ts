@@ -7,8 +7,6 @@ export function getReasonLabel(transaction: Transactions) {
   switch (transaction.reason) {
     case 'NEW_ORDER':
       return 'Новый заказ'
-    case 'CORRECTION':
-      return 'Исправление'
     case 'CANCELLATION':
       return 'Отмена'
     case 'REFUND':
