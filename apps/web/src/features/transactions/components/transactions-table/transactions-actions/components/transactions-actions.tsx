@@ -13,6 +13,7 @@ import { useState, useTransition } from 'react'
 import { toast } from 'sonner'
 
 import { useCompanySelect } from '@/components/company-select/company-select-store'
+import { cancelAction } from '@/features/transactions/actions/cancel-action'
 import { refundAction } from '@/features/transactions/actions/refund-action'
 import { useRecreate } from '@/features/transactions/hooks/use-recreate'
 import type { Transactions } from '@/server/repositories/transactions/get-all-transactions'
@@ -57,12 +58,17 @@ export default function TransactionsActions({ transaction }: TransactionsActions
           pushHandler(actionId)
           break
         case 'refund':
-          const result = await refundAction(transaction.id, company)
-          if (!result.success) toast.error(result.error)
+          const refundResult = await refundAction(transaction.id, company)
+          if (!refundResult.success) toast.error(refundResult.error)
           else toast.success('Возврат успешно выполнен')
           break
         case 'view':
           pushHandler(actionId)
+          break
+        case 'cancel':
+          const cancelResult = await cancelAction(transaction.id)
+          if (!cancelResult.success) toast.error(cancelResult.error)
+          else toast.success('Транзакция успешно отменена')
           break
       }
 
@@ -85,6 +91,8 @@ export default function TransactionsActions({ transaction }: TransactionsActions
           <DropdownMenuContent align="center">
             <DropdownMenuGroup>
               {actionsItems.map((item) => {
+                if (item.showCondition === false) return null
+
                 const Icon = actionIcons[item.id]
                 return (
                   <DropdownMenuItem

@@ -1,4 +1,4 @@
-export type TransactionActionId = 'view' | 'refund' | 'edit' | 'recreate'
+export type TransactionActionId = 'view' | 'refund' | 'edit' | 'recreate' | 'cancel'
 
 export interface TransactionAction {
   id: TransactionActionId
@@ -7,4 +7,5 @@ export interface TransactionAction {
   requiresConfirmation?: boolean
   disabled?: boolean
   disabledReason?: string
+  showCondition?: boolean
 }
