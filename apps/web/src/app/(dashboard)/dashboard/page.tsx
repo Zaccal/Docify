@@ -1,9 +1,9 @@
 // import { DataTable } from '@Docify/ui/components/data-table'
 
-import { ChartAreaInteractive } from '@/components/chart-area-interactive'
 import OrganizationSelectValue from '@/components/company-select/company-select-value'
-import { SectionCards } from '@/components/section-cards/section-cards'
-import WelcomeText from '@/components/welcome-text'
+import ChartAreaIncome from '@/features/dashboard/components/chart-area-income'
+import SectionTotalCards from '@/features/dashboard/components/section-total-cards/section-total-cards'
+import WelcomeText from '@/features/dashboard/components/welcome-text'
 
 export default function Dashboard() {
   return (
@@ -17,9 +17,9 @@ export default function Dashboard() {
       <div className="flex flex-1 flex-col">
         <div className="@container/main flex flex-1 flex-col gap-2">
           <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-            <SectionCards />
+            <SectionTotalCards />
             <div className="px-4 lg:px-6">
-              <ChartAreaInteractive />
+              <ChartAreaIncome />
             </div>
             {/*<DataTable data={} />*/}
           </div>

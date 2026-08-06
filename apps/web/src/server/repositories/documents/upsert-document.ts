@@ -1,7 +1,8 @@
 import { eq, type TransactionType } from '@Docify/db'
 import { CustomersTable, DocumentsTable, OrganizationsTable } from '@Docify/db/schema'
 
-import type { DocumentFormSchema } from '@/schemas/document-schema/document.schema'
+import type { DocumentFormSchema } from '@/features/documents/form/schemas/document-schema/document.schema'
+import { DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
 import { getNightsCount } from '@/utils/format-document-template-data/subutils/get-nights-count'
 
 export async function upsertDocument(
@@ -23,7 +24,8 @@ export async function upsertDocument(
     totalCost,
     iik: data.iik,
     kbe: data.kbe,
-    knp: data.knp ?? ''
+    knp: data.knp ?? '',
+    templateType: data.templateType ?? DEFAULT_TEMPLATE_TYPE
   }
 
   let [organization] = await tx

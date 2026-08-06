@@ -52,12 +52,13 @@ function SelectTrigger({
       {...props}
     >
       {children}
+
       <SelectPrimitive.Icon
         render={
           <HugeiconsIcon
             icon={UnfoldMoreIcon}
             strokeWidth={2}
-            className="text-muted-foreground pointer-events-none size-5"
+            className="text-on-surface-variant pointer-events-none size-5"
           />
         }
       />
@@ -122,7 +123,7 @@ function SelectItem({ className, children, ...props }: SelectPrimitive.Item.Prop
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "relative flex w-full cursor-default items-center gap-3 rounded-2xl py-3 pr-10 pl-4 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "relative flex w-full cursor-default items-center gap-3 rounded-2xl py-3 pr-10 pl-4 text-base outline-hidden select-none focus:bg-on-surface/8 focus:text-on-surface not-data-[variant=destructive]:focus:**:text-on-surface data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         className
       )}
       {...props}

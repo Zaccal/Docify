@@ -1,18 +1,19 @@
 import { db } from '@Docify/db'
 
-import type { DocumentFormSchema } from '@/schemas/document-schema/document.schema'
+import type { DocumentFormSchema } from '@/features/documents/form/schemas/document-schema/document.schema'
 import { createTransactionSnapshot } from '@/utils/create-transaction-snapshot'
 
 import { findDocumentById } from '../../repositories/documents/find-document-by-id'
 import { upsertDocument } from '../../repositories/documents/upsert-document'
 import { createChargeTransaction } from '../../repositories/transactions/create-transactions'
-import { findTransactionsByOperationId } from '../../repositories/transactions/find-transactions-by-operation-id'
+import { findTransactionsByOperationIdInTransaction } from '../../repositories/transactions/find-transactions-by-operation-id-in-transaction'
+import 'server-only'
 
 export async function processNewOrder(data: DocumentFormSchema) {
   const { operationId, ...rest } = data
 
   return db.transaction(async (tx) => {
-    const existingTransaction = await findTransactionsByOperationId(tx, operationId)
+    const existingTransaction = await findTransactionsByOperationIdInTransaction(tx, operationId)
 
     if (existingTransaction) {
       if (!existingTransaction.documentId) throw new Error('Id документа не найден')

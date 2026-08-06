@@ -1,4 +1,4 @@
-import type { DocumentFormSchema } from '@/schemas/document-schema/document.schema'
+import type { DocumentFormSchema } from '@/features/documents/form/schemas/document-schema/document.schema'
 
 import type { DocumentAction } from './document-action.type'
 

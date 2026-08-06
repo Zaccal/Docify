@@ -1,1 +1,1 @@
-export type DocumentAction = 'NEW_ORDER' | 'CORRECTION' | 'REGENERATE' | 'CANCEL'
+export type DocumentAction = 'NEW_ORDER' | 'CORRECTION' | 'REGENERATE' | 'CANCEL' | 'REFUND'

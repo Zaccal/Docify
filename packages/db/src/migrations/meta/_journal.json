@@ -169,6 +169,48 @@
       "when": 1784570739410,
       "tag": "0023_past_stick",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1785682601718,
+      "tag": "0024_outgoing_madame_masque",
+      "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1785761448466,
+      "tag": "0025_revert_enums",
+      "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1785761698042,
+      "tag": "0026_watery_maggott",
+      "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1785864979268,
+      "tag": "0027_kind_bloodstorm",
+      "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1786030707208,
+      "tag": "0028_remove-correction-reason",
+      "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "7",
+      "when": 1786030916907,
+      "tag": "0029_bored_killer_shrike",
+      "breakpoints": true
     }
   ]
 }

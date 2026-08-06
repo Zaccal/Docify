@@ -1,6 +1,6 @@
 import { env } from '@Docify/env/server'
 
-import type { TemplateType } from '@/schemas/document-schema/document.schema'
+import type { TemplateType } from '@/features/documents/form/schemas/document-schema/document.schema'
 import type { Company } from '@/types/company.type'
 import type { FindDocumentByIdData } from '@/types/find-document-by-id.type'
 
