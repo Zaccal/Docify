@@ -23,7 +23,18 @@ export async function getAllTransactions() {
                 AND reversal.type = 'REVERSAL'
                 AND reversal.status = 'POSTED'
             )
-          `.as('is_refunded')
+          `.as('is_refunded'),
+      isCanceled: sql<boolean>`
+        ${fields.type} = 'REVERSAL'
+        AND EXISTS (
+          SELECT 1
+          FROM cost_transactions_table AS cancellation
+          WHERE cancellation.reverses_transaction_id = ${fields.id}
+            AND cancellation.type = 'CHARGE'
+            AND cancellation.reason = 'CANCELLATION'
+            AND cancellation.status = 'POSTED'
+        )
+      `.as('is_canceled')
     })
   })
 

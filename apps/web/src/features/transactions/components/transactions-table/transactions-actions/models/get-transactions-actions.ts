@@ -33,7 +33,7 @@ export function getTransactionActions(
       id: 'cancel',
       label: 'Отменить',
       requiresConfirmation: true,
-      disabled: !canModifyPostedTransaction,
+      disabled: !canModifyPostedTransaction || transaction.isCanceled,
       disabledReason:
         transaction.status !== 'POSTED' ? 'Можно отменить только проведённый документ' : undefined,
       showCondition: transaction.type === 'REVERSAL'
