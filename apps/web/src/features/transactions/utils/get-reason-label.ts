@@ -1,7 +1,7 @@
 import type { Transactions } from '@/server/repositories/transactions/get-all-transactions'
 
 export function getReasonLabel(transaction: Transactions) {
-  console.log(transaction.isRefunded)
+  if (transaction.isCanceled) return 'Отменено'
   if (transaction.isRefunded) return 'Возвращено'
 
   switch (transaction.reason) {

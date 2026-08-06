@@ -14,7 +14,7 @@ export async function refundAction(transactionId: string, company: Company) {
   if (!parsed.success) {
     return {
       success: false as const,
-      error: 'Некоректный '
+      error: 'Некоректный идентификатор транзакции'
     }
   }
 
