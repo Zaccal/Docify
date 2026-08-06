@@ -6,6 +6,7 @@ export const CostTransactionTypeEnum = pgEnum('cost_transaction_type', ['CHARGE'
 
 export const CostTransactionReasonEnum = pgEnum('cost_transaction_reason', [
   'NEW_ORDER',
+  'REFUND_CANCELLATION',
   'CANCELLATION',
   'REFUND'
 ])

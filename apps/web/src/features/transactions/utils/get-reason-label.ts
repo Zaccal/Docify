@@ -8,8 +8,12 @@ export function getReasonLabel(transaction: Transactions) {
     case 'NEW_ORDER':
       return 'Новый заказ'
     case 'CANCELLATION':
-      return 'Отмена'
+      return 'Отменено'
     case 'REFUND':
       return 'Возврат'
+    case 'REFUND_CANCELLATION':
+      return 'Отмена возврата'
+    default:
+      return transaction.reason
   }
 }

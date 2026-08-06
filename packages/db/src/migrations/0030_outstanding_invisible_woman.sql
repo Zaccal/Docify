@@ -1,0 +1,1 @@
+ALTER TYPE "public"."cost_transaction_reason" ADD VALUE 'REFUND_CANCELLATION' BEFORE 'CANCELLATION';
