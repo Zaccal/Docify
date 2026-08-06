@@ -39,12 +39,6 @@ export function getTransactionActions(
       showCondition: transaction.type === 'REVERSAL'
     },
     {
-      id: 'edit',
-      label: 'Исправить',
-      href: `/transactions/${transaction.operationId}/edit`,
-      disabled: !permissions.canEdit
-    },
-    {
       id: 'recreate',
       label: 'Пересоздать',
       requiresConfirmation: true,

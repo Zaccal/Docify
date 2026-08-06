@@ -1,7 +1,6 @@
 import {
   CancelSquareIcon,
   DeliveryReturn02Icon,
-  Edit03Icon,
   Repeat,
   TransactionIcon,
   ViewIcon
@@ -12,7 +11,6 @@ import type { TransactionActionId } from './transactions-actions'
 export const actionIcons = {
   view: ViewIcon,
   refund: DeliveryReturn02Icon,
-  edit: Edit03Icon,
   recreate: Repeat,
   cancel: CancelSquareIcon,
   ignore: TransactionIcon

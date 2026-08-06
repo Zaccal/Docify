@@ -55,9 +55,6 @@ export default function TransactionsActions({ transaction }: TransactionsActions
         case 'recreate':
           recreateHandler()
           break
-        case 'edit':
-          pushHandler(actionId)
-          break
         case 'refund':
           const refundResult = await refundAction(transaction.id, company)
           if (!refundResult.success) toast.error(refundResult.error)
