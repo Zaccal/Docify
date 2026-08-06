@@ -49,6 +49,12 @@ export function getTransactionActions(
       label: 'Пересоздать',
       requiresConfirmation: true,
       disabled: !permissions.canRecreate
+    },
+    {
+      id: 'ignore',
+      label: 'Игнорировать',
+      requiresConfirmation: true,
+      showCondition: transaction.status === 'POSTED'
     }
   ]
 }

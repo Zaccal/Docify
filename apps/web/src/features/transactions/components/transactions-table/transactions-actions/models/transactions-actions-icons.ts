@@ -3,6 +3,7 @@ import {
   DeliveryReturn02Icon,
   Edit03Icon,
   Repeat,
+  TransactionIcon,
   ViewIcon
 } from '@hugeicons/core-free-icons'
 
@@ -13,5 +14,6 @@ export const actionIcons = {
   refund: DeliveryReturn02Icon,
   edit: Edit03Icon,
   recreate: Repeat,
-  cancel: CancelSquareIcon
+  cancel: CancelSquareIcon,
+  ignore: TransactionIcon
 } satisfies Record<TransactionActionId, typeof ViewIcon>

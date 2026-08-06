@@ -14,6 +14,7 @@ import { toast } from 'sonner'
 
 import { useCompanySelect } from '@/components/company-select/company-select-store'
 import { cancelAction } from '@/features/transactions/actions/cancel-action'
+import { ignoreAction } from '@/features/transactions/actions/ignore-action'
 import { refundAction } from '@/features/transactions/actions/refund-action'
 import { useRecreate } from '@/features/transactions/hooks/use-recreate'
 import type { Transactions } from '@/server/repositories/transactions/get-all-transactions'
@@ -69,6 +70,11 @@ export default function TransactionsActions({ transaction }: TransactionsActions
           const cancelResult = await cancelAction(transaction.id)
           if (!cancelResult.success) toast.error(cancelResult.error)
           else toast.success('Транзакция успешно отменена')
+          break
+        case 'ignore':
+          const ignoreResult = await ignoreAction(transaction.id)
+          if (!ignoreResult.success) toast.error(ignoreResult.error)
+          else toast.success('Транзакция успешно игнорирована')
           break
       }
 
