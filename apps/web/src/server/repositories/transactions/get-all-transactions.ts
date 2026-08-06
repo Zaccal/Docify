@@ -31,7 +31,6 @@ export async function getAllTransactions() {
           FROM cost_transactions_table AS cancellation
           WHERE cancellation.reverses_transaction_id = ${fields.id}
             AND cancellation.type = 'CHARGE'
-            AND cancellation.reason = 'CANCELLATION'
             AND cancellation.status = 'POSTED'
         )
       `.as('is_canceled')
