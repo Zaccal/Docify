@@ -38,7 +38,8 @@ export const transactionsColumns: ColumnDef<Transactions>[] = [
   },
   {
     id: 'documentEnumeration',
-    sortingFn: 'alphanumeric',
+    accessorFn: (row) => Number(row.snapshot.document.enumeration),
+    sortingFn: 'basic',
     header: ({ column }) => (
       <SortingButton sorted={column.getIsSorted() === 'asc'} column={column}>
         Номер документа
