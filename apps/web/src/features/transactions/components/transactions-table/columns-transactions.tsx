@@ -23,6 +23,15 @@ export const transactionsColumns: ColumnDef<Transactions>[] = [
     )
   },
   {
+    accessorKey: 'company',
+    header: 'ИП',
+    cell: ({ row }) => (
+      <span title={row.original.company ?? '—'}>
+        {truncate(row.original.company ?? '—', { length: 10 })}
+      </span>
+    )
+  },
+  {
     accessorKey: 'transactionDate',
     sortingFn: 'datetime',
     header: ({ column }) => (
