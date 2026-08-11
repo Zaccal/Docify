@@ -1,7 +1,6 @@
-// import { DataTable } from '@Docify/ui/components/data-table'
-
 import OrganizationSelectValue from '@/components/company-select/company-select-value'
 import ChartAreaIncome from '@/features/dashboard/components/chart-area-income'
+import RecentDocumentsTable from '@/features/dashboard/components/recent-documents-table/recent-documents-table'
 import SectionTotalCards from '@/features/dashboard/components/section-total-cards/section-total-cards'
 import WelcomeText from '@/features/dashboard/components/welcome-text'
 
@@ -21,7 +20,7 @@ export default function Dashboard() {
             <div className="px-4 lg:px-6">
               <ChartAreaIncome />
             </div>
-            {/*<DataTable data={} />*/}
+            <RecentDocumentsTable />
           </div>
         </div>
       </div>

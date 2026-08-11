@@ -27,15 +27,19 @@ import { useState } from 'react'
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  showSearch?: boolean
+  defaultSorting?: SortingState
+  showPagination?: boolean
 }
 
-export default function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([
-    {
-      id: 'transactionDate',
-      desc: true
-    }
-  ])
+export default function DataTable<TData, TValue>({
+  columns,
+  data,
+  showSearch = true,
+  defaultSorting = [],
+  showPagination = true
+}: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = useState<SortingState>(defaultSorting)
   const [globalFilter, setGlobalFileter] = useState('')
   const table = useReactTable({
     data,
@@ -55,18 +59,20 @@ export default function DataTable<TData, TValue>({ columns, data }: DataTablePro
 
   return (
     <div>
-      <div className="flex items-center py-4">
-        <InputGroup className="max-w-md">
-          <InputGroupAddon align="inline-start">
-            <HugeiconsIcon icon={Search} />
-          </InputGroupAddon>
-          <InputGroupInput
-            placeholder="Поиск по таблице"
-            value={globalFilter}
-            onChange={(e) => setGlobalFileter(e.target.value)}
-          />
-        </InputGroup>
-      </div>
+      {showSearch && (
+        <div className="flex items-center py-4">
+          <InputGroup className="max-w-md">
+            <InputGroupAddon align="inline-start">
+              <HugeiconsIcon icon={Search} />
+            </InputGroupAddon>
+            <InputGroupInput
+              placeholder="Поиск по таблице"
+              value={globalFilter}
+              onChange={(e) => setGlobalFileter(e.target.value)}
+            />
+          </InputGroup>
+        </div>
+      )}
       <div className="muted-headers overflow-hidden">
         <Table>
           <TableHeader>
@@ -105,27 +111,29 @@ export default function DataTable<TData, TValue>({ columns, data }: DataTablePro
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Предыдущая
-        </Button>
-        <span>
-          {table.getState().pagination.pageIndex + 1} из {table.getPageCount()}
-        </span>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Следующая
-        </Button>
-      </div>
+      {showPagination && (
+        <div className="flex items-center justify-end space-x-2 py-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Предыдущая
+          </Button>
+          <span>
+            {table.getState().pagination.pageIndex + 1} из {table.getPageCount()}
+          </span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Следующая
+          </Button>
+        </div>
+      )}
     </div>
   )
 }
