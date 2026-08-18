@@ -23,6 +23,15 @@ export const transactionsColumns: ColumnDef<Transactions>[] = [
     )
   },
   {
+    accessorKey: 'company',
+    header: 'ИП',
+    cell: ({ row }) => (
+      <span title={row.original.company ?? '—'}>
+        {truncate(row.original.company ?? '—', { length: 10 })}
+      </span>
+    )
+  },
+  {
     accessorKey: 'transactionDate',
     sortingFn: 'datetime',
     header: ({ column }) => (
@@ -38,7 +47,8 @@ export const transactionsColumns: ColumnDef<Transactions>[] = [
   },
   {
     id: 'documentEnumeration',
-    sortingFn: 'alphanumeric',
+    accessorFn: (row) => Number(row.snapshot.document.enumeration),
+    sortingFn: 'basic',
     header: ({ column }) => (
       <SortingButton sorted={column.getIsSorted() === 'asc'} column={column}>
         Номер документа

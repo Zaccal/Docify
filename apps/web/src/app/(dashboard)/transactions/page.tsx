@@ -11,7 +11,18 @@ async function TransactionsTable() {
 
   const data = await getAllTransactions()
 
-  return <DataTable columns={transactionsColumns} data={data} />
+  return (
+    <DataTable
+      defaultSorting={[
+        {
+          id: 'transactionDate',
+          desc: true
+        }
+      ]}
+      columns={transactionsColumns}
+      data={data}
+    />
+  )
 }
 
 export default function Transactions() {
