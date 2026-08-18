@@ -3,14 +3,14 @@ package internal
 import "time"
 
 type Payload struct {
-	ID           string    `json:"id"`
-	Enumeration  string    `json:"enumeration"`
-	DocumentDate []string  `json:"documentDate"`
-	UpdatedAt    time.Time `json:"updatedAt"`
-	CreatedAt    time.Time `json:"createdAt"`
-	CellsLine    map[string]string `json:"cellsLine"`
-	CustomerID     string `json:"customerId"`
-	OrganizationID string `json:"organizationId"`
+	ID             string            `json:"id"`
+	Enumeration    string            `json:"enumeration"`
+	DocumentDate   []string          `json:"documentDate"`
+	UpdatedAt      time.Time         `json:"updatedAt"`
+	CreatedAt      time.Time         `json:"createdAt"`
+	CellsLine      map[string]string `json:"cellsLine"`
+	CustomerID     string            `json:"customerId"`
+	OrganizationID string            `json:"organizationId"`
 	Customer       struct {
 		ID               string `json:"id"`
 		FullnameClient   string `json:"fullnameClient"`
@@ -26,8 +26,8 @@ type Payload struct {
 			City         string `json:"city"`
 			Index        string `json:"index"`
 			Address      string `json:"address"`
-			CostPerDay   int    `json:"costPerDay"`
-			TotalCost    int    `json:"totalCost"`
+			CostPerDay   int64  `json:"costPerDay"`
+			TotalCost    int64  `json:"totalCost"`
 			Iik          string `json:"iik"`
 			Bik          string `json:"bik"`
 			Bank         string `json:"bank"`

@@ -35,12 +35,7 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 	}
 
 	costPerDayRaw := normalizeNumericString(data.Customer.Organization.CostPerDay)
-	costPerDay, err := strconv.Atoi(costPerDayRaw)
-	if err != nil {
-		return result, fmt.Errorf("parse costPerDay: %w", err)
-	}
-
-	costPerDayWords, err := utils.NumbersToWordsRu(costPerDay)
+	costPerDayWords, err := utils.NumbersToWordsRu(data.Customer.Organization.CostPerDay)
 	if err != nil {
 		return result, err
 	}
@@ -52,7 +47,7 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 
 	result.Generated = make(map[string]string)
 
-	result.Generated["totalCost"] = utils.FormatCost(strconv.Itoa(data.Customer.Organization.TotalCost))
+	result.Generated["totalCost"] = utils.FormatCost(strconv.FormatInt(data.Customer.Organization.TotalCost, 10))
 	result.Generated["totalCostRu"] = utils.Capitalize(totalCostRu)
 	result.Generated["nights"] = strconv.Itoa(nights)
 
@@ -77,8 +72,8 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 	return result, nil
 }
 
-func normalizeNumericString(data int) string {
-	value := strconv.Itoa(data)
+func normalizeNumericString(data int64) string {
+	value := strconv.FormatInt(data, 10)
 
 	replacer := strings.NewReplacer(" ", "", "\u00a0", "", "\u202f", "")
 	return replacer.Replace(value)
