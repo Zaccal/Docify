@@ -7,9 +7,7 @@ func TestFormatPayloadAddsGeneratedValues(t *testing.T) {
 	payload.DocumentDate = []string{"2026-06-10", "2026-06-13"}
 	payload.Customer.Organization.CostPerDay = 1000000
 	payload.Customer.Organization.TotalCost = 3000000
-	payload.CellsLine = map[string]string{
-		"userValue": "kept",
-	}
+	payload.CellsLine = CellLines{{Key: "userValue", Value: "kept"}}
 
 	result, err := FormatPayload(payload)
 	if err != nil {
@@ -23,10 +21,10 @@ func TestFormatPayloadAddsGeneratedValues(t *testing.T) {
 	assertPayloadGeneratedValue(t, result, "totalCostRu", "Три миллиона")
 	assertPayloadGeneratedValue(t, result, "costPerDayRu", "Один миллион")
 
-	if result.CellsLine["userValue"] != "kept" {
+	if result.CellsLine.AsMap()["userValue"] != "kept" {
 		t.Fatalf("expected user cellsLine value to be preserved")
 	}
-	if _, exists := result.CellsLine["totalCost"]; exists {
+	if _, exists := result.CellsLine.AsMap()["totalCost"]; exists {
 		t.Fatalf("expected computed values not to be written into cellsLine")
 	}
 

@@ -56,9 +56,7 @@ func TestFillGapReplacesNestedPayloadValues(t *testing.T) {
 
 	var payload Payload
 	payload.Customer.FullnameClient = "Adil"
-	payload.CellsLine = map[string]string{
-		"customPrice": "1000",
-	}
+	payload.CellsLine = CellLines{{Key: "customPrice", Value: "1000"}}
 	formattedPayload := FormattedPayload{
 		Payload: payload,
 		Generated: map[string]string{
