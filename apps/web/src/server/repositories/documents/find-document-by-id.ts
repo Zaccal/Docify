@@ -13,3 +13,5 @@ export async function findDocumentById(id: string) {
     }
   })
 }
+
+export type FindDocumentByIdResult = Awaited<ReturnType<typeof findDocumentById>>
