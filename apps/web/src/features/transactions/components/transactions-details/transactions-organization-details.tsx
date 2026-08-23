@@ -52,6 +52,13 @@ export default function TrunsactionsOrganizationDetails({
         <DetailSection.Item keyOfValue="КНП">
           {fallbackEmpty(trunsactions.snapshot.organization.knp)}
         </DetailSection.Item>
+        <DetailSection.Item keyOfValue="Стоимость за сутки">
+          {new Intl.NumberFormat('ru-RU', {
+            style: 'currency',
+            currency: 'KZT',
+            maximumFractionDigits: 0
+          }).format(trunsactions.snapshot.organization.costPerDay)}
+        </DetailSection.Item>
       </DetailSection.Content>
     </DetailSection.Root>
   )

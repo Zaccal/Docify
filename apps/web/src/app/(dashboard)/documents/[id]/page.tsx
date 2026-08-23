@@ -133,12 +133,19 @@ async function DocumentDetails({ params }: PageProps) {
               <DetailSection.Item keyOfValue="ИИК">
                 {document.customer.organization.iik}
               </DetailSection.Item>
-              <DetailSection.Item keyOfValue="Стоимость">
+              <DetailSection.Item keyOfValue="Общая стоимость">
                 {new Intl.NumberFormat('ru-RU', {
                   style: 'currency',
                   currency: 'KZT',
                   maximumFractionDigits: 0
                 }).format(document.customer.organization.totalCost)}
+              </DetailSection.Item>
+              <DetailSection.Item keyOfValue="Стоимость за сутки">
+                {new Intl.NumberFormat('ru-RU', {
+                  style: 'currency',
+                  currency: 'KZT',
+                  maximumFractionDigits: 0
+                }).format(document.customer.organization.costPerDay)}
               </DetailSection.Item>
             </DetailSection.Content>
           </DetailSection.Root>
