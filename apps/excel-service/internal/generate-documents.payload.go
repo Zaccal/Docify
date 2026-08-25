@@ -140,19 +140,19 @@ type Payload struct {
 		Iin              string `json:"iin"`
 		OrganizationID   string `json:"organizationId"`
 		Organization     struct {
-			ID           string `json:"id"`
-			Organization string `json:"organization"`
-			Bin          string `json:"bin"`
-			City         string `json:"city"`
-			Index        string `json:"index"`
-			Address      string `json:"address"`
-			CostPerDay   int64  `json:"costPerDay"`
-			TotalCost    int64  `json:"totalCost"`
-			Iik          string `json:"iik"`
-			Bik          string `json:"bik"`
-			Bank         string `json:"bank"`
-			Knp          string `json:"knp"`
-			Kbe          string `json:"kbe"`
+			ID           string  `json:"id"`
+			Organization string  `json:"organization"`
+			Bin          string  `json:"bin"`
+			City         string  `json:"city"`
+			Index        string  `json:"index"`
+			Address      string  `json:"address"`
+			CostPerDay   float64 `json:"costPerDay"`
+			TotalCost    float64 `json:"totalCost"`
+			Iik          string  `json:"iik"`
+			Bik          string  `json:"bik"`
+			Bank         string  `json:"bank"`
+			Knp          string  `json:"knp"`
+			Kbe          string  `json:"kbe"`
 		} `json:"organization"`
 	} `json:"customer"`
 }

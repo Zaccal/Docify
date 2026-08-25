@@ -24,6 +24,20 @@ export default function formatDocumentTemplateData(
 }
 
 function formatLeaseAgreement(data: NonNullable<FindDocumentByIdData>) {
+  const formatedCostPerDay = Number(
+    String(data.customer.organization.costPerDay).replace('.', ',').split(',')[0]
+  )
+  const formatedTotalCost = Number(
+    String(data.customer.organization.totalCost).replace('.', ',').split(',')[0]
+  )
+
+  const centsPerDay = Number(
+    String(data.customer.organization.costPerDay).replace('.', ',').split(',')[1]
+  )
+  const centsTotalCost = Number(
+    String(data.customer.organization.totalCost).replace('.', ',').split(',')[1]
+  )
+
   const [dateFrom, dateTo] = parseDocumentDateRange(data.documentDate)
 
   const formattedDateFrom = format(dateFrom, '«dd» MMMM yyyyг', {
@@ -35,7 +49,8 @@ function formatLeaseAgreement(data: NonNullable<FindDocumentByIdData>) {
 
   const nights = getNightsCount(dateFrom, dateTo)
 
-  const costPerDayRu = numberToWordsRu(Number(data.customer.organization.costPerDay))
+  const costPerDayRu = numberToWordsRu(formatedCostPerDay)
+  const totalCostRu = numberToWordsRu(formatedTotalCost)
 
   return flattenObject({
     ...data,
@@ -43,14 +58,16 @@ function formatLeaseAgreement(data: NonNullable<FindDocumentByIdData>) {
       ...data.customer,
       organization: {
         ...data.customer.organization,
-        costPerDay: formatNumber(data.customer.organization.costPerDay)
+        costPerDay: formatNumber(formatedCostPerDay)
       }
     },
     formattedDateFrom,
     formattedDateTo,
-    totalCost: formatNumber(data.customer.organization.totalCost),
-    totalCostRu: numberToWordsRu(data.customer.organization.totalCost),
+    totalCost: formatNumber(formatedTotalCost),
+    totalCostRu,
     costPerDayRu,
-    nightsCount: nights
+    nightsCount: nights,
+    costPerDayCents: centsPerDay ? `, ${centsPerDay}` : ', 00',
+    totalCostCents: centsTotalCost ? `, ${centsTotalCost}` : ', 00'
   })
 }
