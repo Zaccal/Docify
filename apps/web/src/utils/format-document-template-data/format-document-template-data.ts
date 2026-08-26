@@ -24,19 +24,18 @@ export default function formatDocumentTemplateData(
 }
 
 function formatLeaseAgreement(data: NonNullable<FindDocumentByIdData>) {
-  const formatedCostPerDay = Number(
-    String(data.customer.organization.costPerDay).replace('.', ',').split(',')[0]
-  )
-  const formatedTotalCost = Number(
-    String(data.customer.organization.totalCost).replace('.', ',').split(',')[0]
-  )
+  const splitedCostPerDay = String(data.customer.organization.costPerDay.toFixed(2))
+    .replace('.', ',')
+    .split(',')
+  const splitedTotalCost = String(data.customer.organization.totalCost.toFixed(2))
+    .replace('.', ',')
+    .split(',')
 
-  const centsPerDay = Number(
-    String(data.customer.organization.costPerDay).replace('.', ',').split(',')[1]
-  )
-  const centsTotalCost = Number(
-    String(data.customer.organization.totalCost).replace('.', ',').split(',')[1]
-  )
+  const formatedCostPerDay = Number(splitedCostPerDay[0])
+  const formatedTotalCost = Number(splitedTotalCost[0])
+
+  const centsPerDay = Number(splitedCostPerDay[1])
+  const centsTotalCost = Number(splitedTotalCost[1])
 
   const [dateFrom, dateTo] = parseDocumentDateRange(data.documentDate)
 
@@ -67,7 +66,7 @@ function formatLeaseAgreement(data: NonNullable<FindDocumentByIdData>) {
     totalCostRu,
     costPerDayRu,
     nightsCount: nights,
-    costPerDayCents: centsPerDay ? `, ${centsPerDay}` : ', 00',
-    totalCostCents: centsTotalCost ? `, ${centsTotalCost}` : ', 00'
+    costPerDayCents: centsPerDay ? `, ${String(centsPerDay).padStart(2, '0')}` : ', 00',
+    totalCostCents: centsTotalCost ? `, ${String(centsTotalCost).padStart(2, '0')}` : ', 00'
   })
 }

@@ -2,9 +2,7 @@ package internal
 
 import (
 	"fmt"
-	"math"
 	"strconv"
-	"strings"
 
 	"github.com/Zaccal/Docify/apps/excel-service/utils"
 )
@@ -15,14 +13,18 @@ type FormattedPayload struct {
 }
 
 func FormatPayload(data Payload) (result FormattedPayload, err error) {
-	totalCost, totalCostFracPart := math.Modf(data.Customer.Organization.TotalCost)
-
-	totalCostCents := int64(math.Round(totalCostFracPart * 100))
-
 	result.Payload = data
+
 	if len(data.DocumentDate) < 2 {
 		return result, fmt.Errorf("documentDate must contain date from and date to")
 	}
+
+	totalCostCents := utils.ToCents(data.Customer.Organization.TotalCost)
+	totalCost := totalCostCents / 100
+	totalCostFraction := totalCostCents % 100
+
+	costPerDayCents := utils.ToCents(data.Customer.Organization.CostPerDay)
+	costPerDay := costPerDayCents / 100
 
 	formattedDateFrom, err := utils.FormatRussianDate(data.DocumentDate[0])
 	if err != nil {
@@ -39,51 +41,43 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 		return result, err
 	}
 
-	totalCostCentsRu, err := utils.NumbersToWordsRu(int64(totalCostCents))
+	totalCostRu, err := utils.NumbersToWordsRu(totalCost)
 	if err != nil {
 		return result, err
 	}
 
-	costPerDayRaw := normalizeNumericString(data.Customer.Organization.CostPerDay)
-
-	costPerDay, _ := math.Modf(data.Customer.Organization.CostPerDay)
-	costPerDayWords, err := utils.NumbersToWordsRu(int64(costPerDay))
+	totalCostCentsRu, err := utils.NumbersToWordsRu(totalCostFraction)
 	if err != nil {
 		return result, err
 	}
 
-	totalCostRu, err := utils.NumbersToWordsRu(int64(totalCost))
+	costPerDayWords, err := utils.NumbersToWordsRu(costPerDay)
 	if err != nil {
 		return result, err
 	}
 
-	if totalCostCentsRu == "ноль" {
+	if totalCostFraction == 0 {
 		totalCostCentsRu = ", 00"
 	} else {
 		totalCostCentsRu = ", " + totalCostCentsRu
 	}
 
-	var totalCostResult string
-	if totalCostCents == 0 {
-		totalCostResult = "00"
-	} else {
-		totalCostResult = strconv.Itoa(int(totalCostCents))
-	}
+	totalCostCentsResult := fmt.Sprintf("%02d", totalCostFraction)
 
 	result.Generated = make(map[string]string)
 
-	result.Generated["totalCost"] = utils.FormatCost(strconv.FormatInt(int64(totalCost), 10))
+	result.Generated["totalCost"] = utils.FormatCents(totalCostCents)
 	result.Generated["totalCostRu"] = utils.Capitalize(totalCostRu)
 
 	result.Generated["totalCostCentsRu"] = totalCostCentsRu
-	result.Generated["totalCostCents"] = totalCostResult
+	result.Generated["totalCostCents"] = totalCostCentsResult
 
 	result.Generated["nights"] = strconv.Itoa(nights)
 
 	result.Generated["formattedDateFrom"] = formattedDateFrom
 	result.Generated["formattedDateTo"] = formattedDateTo
 
-	result.Generated["costPerDayFormatted"] = utils.FormatCost(costPerDayRaw)
+	result.Generated["costPerDayFormatted"] = utils.FormatCents(costPerDayCents)
 	result.Generated["costPerDayRu"] = utils.Capitalize(costPerDayWords)
 
 	if data.Customer.Organization.Knp != "" {
@@ -99,11 +93,4 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 	}
 
 	return result, nil
-}
-
-func normalizeNumericString(data float64) string {
-	value := strconv.FormatFloat(data, 'f', -1, 64)
-
-	replacer := strings.NewReplacer(" ", "", "\u00a0", "", "\u202f", "")
-	return replacer.Replace(value)
 }
