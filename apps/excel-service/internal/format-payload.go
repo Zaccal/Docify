@@ -63,20 +63,22 @@ func FormatPayload(data Payload) (result FormattedPayload, err error) {
 		totalCostCentsRu = ", " + totalCostCentsRu
 	}
 
-	var totalCostResult string
+	var totalCostCentsResult string
 	if totalCostCents == 0 {
-		totalCostResult = "00"
+		totalCostCentsResult = "00"
 	} else {
-		totalCostResult = strconv.Itoa(int(totalCostCents))
+		totalCostCentsResult = fmt.Sprintf("%02d", totalCostCents)
 	}
+
+	fmt.Println("CostPerDay", totalCostCentsRu)
 
 	result.Generated = make(map[string]string)
 
-	result.Generated["totalCost"] = utils.FormatCost(strconv.FormatInt(int64(totalCost), 10))
+	result.Generated["totalCost"] = utils.FormatCost(normalizeNumericString(data.Customer.Organization.TotalCost))
 	result.Generated["totalCostRu"] = utils.Capitalize(totalCostRu)
 
 	result.Generated["totalCostCentsRu"] = totalCostCentsRu
-	result.Generated["totalCostCents"] = totalCostResult
+	result.Generated["totalCostCents"] = totalCostCentsResult
 
 	result.Generated["nights"] = strconv.Itoa(nights)
 

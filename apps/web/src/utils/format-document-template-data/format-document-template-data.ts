@@ -51,8 +51,6 @@ function formatLeaseAgreement(data: NonNullable<FindDocumentByIdData>) {
   const costPerDayRu = numberToWordsRu(formatedCostPerDay)
   const totalCostRu = numberToWordsRu(formatedTotalCost)
 
-  console.log(data.customer.organization.totalCost.toFixed(2))
-
   return flattenObject({
     ...data,
     customer: {
@@ -68,7 +66,7 @@ function formatLeaseAgreement(data: NonNullable<FindDocumentByIdData>) {
     totalCostRu,
     costPerDayRu,
     nightsCount: nights,
-    costPerDayCents: centsPerDay ? `, ${centsPerDay}` : ', 00',
-    totalCostCents: centsTotalCost ? `, ${centsTotalCost}` : ', 00'
+    costPerDayCents: centsPerDay ? `, ${String(centsPerDay).padStart(2, '0')}` : ', 00',
+    totalCostCents: centsTotalCost ? `, ${String(centsTotalCost).padStart(2, '0')}` : ', 00'
   })
 }
