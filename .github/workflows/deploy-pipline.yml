@@ -12,8 +12,23 @@ permissions:
   contents: read
 
 jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - uses: cypress-io/github-action@v7.4.3
+        with:
+          build: bun run build
+          start: bun run dev
+        env:
+          CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}
+
   lint:
     runs-on: ubuntu-latest
+    needs: cypress
     steps:
       - uses: actions/checkout@v4
 
@@ -27,6 +42,7 @@ jobs:
   migrate:
     runs-on: ubuntu-latest
     environment: production
+    needs: cypress
     steps:
       - uses: actions/checkout@v4
 

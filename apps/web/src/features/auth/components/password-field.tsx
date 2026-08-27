@@ -26,6 +26,7 @@ export default function PasswordField({ disabled, errors }: PasswordFieldProps) 
         <InputGroupInput
           id="password"
           name="password"
+          data-testid="password-field"
           type={isPasswordVisible ? 'text' : 'password'}
           placeholder="Пароль"
           disabled={disabled}
@@ -34,6 +35,7 @@ export default function PasswordField({ disabled, errors }: PasswordFieldProps) 
           <Button
             type="button"
             size="icon-sm"
+            data-testid="password-button"
             variant="ghost"
             aria-label={isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'}
             aria-pressed={isPasswordVisible}

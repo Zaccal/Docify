@@ -56,3 +56,6 @@ tmp
 temp
 deployment/certbot/conf/
 deployment/certbot/www/
+
+# e2e
+cypress.env.json
