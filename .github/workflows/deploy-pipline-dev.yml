@@ -26,6 +26,12 @@ jobs:
           start: bun run dev
         env:
           CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          CORS_ORIGIN: ${{ secrets.CORS_ORIGIN }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          TEMPLATE_DIR: ${{ secrets.TEMPLATE_DIR }}
+          EXCEL_SERVICE_URL: ${{ secrets.EXCEL_SERVICE_URL }}
 
   migrate:
     runs-on: ubuntu-latest
