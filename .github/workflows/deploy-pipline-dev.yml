@@ -35,6 +35,13 @@ jobs:
           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
           CORS_ORIGIN: ${{ secrets.CORS_ORIGIN }}
 
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install Cypress
+        run: bun install --frozen-lockfile
+
       - name: Wait for application
         run: |
           timeout 120 bash -c \
