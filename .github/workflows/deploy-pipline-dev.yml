@@ -13,13 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: development
     env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL_DEV }}
       PASSWORD: ${{ secrets.PASSWORD }}
       CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}
       CORS_ORIGIN: ${{ secrets.CORS_ORIGIN }}
       AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-      TEMPLATE_DIR: ${{ secrets.TEMPLATE_DIR }}
-      EXCEL_SERVICE_URL: ${{ secrets.EXCEL_SERVICE_URL }}
 
     steps:
       - uses: actions/checkout@v4
@@ -47,7 +44,10 @@ jobs:
             'until curl -f http://localhost:3001; do sleep 2; done'
 
       - name: Run Cypress
-        run: bunx cypress run
+        run: bunx cypress run --record --parallel
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Show Docker logs
         if: failure()
