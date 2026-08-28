@@ -11,15 +11,7 @@ permissions:
 jobs:
   cypress:
     runs-on: ubuntu-latest
-    environment: development
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      PASSWORD: ${{ secrets.PASSWORD }}
-      CORS_ORIGIN: ${{ secrets.CORS_ORIGIN }}
-      AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-      TEMPLATE_DIR: ${{ secrets.TEMPLATE_DIR }}
-      EXCEL_SERVICE_URL: ${{ secrets.EXCEL_SERVICE_URL }}
-      CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}
+
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -32,6 +24,14 @@ jobs:
           install: false
           build: bun run build
           start: bun run dev
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          CORS_ORIGIN: ${{ secrets.CORS_ORIGIN }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          TEMPLATE_DIR: ${{ secrets.TEMPLATE_DIR }}
+          EXCEL_SERVICE_URL: ${{ secrets.EXCEL_SERVICE_URL }}
+          CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}
 
   migrate:
     runs-on: ubuntu-latest
