@@ -20,6 +20,22 @@ jobs:
           bun-version: latest
       - name: Install dependencies
         run: bun install --frozen-lockfile
+      - name: Check environment
+        run: |
+          echo "DATABASE_URL=${DATABASE_URL:+SET}"
+          echo "PASSWORD=${PASSWORD:+SET}"
+          echo "CORS_ORIGIN=${CORS_ORIGIN:+SET}"
+          echo "AUTH_SECRET=${AUTH_SECRET:+SET}"
+          echo "TEMPLATE_DIR=${TEMPLATE_DIR:+SET}"
+          echo "EXCEL_SERVICE_URL=${EXCEL_SERVICE_URL:+SET}"
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL_DEV }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}
+          CORS_ORIGIN: ${{ secrets.CORS_ORIGIN }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          TEMPLATE_DIR: ${{ secrets.TEMPLATE_DIR }}
+          EXCEL_SERVICE_URL: ${{ secrets.EXCEL_SERVICE_URL }}
       - name: Build App
         run: bun run build
         env:
