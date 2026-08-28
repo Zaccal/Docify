@@ -1,18 +1,6 @@
 name: Docify-CI
 
 services:
-  migrate:
-    build:
-      context: .
-      dockerfile: apps/web/Dockerfile
-    environment:
-      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-password}@postgres:5432/Docify
-    depends_on:
-      postgres:
-        condition: service_healthy
-    command: bun run db:migrate
-    restart: 'no'
-
   web:
     build:
       context: .
@@ -28,8 +16,6 @@ services:
       PASSWORD: ${PASSWORD}
       TEMPLATE_DIR: /app/templates
     depends_on:
-      migrate:
-        condition: service_completed_successfully
       excel-service:
         condition: service_started
       postgres:
