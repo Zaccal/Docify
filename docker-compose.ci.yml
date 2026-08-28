@@ -34,6 +34,8 @@ services:
 
   postgres:
     image: postgres:18
+    ports:
+      - '5433:5432'
     environment:
       POSTGRES_DB: Docify
       POSTGRES_USER: postgres
