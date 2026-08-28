@@ -5,7 +5,15 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
+      "env": [
+        "DATABASE_URL",
+        "PASSWORD",
+        "CORS_ORIGIN",
+        "AUTH_SECRET",
+        "TEMPLATE_DIR",
+        "EXCEL_SERVICE_URL"
+      ]
     },
     "lint": {
       "dependsOn": ["^lint"]
