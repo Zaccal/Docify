@@ -11,6 +11,7 @@ permissions:
 jobs:
   cypress:
     runs-on: ubuntu-latest
+    environment: development
 
     steps:
       - uses: actions/checkout@v4
@@ -19,11 +20,8 @@ jobs:
           bun-version: latest
       - name: Install dependencies
         run: bun install --frozen-lockfile
-      - uses: cypress-io/github-action@v7.4.3
-        with:
-          install: false
-          build: bun run build
-          start: bun run dev
+      - name: Build App
+        run: bun run build
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           PASSWORD: ${{ secrets.PASSWORD }}
@@ -31,7 +29,11 @@ jobs:
           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
           TEMPLATE_DIR: ${{ secrets.TEMPLATE_DIR }}
           EXCEL_SERVICE_URL: ${{ secrets.EXCEL_SERVICE_URL }}
-          CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}
+      - uses: cypress-io/github-action@v7.4.3
+        with:
+          install: false
+          start: bun run dev
+          wait-on: 'http://localhost:3001'
 
   migrate:
     runs-on: ubuntu-latest
