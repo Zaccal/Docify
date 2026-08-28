@@ -44,7 +44,7 @@ jobs:
 
       - name: Run database migrations
         working-directory: packages/db
-        run: bun run db:migrate
+        run: bun run db:migrate:file
         env:
           DATABASE_URL: postgresql://postgres:${PASSWORD}@localhost:5433/Docify
 
