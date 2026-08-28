@@ -1,0 +1,45 @@
+name: Docify-CI
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    init: true
+    ports:
+      - '3001:3001'
+    environment:
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-password}@postgres:5432/Docify
+      EXCEL_SERVICE_URL: http://excel-service:3002
+      CORS_ORIGIN: http://localhost:3001
+      AUTH_SECRET: ${AUTH_SECRET}
+      PASSWORD: ${PASSWORD}
+      TEMPLATE_DIR: /app/templates
+    depends_on:
+      excel-service:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+
+  excel-service:
+    build:
+      context: apps/excel-service
+      dockerfile: Dockerfile
+    init: true
+    expose:
+      - '3002'
+    environment:
+      PORT: 3002
+      TEMPLATE_PATH: /templates
+
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: Docify
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
