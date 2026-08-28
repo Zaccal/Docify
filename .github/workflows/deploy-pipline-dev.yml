@@ -36,6 +36,7 @@ jobs:
         run: docker compose -f docker-compose.ci.yml up -d postgres excel-service
         env:
           POSTGRES_PASSWORD: ${{ secrets.PASSWORD }}
+          PASSWORD: ${{ secrets.PASSWORD }}
 
       - name: Wait for PostgreSQL
         run: |
@@ -46,7 +47,7 @@ jobs:
         working-directory: packages/db
         run: bun run db:migrate:file
         env:
-          DATABASE_URL: postgresql://postgres:${PASSWORD}@localhost:5433/Docify
+          DATABASE_URL: postgresql://postgres:${{ secrets.PASSWORD }}@localhost:5433/Docify
 
       - name: Start web
         run: docker compose -f docker-compose.ci.yml up -d web
