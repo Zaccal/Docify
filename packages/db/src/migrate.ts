@@ -1,8 +1,13 @@
 import process from 'node:process'
 
+import dotenv from 'dotenv'
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { migrate } from 'drizzle-orm/node-postgres/migrator'
 import { Pool } from 'pg'
+
+dotenv.config({
+  path: '../../apps/web/.env'
+})
 
 const connectionString = process.env.DATABASE_URL
 

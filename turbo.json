@@ -52,6 +52,9 @@
     },
     "db:down": {
       "cache": false
+    },
+    "db:migrate:file": {
+      "cache": false
     }
   }
 }
