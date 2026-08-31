@@ -69,6 +69,23 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Cypress result summary
+        if: always()
+        run: |
+          echo "## 🧪 Cypress E2E Results" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "${{ steps.cypress.outcome }}" = "success" ]; then
+            echo "### ✅ Tests passed" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### ❌ Tests failed" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Branch:** \`${GITHUB_REF_NAME}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Commit:** \`${GITHUB_SHA::7}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Cypress:** 15.21.1" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Show Docker logs
         if: failure()
         run: docker compose -f docker-compose.ci.yml logs
