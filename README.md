@@ -2,6 +2,8 @@
 
 This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, Self, and more.
 
+This project is a web application for automating the generation of Excel documents for my family business.
+
 ## Features
 
 - **TypeScript** - For type safety and improved developer experience
@@ -42,6 +44,69 @@ bun run dev
 ```
 
 Open [http://localhost:3001](http://localhost:3001) in your browser to see the fullstack application.
+
+## Isolated Database setup for testing
+
+To set up an isolated database for testing,
+run the following command:
+
+```bash
+bun run db:test:up
+```
+
+To tear down the isolated database:
+
+```bash
+bun run db:test:down
+```
+
+### ALSO DO NOT FORGET SET UP ENVIRONMENT VARIABLES
+
+Create a `.env` file in the `apps/web` directory with the following content:
+
+```env
+CORS_ORIGIN=
+DATABASE_URL=LOCAL DB FOR DEV
+PASSWORD=PASSWORD FOR LOGIN
+AUTH_SECRET==GENERATED SECRET
+TEMPLATE_DIR='templates'
+EXCEL_SERVICE_URL="http://localhost:PORT"
+```
+
+Create a `.env` file in the `apps/excel-service` directory with the following content:
+
+```env
+PORT=
+TEMPLATE_PATH=templates
+```
+
+Optional: create a `cypress.env.json` file in the root directory with the following content:
+
+```json
+{
+  "PASSWORD": "PASSWORD FOR LOGIN FROM ENV IN WEB",
+  "AUTH_SECRET": "GENERATED SECRET FROM ENV IN WEB",
+  "DATABASE_URL": "LOCAL DB FOR TESTING"
+}
+```
+
+for testing db u can run `bun run db:test:up` and `bun run db:test:down` to set it up and tear it down.
+
+## Excel Service
+
+The Excel service is a Go microservice that generates Excel documents from templates.
+
+Requirements:
+
+- Go (version 1.21 or higher)
+- Air (for live reloading)
+
+To run the Excel service:
+
+```bash
+cd apps/excel
+bun run dev
+```
 
 ## UI Customization
 
