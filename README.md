@@ -73,6 +73,8 @@ TEMPLATE_DIR='templates'
 EXCEL_SERVICE_URL="http://localhost:PORT"
 ```
 
+Create a `.env.test` file in the `apps/web` directory with the same following content as `.env` but with the `DATABASE_URL` set to the test database.
+
 Create a `.env` file in the `apps/excel-service` directory with the following content:
 
 ```env
@@ -80,17 +82,12 @@ PORT=
 TEMPLATE_PATH=templates
 ```
 
-Optional: create a `cypress.env.json` file in the root directory with the following content:
+## E2E Testing
 
-```json
-{
-  "PASSWORD": "PASSWORD FOR LOGIN FROM ENV IN WEB",
-  "AUTH_SECRET": "GENERATED SECRET FROM ENV IN WEB",
-  "DATABASE_URL": "LOCAL DB FOR TESTING"
-}
-```
+Before running E2E tests, ensure the test database is set up by following the instructions above in "Isolated Database setup for testing":
 
-for testing db u can run `bun run db:test:up` and `bun run db:test:down` to set it up and tear it down.
+for running E2E tests you can use the `bun run cypress:run` command.
+or `bun run cypress:open` to run the Cypress test runner in interactive mode.
 
 ## Excel Service
 

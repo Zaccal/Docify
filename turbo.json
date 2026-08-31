@@ -9,6 +9,7 @@
       "env": [
         "DATABASE_URL",
         "PASSWORD",
+        "NODE_ENV",
         "CORS_ORIGIN",
         "AUTH_SECRET",
         "TEMPLATE_DIR",
@@ -25,6 +26,10 @@
       "cache": false,
       "persistent": true
     },
+    "dev:test": {
+      "cache": false,
+      "persistent": true
+    },
     "db:push": {
       "cache": false
     },
@@ -32,6 +37,10 @@
       "cache": false
     },
     "db:migrate": {
+      "cache": false,
+      "persistent": true
+    },
+    "db:migrate:test": {
       "cache": false,
       "persistent": true
     },

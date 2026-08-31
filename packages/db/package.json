@@ -18,6 +18,7 @@
     "db:studio": "drizzle-kit studio",
     "db:migrate": "drizzle-kit migrate",
     "db:migrate:file": "bun src/migrate.ts",
+    "db:migrate:test": "dotenv -e ../../apps/web/.env.test -- drizzle-kit migrate",
     "db:drop": "drizzle-kit drop"
   },
   "dependencies": {
