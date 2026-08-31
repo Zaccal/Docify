@@ -16,7 +16,7 @@ export async function login(_prevState: LoginState, formData: FormData): Promise
   }
 
   if (result.data.password !== env.PASSWORD) {
-    return { success: false, error: [{ message: 'Не верный пароль' }] }
+    return { success: false, error: [{ message: 'Неверный пароль' }] }
   }
 
   const cookieStore = await cookies()

@@ -15,10 +15,10 @@ export default function LoginForm() {
   const [state, formAction, pending] = useActionState(login, initialState)
 
   return (
-    <form action={formAction}>
+    <form data-testid="login-form" action={formAction}>
       <PasswordField errors={state.error} disabled={pending} />
 
-      <Button loading={pending} fullWidth className="mt-4" type="submit">
+      <Button data-testid="login-button" loading={pending} fullWidth className="mt-4" type="submit">
         Войти
       </Button>
     </form>
