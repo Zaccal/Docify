@@ -22,7 +22,6 @@
   "type": "module",
   "scripts": {
     "dev": "turbo dev",
-    "dev:test": "turbo dev:test",
     "build": "turbo build",
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
@@ -36,7 +35,6 @@
     "db:generate": "turbo -F @Docify/db db:generate",
     "db:migrate": "turbo -F @Docify/db db:migrate",
     "db:migrate:file": "turbo -F @Docify/db db:migrate:file",
-    "db:migrate:test": "turbo -F @Docify/db db:migrate:test",
     "db:drop": "turbo -F @Docify/db db:drop",
     "db:start": "docker compose up -d postgres",
     "db:watch": "docker compose up postgres",
@@ -48,7 +46,9 @@
     "docker:logs": "docker compose logs -f",
     "prepare": "husky",
     "cypress:run": "bunx cypress run",
-    "cypress:open": "bunx cypress open"
+    "cypress:open": "bunx cypress open",
+    "e2e:run": "bun ./cypress/runner/scripts/ci.ts",
+    "e2e:open": "bun ./cypress/runner/scripts/default.ts"
   },
   "dependencies": {
     "@Docify/env": "workspace:*",
@@ -58,12 +58,17 @@
   },
   "devDependencies": {
     "@Docify/config": "workspace:*",
+    "@testcontainers/postgresql": "^12.1.0",
     "@types/node": "^22.13.14",
+    "@types/pg": "^8.23.1",
     "cypress": "^15.21.1",
+    "dotenv-cli": "^11.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.7",
     "oxfmt": "^0.55.0",
     "oxlint": "^1.70.0",
+    "pg": "^8.23.0",
+    "testcontainers": "^12.1.0",
     "turbo": "^2.9.16",
     "typescript": "catalog:"
   },

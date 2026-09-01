@@ -1,6 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
+  "globalEnv": ["DATABASE_URL"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -26,10 +27,6 @@
       "cache": false,
       "persistent": true
     },
-    "dev:test": {
-      "cache": false,
-      "persistent": true
-    },
     "db:push": {
       "cache": false
     },
@@ -40,9 +37,8 @@
       "cache": false,
       "persistent": true
     },
-    "db:migrate:test": {
-      "cache": false,
-      "persistent": true
+    "db:migrate:file": {
+      "cache": false
     },
     "db:studio": {
       "cache": false,
@@ -60,9 +56,6 @@
       "persistent": true
     },
     "db:down": {
-      "cache": false
-    },
-    "db:migrate:file": {
       "cache": false
     }
   }
