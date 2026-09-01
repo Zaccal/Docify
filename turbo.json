@@ -1,6 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
+  "globalEnv": ["DATABASE_URL"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -9,6 +10,7 @@
       "env": [
         "DATABASE_URL",
         "PASSWORD",
+        "NODE_ENV",
         "CORS_ORIGIN",
         "AUTH_SECRET",
         "TEMPLATE_DIR",
@@ -35,6 +37,9 @@
       "cache": false,
       "persistent": true
     },
+    "db:migrate:file": {
+      "cache": false
+    },
     "db:studio": {
       "cache": false,
       "persistent": true
@@ -51,9 +56,6 @@
       "persistent": true
     },
     "db:down": {
-      "cache": false
-    },
-    "db:migrate:file": {
       "cache": false
     }
   }

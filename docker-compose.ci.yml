@@ -33,7 +33,7 @@ services:
       TEMPLATE_PATH: /templates
 
   postgres:
-    image: postgres:18
+    image: postgres:18-alpine
     ports:
       - '5433:5432'
     environment:

@@ -2,6 +2,8 @@
 
 This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, Self, and more.
 
+This project is a web application for automating the generation of Excel/DOCS documents for my family business.
+
 ## Features
 
 - **TypeScript** - For type safety and improved developer experience
@@ -42,6 +44,132 @@ bun run dev
 ```
 
 Open [http://localhost:3001](http://localhost:3001) in your browser to see the fullstack application.
+
+## Testing
+
+Docify uses **Cypress** for end-to-end (E2E) testing and **Testcontainers** to provide an isolated PostgreSQL database.
+
+### Environment Variables
+
+Before running the application, create `.env` in `apps/web`:
+
+```env
+CORS_ORIGIN=
+DATABASE_URL=LOCAL_DB_CONNECTION_URL
+PASSWORD=PASSWORD_FOR_LOGIN
+AUTH_SECRET=GENERATED_SECRET
+TEMPLATE_DIR=templates
+EXCEL_SERVICE_URL=http://localhost:PORT
+```
+
+The Excel service requires its own `.env` file in `apps/excel-service`:
+
+```env
+PORT=
+TEMPLATE_PATH=templates
+```
+
+### E2E Testing
+
+The E2E test runner uses **Testcontainers** to automatically create a temporary PostgreSQL database for each test run. You do not need to create a separate test database or `.env.test` file.
+
+The test database connection URL is generated automatically by Testcontainers and passed to the Next.js application and database migrations.
+
+#### Run E2E Tests
+
+```bash
+bun run e2e:run
+```
+
+This command:
+
+1. Starts a PostgreSQL container using Testcontainers.
+2. Creates the test database.
+3. Runs the database migrations.
+4. Starts the Next.js development server.
+5. Waits for Next.js to become available.
+6. Runs Cypress tests.
+7. Stops the Next.js server.
+8. Removes the PostgreSQL container.
+
+This is the recommended command for **CI and automated E2E testing**.
+
+#### Open Cypress
+
+```bash
+bun run e2e:open
+```
+
+This starts the E2E environment and opens Cypress in interactive mode, allowing tests to be run and debugged manually.
+
+### Cypress Environment Variables
+
+Cypress uses `cypress.env.json` for values required by the tests.
+
+Create `cypress.env.json` in the project root:
+
+```json
+{
+  "PASSWORD": "PASSWORD_FOR_LOGIN"
+}
+```
+
+The `PASSWORD` value should match the `PASSWORD` configured in `apps/web/.env`.
+
+> **Do not commit `cypress.env.json` if it contains real credentials.** Add it to `.gitignore` if necessary.
+
+### Running Cypress Directly
+
+Cypress can also be run without the E2E runner:
+
+```bash
+bun run cypress:run
+```
+
+Or opened in interactive mode:
+
+```bash
+bun run cypress:open
+```
+
+These commands only run Cypress. They do **not** start Testcontainers or Next.js automatically, so the required application and database must already be running.
+
+### E2E Runner Scripts
+
+The E2E runner scripts are located in:
+
+```text
+cypress/
+└── runner/
+    └── scripts/
+        ├── ci.ts
+        └── default.ts
+```
+
+The corresponding package scripts are:
+
+```json
+{
+  "e2e:run": "bun ./cypress/runner/scripts/ci.ts",
+  "e2e:open": "bun ./cypress/runner/scripts/default.ts"
+}
+```
+
+## Excel Service
+
+The Excel service is a Go microservice that generates Excel documents from templates.
+
+Requirements:
+
+- Go (version 1.21 or higher)
+- Air (for live reloading)
+
+To run the Excel service:
+
+```bash
+cd apps/excel
+bun run dev
+```
 
 ## UI Customization
 

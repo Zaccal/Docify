@@ -6,7 +6,7 @@ describe('Authentication', () => {
 
   describe('Valid page', () => {
     it('it should be on the right page', () => {
-      cy.url().should('eq', 'http://localhost:3001/')
+      cy.location('pathname').should('eq', '/')
     })
 
     it('it should display the login form', () => {
