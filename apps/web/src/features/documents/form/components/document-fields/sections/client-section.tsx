@@ -32,6 +32,7 @@ export default function ClientSection() {
           <Input
             name="fullnameClient"
             id="fullnameClient"
+            data-testid="fullnameClient-input"
             aria-invalid={Boolean(errors?.fullnameClient?.length)}
             defaultValue={values?.fullnameClient}
             placeholder="Иван И.О."
@@ -44,6 +45,7 @@ export default function ClientSection() {
             <Input
               name="clientIdNumber"
               id="clientIdNumber"
+              data-testid="clientIdNumber-input"
               aria-invalid={Boolean(errors?.clientIdNumber?.length)}
               defaultValue={values?.clientIdNumber}
               placeholder="1234567890"
@@ -55,6 +57,7 @@ export default function ClientSection() {
             <Input
               name="clientIdDateFrom"
               id="clientIdDateFrom"
+              data-testid="clientIdDateFrom-input"
               aria-invalid={Boolean(errors?.clientIdDateFrom?.length)}
               defaultValue={values?.clientIdDateFrom}
               placeholder="12.12.2024"
@@ -69,6 +72,7 @@ export default function ClientSection() {
             <FieldLabel htmlFor="clientIdType">Тип удостоверения</FieldLabel>
             <Input
               name="clientIdType"
+              data-testid="clientIdType-input"
               id="clientIdType"
               aria-invalid={Boolean(errors?.clientIdType?.length)}
               defaultValue={values?.clientIdType}
@@ -80,13 +84,14 @@ export default function ClientSection() {
             <FieldLabel htmlFor="iin">ИИН</FieldLabel>
             <Input
               name="iin"
+              data-testid="iin-input"
               id="iin"
               aria-invalid={Boolean(errors?.iin?.length)}
               defaultValue={values?.iin}
               placeholder="12-значный иин"
             />
 
-            <FieldError errors={errors?.costPerDay} />
+            <FieldError errors={errors?.iin} />
           </Field>
         </div>
         <Field>
@@ -97,6 +102,7 @@ export default function ClientSection() {
             </InputGroupAddon>
             <input type="hidden" name="costPerDay" value={normalizeNumber(formattedCost)} />
             <InputGroupInput
+              data-testid="costPerDay-input"
               id="costPerDay"
               inputMode="decimal"
               aria-invalid={Boolean(errors?.costPerDay?.length)}

@@ -51,12 +51,17 @@ export default function CellsSection() {
             <p className="text-muted-foreground py-4 text-sm">Нет данных</p>
           ) : (
             value.map((cell, index) => (
-              <div key={cell.id} className="grid w-full grid-cols-[1fr_1fr_auto] items-end gap-4">
+              <div
+                data-testid={`cellsLineCells[${index}]`}
+                key={cell.id}
+                className="grid w-full grid-cols-[1fr_1fr_auto] items-end gap-4"
+              >
                 <Field>
                   <FieldLabel htmlFor={`cellsLineKeys[${index}]`}>Ключ</FieldLabel>
                   <Input
                     id={`cellsLineKeys[${index}]`}
                     name={`cellsLineKeys[${index}]`}
+                    data-testid={`cellsLineKeys[${index}]`}
                     aria-invalid={Boolean(errors?.cellsLine?.length)}
                     placeholder="Например: Цвет"
                     onChange={(e) => edit(index, { ...cell, key: e.target.value })}
@@ -69,6 +74,7 @@ export default function CellsSection() {
                   <Input
                     id={`cellsLineValues[${index}]`}
                     name={`cellsLineValues[${index}]`}
+                    data-testid={`cellsLineValues[${index}]`}
                     aria-invalid={Boolean(errors?.cellsLine?.length)}
                     placeholder="Например: Синий"
                     onChange={(e) => edit(index, { ...cell, value: e.target.value })}
@@ -79,6 +85,7 @@ export default function CellsSection() {
                 </Field>
                 <Button
                   aria-label="Удалить строку"
+                  data-testid={`deleteCell[${index}]-btn`}
                   onClick={() => remove(index)}
                   size="icon"
                   type="button"
@@ -93,7 +100,7 @@ export default function CellsSection() {
 
         <Separator className="my-3" />
 
-        <Button size="sm" onClick={addCell} type="button">
+        <Button size="sm" data-testid="addCell-btn" onClick={addCell} type="button">
           <HugeiconsIcon icon={Plus} /> Добавить
         </Button>
       </DocumentFieldCard.Content>

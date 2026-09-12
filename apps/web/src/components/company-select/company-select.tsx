@@ -30,13 +30,17 @@ export default function OrganizationSelect() {
       >
         <SelectTrigger className="w-full">
           <HugeiconsIcon icon={Building03Icon} />
-          <SelectValue placeholder="Выберите организацию" />
+          <SelectValue data-testid="company-select-value" placeholder="Выберите организацию" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
             <SelectLabel>Организация</SelectLabel>
-            <SelectItem value="NomadDocs">NomadDocs</SelectItem>
-            <SelectItem value="XANSHA">XANSHA</SelectItem>
+            <SelectItem value="NomadDocs" data-testid="company-select-value-NomadDocs">
+              NomadDocs
+            </SelectItem>
+            <SelectItem value="XANSHA" data-testid="company-select-value-XANSHA">
+              XANSHA
+            </SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>

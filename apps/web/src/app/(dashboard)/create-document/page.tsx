@@ -98,7 +98,10 @@ export default function CreateDocumentPage() {
       <form action={formAction}>
         <DocumentFields key={formRevision} errors={state.error} values={values} />
         {state.message && (
-          <div className="bg-destructive/10 text-destructive mt-8 rounded-lg px-6 py-4 text-lg">
+          <div
+            data-testid="error-message"
+            className="bg-destructive/10 text-destructive mt-8 rounded-lg px-6 py-4 text-lg"
+          >
             <div className="flex items-center gap-2">
               <HugeiconsIcon icon={SecurityWarningIcon} />
               <span>{state.message}</span>
@@ -116,7 +119,12 @@ export default function CreateDocumentPage() {
             >
               Сбросить
             </Button>
-            <Button type="submit" loading={pending} className="w-full md:w-auto">
+            <Button
+              type="submit"
+              data-testid="save-btn"
+              loading={pending}
+              className="w-full md:w-auto"
+            >
               Сохранить документ
             </Button>
           </div>

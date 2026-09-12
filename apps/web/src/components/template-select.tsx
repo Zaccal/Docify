@@ -30,14 +30,14 @@ export default function TemplateSelect({ name, defaultValue }: TemplateSelectPro
       defaultValue={defaultValue}
       onValueChange={(value) => setValue((value ?? 'APARTMENT') as TemplateType)}
     >
-      <SelectTrigger>
+      <SelectTrigger data-testid="template-select">
         <SelectValue placeholder="Выберите шаблон">
           {templates.find((item) => item.value === value)?.label}
         </SelectValue>
       </SelectTrigger>
       <SelectContent>
         {templates.map(({ value, label }) => (
-          <SelectItem key={value} value={value}>
+          <SelectItem data-testid={`template-select-item-${value}`} key={value} value={value}>
             {label}
           </SelectItem>
         ))}
