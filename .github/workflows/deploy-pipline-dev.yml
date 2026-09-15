@@ -18,6 +18,7 @@ jobs:
       CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}
       CORS_ORIGIN: ${{ secrets.CORS_ORIGIN }}
       AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+      CYPRESS_AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
 
     steps:
       - uses: actions/checkout@v4
