@@ -85,7 +85,7 @@ describe('Create Document Flow', () => {
       validateZip(filepath, MOCK_DATA)
     })
 
-    it('should search & update an existing document', () => {
+    it('hould search & update an existing document', () => {
       const INITIAL_MOCK_DATA = generateMockData()
       const UPDATE_MOCK_DATA = generateMockData()
 
