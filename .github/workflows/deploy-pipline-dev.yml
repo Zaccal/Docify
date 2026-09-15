@@ -9,9 +9,23 @@ permissions:
   contents: read
 
 jobs:
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install bun
+        uses: oven-sh/setup-bun@v2
+      - name: Install dependencies
+        run: bun install
+      - name: Run tests
+        run: bun test
+
   cypress:
     runs-on: ubuntu-latest
     environment: development
+    needs: unit-tests
 
     env:
       PASSWORD: ${{ secrets.PASSWORD }}
