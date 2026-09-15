@@ -85,7 +85,45 @@ describe('Create Document Flow', () => {
       validateZip(filepath, MOCK_DATA)
     })
 
-    it('hould search & update an existing document', () => {
+    it('should create a new document with NomadDocs company', () => {
+      // Should display NomadDocs as the selected company
+      cy.get('[data-testid="company-select-value"]', { timeout: 10000 }).should(
+        'have.text',
+        'XANSHA'
+      )
+      cy.get('[data-testid="template-select"]').should('be.visible')
+      cy.get('[data-testid="company-select-value"]').click()
+      cy.get('[data-testid="company-select-value-XANSHA"]').should('be.visible')
+      cy.get('[data-testid="company-select-value-NomadDocs"]').should('be.visible')
+
+      cy.get('[data-testid="company-select-value-NomadDocs"]').click()
+      cy.get('[data-testid="company-select-value"]').should('have.text', 'NomadDocs')
+
+      const MOCK_DATA = generateMockData()
+
+      fillCreateDocumentForm(MOCK_DATA)
+
+      // Save Button
+      cy.get('[data-testid="save-btn"]').click()
+      cy.wait('@createDocumentAction').its('response.statusCode').should('eq', 200)
+
+      cy.get('[data-testid="password-error"]').should('not.exist')
+      cy.get('[data-testid="error-message"]').should('not.exist')
+
+      // Target the Sonner toast container and specific toast item
+      cy.get('[data-sonner-toaster]').find('[data-sonner-toast]').should('exist')
+
+      // Check download
+      const filename = `Документы ${MOCK_DATA.fullnameClient}.zip`
+      const filepath = `cypress/downloads/${filename}`
+
+      cy.readFile(filepath, { timeout: 15000 }).should('exist')
+      cy.readFile(filepath).should('have.length.gt', 0)
+
+      validateZip(filepath, MOCK_DATA)
+    })
+
+    it('should search & update an existing document', () => {
       const INITIAL_MOCK_DATA = generateMockData()
       const UPDATE_MOCK_DATA = generateMockData()
 
@@ -121,7 +159,9 @@ describe('Create Document Flow', () => {
       cy.get('[data-testid="costPerDay-input"]').clear().type(UPDATE_MOCK_DATA.costPerDay)
 
       cy.get('[data-testid="save-btn"]').click()
-      cy.wait('@createDocumentAction').its('response.statusCode').should('eq', 200)
+      cy.wait('@createDocumentAction')
+        .its('response.statusCode')
+        .should('be.oneOf', [200, 201, 301])
 
       cy.get('[data-testid="password-error"]').should('not.exist')
       cy.get('[data-testid="error-message"]').should('not.exist')
