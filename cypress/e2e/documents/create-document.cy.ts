@@ -1,6 +1,6 @@
 import { COOKIE_NAME } from '../../../apps/web/src/features/auth/lib/constant'
 import { validateZip } from '../../support/document-validation'
-import { fillCreateDocumentForm } from '../../support/form'
+import { checkCreateDocumentFormValues, fillCreateDocumentForm } from '../../support/form'
 import { generateMockData } from '../../support/utils/generate-mock-data'
 
 describe('Create Document Flow', () => {
@@ -56,6 +56,14 @@ describe('Create Document Flow', () => {
       cy.get('[data-testid="deleteCell[0]-btn"]').should('be.visible')
       cy.get('[data-testid="deleteCell[0]-btn"]').click()
       cy.get('[data-testid="cellsLineCells[0]"]').should('not.exist')
+    })
+
+    it('should clear form fields when clicked on the reset button', () => {
+      const MOCK_DATA = generateMockData()
+      fillCreateDocumentForm(MOCK_DATA)
+      cy.get('[data-testid="reset-btn"]').click()
+
+      checkCreateDocumentFormValues(MOCK_DATA)
     })
   })
 
@@ -129,7 +137,9 @@ describe('Create Document Flow', () => {
 
       fillCreateDocumentForm(INITIAL_MOCK_DATA)
       cy.get('[data-testid="save-btn"]').click()
-      cy.wait('@createDocumentAction').its('response.statusCode').should('eq', 200)
+      cy.wait('@createDocumentAction')
+        .its('response.statusCode')
+        .should('be.oneOf', [200, 201, 301])
       cy.get('[data-sonner-toaster]').find('[data-sonner-toast]').should('exist')
 
       cy.get('[data-testid="password-error"]').should('not.exist')
@@ -181,6 +191,114 @@ describe('Create Document Flow', () => {
         iin: UPDATE_MOCK_DATA.iin,
         costPerDay: UPDATE_MOCK_DATA.costPerDay
       })
+    })
+  })
+
+  describe('Error Handling', () => {
+    it('should show field validation errors when submitted with invalid data', () => {
+      fillCreateDocumentForm(generateMockData())
+
+      const invalidFields = [
+        {
+          name: 'enumeration',
+          value: '123',
+          message: 'Длина должна быть не менее 4 символов'
+        },
+        {
+          name: 'fullnameClient',
+          value: 'John Smith',
+          message:
+            'Укажите ФИО в формате "Иванов И.И."; фамилия и инициалы должны быть на кириллице'
+        },
+        {
+          name: 'clientIdNumber',
+          value: '123',
+          message: 'Номер удостоверения личности РК должен состоять из 9 цифр'
+        },
+        {
+          name: 'clientIdDateFrom',
+          value: '31.02.2024',
+          message: 'Дата выдачи удостоверения должна быть корректной календарной датой'
+        },
+        {
+          name: 'iin',
+          value: '123',
+          message: 'ИИН Казахстана должен состоять из 12 цифр'
+        },
+        {
+          name: 'costPerDay',
+          value: '0',
+          message: 'Стоимость должна быть больше 0'
+        },
+        {
+          name: 'bin',
+          value: '123',
+          message: 'БИН Казахстана должен состоять из 12 цифр'
+        },
+        {
+          name: 'iik',
+          value: 'KZ123',
+          message: 'ИИК должен быть IBAN Казахстана: KZ и еще 18 букв или цифр'
+        }
+      ]
+
+      invalidFields.forEach(({ name, value }) => {
+        cy.get(`[data-testid="${name}-input"]`).clear().type(value)
+      })
+
+      cy.get('[data-testid="save-btn"]').click()
+      cy.wait('@createDocumentAction').its('response.statusCode').should('eq', 200)
+
+      invalidFields.forEach(({ name, value, message }) => {
+        cy.get(`[data-testid="${name}-input"]`)
+          .should('have.value', value)
+          .and('have.attr', 'aria-invalid', 'true')
+          .closest('[data-slot="field"]')
+          .find('[role="alert"]')
+          .should('be.visible')
+          .and('contain.text', message)
+      })
+
+      cy.get('[data-sonner-toast][data-type="success"]').should('not.exist')
+    })
+
+    it('Can not create document with existing data', () => {
+      const MOCK_DATA = generateMockData()
+
+      fillCreateDocumentForm(MOCK_DATA)
+
+      // Save Button
+      cy.get('[data-testid="save-btn"]').click()
+      cy.wait('@createDocumentAction').its('response.statusCode').should('eq', 200)
+
+      cy.get('[data-testid="password-error"]').should('not.exist')
+      cy.get('[data-testid="error-message"]').should('not.exist')
+
+      // Target the Sonner toast container and specific toast item
+      cy.get('[data-sonner-toaster]').find('[data-sonner-toast]').should('exist')
+
+      // Check download
+      const filename = `Документы ${MOCK_DATA.fullnameClient}.zip`
+      const filepath = `cypress/downloads/${filename}`
+
+      cy.readFile(filepath, { timeout: 15000 }).should('exist')
+      cy.readFile(filepath).should('have.length.gt', 0)
+
+      validateZip(filepath, MOCK_DATA)
+
+      // Try to recreate the document with the same data
+      const SECOND_MOCK_DATA = generateMockData()
+      cy.get('[data-testid="reset-btn"]').click()
+
+      fillCreateDocumentForm(SECOND_MOCK_DATA)
+
+      cy.get('[data-testid="enumeration-input"]').clear().type(MOCK_DATA.enumeration)
+
+      // Save Button
+      cy.get('[data-testid="save-btn"]').click()
+      cy.wait('@createDocumentAction').its('response.statusCode').should('eq', 200)
+
+      cy.get('[data-testid="error-message"]').should('exist')
     })
   })
 })

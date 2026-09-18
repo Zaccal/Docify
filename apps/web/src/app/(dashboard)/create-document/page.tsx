@@ -115,6 +115,7 @@ export default function CreateDocumentPage() {
               type="reset"
               variant={'secondary'}
               className="w-full md:w-auto"
+              data-testid="reset-btn"
               onClick={handleReset}
             >
               Сбросить

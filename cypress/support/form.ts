@@ -42,3 +42,41 @@ export function fillCreateDocumentForm(data: ReturnType<typeof generateMockData>
 function typeInput(name: string, value: string | number) {
   cy.get(`[data-testid="${name}-input"]`).type(String(value))
 }
+
+export function checkCreateDocumentFormValues(data: ReturnType<typeof generateMockData>) {
+  // Document
+  cy.get('[data-testid="enumeration-input"]').should('have.value', '')
+  cy.get('#date-picker-range').should('have.value', 'Выберите период')
+
+  // Client
+  checkInput('fullnameClient')
+  checkInput('clientIdNumber')
+  checkInput('clientIdDateFrom')
+  checkInput('clientIdType')
+  checkInput('iin')
+  checkInput('costPerDay')
+
+  // Organization
+  checkInput('organization')
+  checkInput('bin')
+  checkInput('city')
+  checkInput('index')
+  checkInput('address')
+  checkInput('kbe')
+  checkInput('knp')
+
+  // Bank
+  checkInput('bank')
+  checkInput('iik', 'KZ')
+  checkInput('bik')
+
+  // Dynamic cells
+  data.dynamicCell.forEach((_, index) => {
+    cy.get(`[data-testid="cellsLineKeys[${index}]"]`).should('not.exist')
+    cy.get(`[data-testid="cellsLineValues[${index}]"]`).should('not.exist')
+  })
+}
+
+function checkInput(name: string, expectedValue = '') {
+  cy.get(`[data-testid="${name}-input"]`).should('have.value', expectedValue)
+}
