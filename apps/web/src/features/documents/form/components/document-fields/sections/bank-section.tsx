@@ -25,6 +25,7 @@ export default function BankSection() {
             name="bank"
             id="bank"
             placeholder="Название банка"
+            data-testid="bank-input"
           />
           <FieldError errors={errors?.bank} />
         </Field>
@@ -37,6 +38,7 @@ export default function BankSection() {
               name="iik"
               id="iik"
               placeholder="20-значный ИИК"
+              data-testid="iik-input"
             />
             <FieldError errors={errors?.iik} />
           </Field>
@@ -48,6 +50,7 @@ export default function BankSection() {
               name="bik"
               id="bik"
               placeholder="8-значный БИК"
+              data-testid="bik-input"
             />
             <FieldError errors={errors?.bik} />
           </Field>

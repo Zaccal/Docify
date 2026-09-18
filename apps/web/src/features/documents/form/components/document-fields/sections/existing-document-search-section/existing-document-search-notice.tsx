@@ -10,7 +10,10 @@ export default function ExistingDocumentSearchNotice({
 }: ExistingDocumentSearchNoticeProps) {
   return (
     <>
-      <div className="bg-primary text-primary-foreground border-primary-foreground mt-4 flex items-center gap-4 rounded-lg px-2 py-4">
+      <div
+        data-testid="existing-document-search-notice"
+        className="bg-primary text-primary-foreground border-primary-foreground mt-4 flex items-center gap-4 rounded-lg px-2 py-4"
+      >
         <HugeiconsIcon icon={TickDouble04Icon} />
         <span>{children}</span>
       </div>

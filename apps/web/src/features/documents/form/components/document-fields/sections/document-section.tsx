@@ -27,6 +27,7 @@ export default function DocumentSection() {
           <Field>
             <FieldLabel>Нумерация</FieldLabel>
             <Input
+              data-testid="enumeration-input"
               aria-invalid={Boolean(errors?.enumeration?.length)}
               defaultValue={values?.enumeration}
               name="enumeration"
@@ -38,6 +39,7 @@ export default function DocumentSection() {
           <Field>
             <FieldLabel>Дата документа</FieldLabel>
             <DatePicker
+              data-testid="document-date-input"
               name="documentDate"
               invalid={Boolean(errors?.documentDate?.length)}
               defaultValue={values?.documentDate}

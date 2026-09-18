@@ -25,6 +25,7 @@ export default function OrganizationSection() {
               defaultValue={values?.organization}
               id="organization"
               name="organization"
+              data-testid="organization-input"
               placeholder="Название организации"
             />
             <FieldError errors={errors?.organization} />
@@ -37,6 +38,7 @@ export default function OrganizationSection() {
                 defaultValue={values?.bin}
                 id="bin"
                 name="bin"
+                data-testid="bin-input"
                 placeholder="12-значный БИН"
               />
               <FieldError errors={errors?.bin} />
@@ -48,6 +50,7 @@ export default function OrganizationSection() {
                 defaultValue={values?.city}
                 id="city"
                 name="city"
+                data-testid="city-input"
                 placeholder="Астана"
               />
               <FieldError errors={errors?.city} />
@@ -59,6 +62,7 @@ export default function OrganizationSection() {
                 defaultValue={values?.index}
                 id="index"
                 name="index"
+                data-testid="index-input"
                 placeholder="600000"
               />
               <FieldError errors={errors?.index} />
@@ -71,6 +75,7 @@ export default function OrganizationSection() {
               defaultValue={values?.address}
               id="address"
               name="address"
+              data-testid="address-input"
               placeholder="Адрес организации"
             />
             <FieldError errors={errors?.address} />
@@ -83,6 +88,7 @@ export default function OrganizationSection() {
                 defaultValue={values?.kbe}
                 id="kbe"
                 name="kbe"
+                data-testid="kbe-input"
                 placeholder="КБЕ"
               />
               <FieldError errors={errors?.kbe} />
@@ -94,6 +100,7 @@ export default function OrganizationSection() {
                 defaultValue={values?.knp}
                 id="knp"
                 name="knp"
+                data-testid="knp-input"
                 placeholder="КНП"
               />
               <FieldError errors={errors?.knp} />

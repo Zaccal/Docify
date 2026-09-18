@@ -58,19 +58,25 @@
   },
   "devDependencies": {
     "@Docify/config": "workspace:*",
+    "@faker-js/faker": "^10.6.0",
     "@testcontainers/postgresql": "^12.1.0",
+    "@types/adm-zip": "^0.5.8",
     "@types/node": "^22.13.14",
     "@types/pg": "^8.23.1",
+    "@types/xlsx": "^0.0.36",
+    "adm-zip": "^0.6.0",
     "cypress": "^15.21.1",
     "dotenv-cli": "^11.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.7",
+    "mammoth": "^1.12.2",
     "oxfmt": "^0.55.0",
     "oxlint": "^1.70.0",
     "pg": "^8.23.0",
     "testcontainers": "^12.1.0",
     "turbo": "^2.9.16",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "xlsx": "^0.18.5"
   },
   "lint-staged": {
     "**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,vue,astro,svelte}": "bun run lint:fix --",
