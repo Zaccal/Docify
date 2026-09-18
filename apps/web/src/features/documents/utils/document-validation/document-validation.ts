@@ -1,6 +1,6 @@
 import { DD_MM_YYYY_DATE_REGEX, IIN_OR_BIN_REGEX } from '@/lib/constants'
 
-function getDateFromParts(year: number, month: number, day: number) {
+export function getDateFromParts(year: number, month: number, day: number) {
   const date = new Date(Date.UTC(year, month - 1, day))
 
   if (
@@ -14,7 +14,7 @@ function getDateFromParts(year: number, month: number, day: number) {
   return date
 }
 
-function hasValidKazakhstanControlDigit(value: string): boolean {
+export function hasValidKazakhstanControlDigit(value: string): boolean {
   if (!IIN_OR_BIN_REGEX.test(value)) {
     return false
   }

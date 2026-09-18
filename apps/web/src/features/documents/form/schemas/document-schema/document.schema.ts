@@ -7,7 +7,7 @@ import {
   isValidDate,
   isValidDdMmYyyyDate,
   isValidIin
-} from '@/features/documents/utils/document-validation'
+} from '@/features/documents/utils/document-validation/document-validation'
 import {
   ADDRESS_REGEX,
   CITY_REGEX,
