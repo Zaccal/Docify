@@ -3,7 +3,7 @@ import { truncate } from 'es-toolkit/compat'
 
 import { MetaCard } from '@/components/meta-card'
 import type { TransactionWithDocument } from '@/server/repositories/transactions/get-transaction-with-document'
-import { formatNumber } from '@/utils/format-number'
+import { formatNumber } from '@/utils/format-number/format-number'
 
 interface TransactionsSummaryProps {
   transactionWithDocument: TransactionWithDocument

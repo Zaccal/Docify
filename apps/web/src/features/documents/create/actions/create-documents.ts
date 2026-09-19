@@ -7,7 +7,7 @@ import { documentFormSchema } from '@/features/documents/form/schemas/document-s
 import { processNewOrder } from '@/server/applications/orders/process-new-order'
 
 import type { DocumentState, DocumentValues } from '../../form/types/document-state.type'
-import { getDocumentFormData } from '../../utils/document-formater'
+import { getDocumentFormData } from '../../utils/document-formater/document-formater'
 import { formatPostgresError } from '../../utils/format-postgres-error'
 
 export async function createDocuments(

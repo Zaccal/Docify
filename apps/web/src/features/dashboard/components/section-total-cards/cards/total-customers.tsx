@@ -12,7 +12,7 @@ import { connection } from 'next/server'
 
 import { getStatisticIcon, getStatisticText } from '@/features/dashboard/utils/get-statistic-text'
 import { getCustomerStatistics } from '@/server/repositories/customers/get-customer-statistics'
-import { formatNumber } from '@/utils/format-number'
+import { formatNumber } from '@/utils/format-number/format-number'
 
 export default async function TotalCustomers() {
   await connection()

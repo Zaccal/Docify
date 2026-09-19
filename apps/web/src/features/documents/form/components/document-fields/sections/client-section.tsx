@@ -6,7 +6,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { useState } from 'react'
 
 import { formatDateInput } from '@/utils/format-date-input'
-import { formatNumber, normalizeNumber } from '@/utils/format-number'
+import { formatNumber, normalizeNumber } from '@/utils/format-number/format-number'
 
 import DocumentFieldCard from '../../document-field-card/index'
 import { useDocumentFields } from '../document-fields-store'
