@@ -121,6 +121,7 @@ function createDocumentData(overrides: Partial<DocumentData> = {}): DocumentData
     createdAt: new Date('2026-09-15T10:00:00Z'),
     enumeration: '0002',
     documentDate: ['10.09.2026', '15.09.2026'],
+    documentAddress: 'Сарыарка д 6 кв 1',
     cellsLine: {},
 
     customerId: 'customer-1',

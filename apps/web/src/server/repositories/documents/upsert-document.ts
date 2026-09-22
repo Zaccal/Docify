@@ -72,6 +72,7 @@ export async function upsertDocument(
     enumeration: data.enumeration,
     documentDate: data.documentDate,
     cellsLine: data.cellsLine ?? {},
+    documentAddress: data.documentAddress,
     customerId: customer.id
   }
 
@@ -84,6 +85,7 @@ export async function upsertDocument(
         enumeration: data.enumeration,
         documentDate: data.documentDate,
         cellsLine: data.cellsLine ?? {},
+        documentAddress: data.documentAddress,
         updatedAt: new Date()
       }
     })

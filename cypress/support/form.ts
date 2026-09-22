@@ -8,6 +8,8 @@ export function fillCreateDocumentForm(data: ReturnType<typeof generateMockData>
   cy.get('[role="gridcell"]').contains('15').click()
   cy.get('#date-picker-range').should('have.value', data.documentDate)
   cy.get('#date-picker-range').click()
+  // Closing the calendar restores focus; wait before typing into the next field.
+  cy.get('[data-slot="popover-content"]').should('not.exist')
 
   // Client
   typeInput('fullnameClient', data.fullnameClient)
@@ -37,6 +39,8 @@ export function fillCreateDocumentForm(data: ReturnType<typeof generateMockData>
     cy.get(`[data-testid="cellsLineKeys[${index}]"]`).type(cell.key)
     cy.get(`[data-testid="cellsLineValues[${index}]"]`).type(cell.value)
   })
+
+  cy.get('[data-testid="fullnameClient-input"]').should('have.value', data.fullnameClient)
 }
 
 function typeInput(name: string, value: string | number) {

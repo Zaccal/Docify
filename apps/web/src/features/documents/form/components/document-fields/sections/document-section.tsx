@@ -4,9 +4,10 @@ import { DocumentAttachmentIcon } from '@hugeicons/core-free-icons'
 
 import { useCompanySelect } from '@/components/company-select/company-select-store'
 import { DatePicker } from '@/components/date-picker'
-import TemplateSelect from '@/components/template-select'
+import TemplateSelect from '@/features/documents/form/components/template-select'
 import { DEFAULT_COMPANY_TYPE } from '@/lib/constants'
 
+import DocumentAddressSelect from '../../document-address-select'
 import DocumentFieldCard from '../../document-field-card/index'
 import { useDocumentFields } from '../document-fields-store'
 
@@ -48,10 +49,19 @@ export default function DocumentSection() {
           </Field>
         </div>
         {company === DEFAULT_COMPANY_TYPE && (
-          <Field>
-            <FieldLabel>Шаблон</FieldLabel>
-            <TemplateSelect defaultValue={values?.templateType} name="templateType" />
-          </Field>
+          <div className="grid grid-cols-2 gap-4">
+            <Field>
+              <FieldLabel>Шаблон</FieldLabel>
+              <TemplateSelect defaultValue={values?.templateType} name="templateType" />
+            </Field>
+            <Field>
+              <FieldLabel>Адрес документа</FieldLabel>
+              <DocumentAddressSelect
+                name="documentAddress"
+                defaultValue={values?.documentAddress}
+              />
+            </Field>
+          </div>
         )}
       </DocumentFieldCard.Content>
     </DocumentFieldCard.Root>

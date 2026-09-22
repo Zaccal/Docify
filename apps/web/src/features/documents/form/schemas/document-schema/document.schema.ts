@@ -200,6 +200,17 @@ export const companySchema = z.enum(['XANSHA', 'NomadDocs'])
 
 export const documentIdSchema = z.optional(z.uuid())
 
+export const documentAddressSchema = z.enum([
+  'Сарыарка д 6 кв 1',
+  'Сарыарка д 6 кв 4',
+  'Сарыарка 6 кв 12',
+  'Сарыарка д 14 кв 9',
+  'Сарыарка д 1 кв 7',
+  'Сарыарка д 1 кв 5'
+])
+
+export type DocumentAddress = z.infer<typeof documentAddressSchema>
+
 export const documentFormSchema = z.object({
   enumeration: enumerationSchema,
   fullnameClient: fullnameClientSchema,
@@ -223,7 +234,8 @@ export const documentFormSchema = z.object({
   templateType: templateTypeSchema,
   operationId: operationIdSchema,
   company: companySchema,
-  documentId: documentIdSchema
+  documentId: documentIdSchema,
+  documentAddress: z._default(documentAddressSchema, 'Сарыарка д 6 кв 1')
 })
 
 export type DocumentFormSchema = z.infer<typeof documentFormSchema>
