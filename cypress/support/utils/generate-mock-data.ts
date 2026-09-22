@@ -6,6 +6,7 @@ import { generateDynamicCells } from './generate-dynamic-cells'
 const COMMON_KBE = ['17', '19', '14']
 const COMMON_KNP = ['859', '841', '111', '851']
 const COMMON_BANK = ['АО «Народный Банк Казахстана»', 'АО "Bank RBK"', 'АО "Forte Bank"']
+const COMMON_CITIES = ['Астана', 'Алматы', 'Шымкент', 'Караганда', 'Актобе']
 
 /**
  * Kazakhstan IIN checksum.
@@ -133,11 +134,7 @@ export function generateMockData() {
     ),
     organization: `ТОО "${faker.company.name()}"`,
     bin: generateBIN(),
-    city: faker.location
-      .city()
-      .replace(/^(г\.|город|п\.|поселок)\s+/i, '')
-      .replace(/[()]/g, '')
-      .trim(),
+    city: faker.helpers.arrayElement(COMMON_CITIES),
     index: faker.location.zipCode('######'),
     address: faker.location.streetAddress().replace(/[()]/g, ''),
     kbe: faker.helpers.arrayElement(COMMON_KBE),

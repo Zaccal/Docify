@@ -12,7 +12,7 @@ import { connection } from 'next/server'
 
 import { getStatisticIcon, getStatisticText } from '@/features/dashboard/utils/get-statistic-text'
 import { getDocumentsStatistics } from '@/server/repositories/documents/get-documents-statistics'
-import { formatNumber } from '@/utils/format-number'
+import { formatNumber } from '@/utils/format-number/format-number'
 
 export default async function TotalDocuments() {
   await connection()

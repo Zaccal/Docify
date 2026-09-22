@@ -1,7 +1,7 @@
 import { relations } from 'drizzle-orm'
 import { index, jsonb, numeric, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 
-import { TemplateType } from './enums'
+import { DocumentAddressEnum, TemplateType } from './enums'
 import { CostTransactionsTable } from './transactions'
 
 export const OrganizationsTable = pgTable(
@@ -70,6 +70,7 @@ export const DocumentsTable = pgTable(
     updatedAt: timestamp('updated_at').notNull().defaultNow(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     cellsLine: jsonb('cells_line').$type<Record<string, string>>().notNull(),
+    documentAddress: DocumentAddressEnum('document_address').default('Сарыарка д 6 кв 1').notNull(),
 
     customerId: uuid('customer_id')
       .references(() => CustomersTable.id, { onDelete: 'restrict' })

@@ -1,4 +1,6 @@
-export function formatNumber(data: number | string) {
+export function formatNumber(data?: number | string) {
+  if (data === undefined) return ''
+
   const value = typeof data === 'string' ? data : String(data)
   const cleaned = value.replace(/\s/g, '').replace(/[^\d,.]/g, '')
   const [integer = '', fraction] = cleaned.split(/[,.]/)

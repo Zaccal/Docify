@@ -3,14 +3,38 @@ import { validateZip } from '../../support/document-validation'
 import { checkCreateDocumentFormValues, fillCreateDocumentForm } from '../../support/form'
 import { generateMockData } from '../../support/utils/generate-mock-data'
 
+const DOCUMENT_ADDRESSES = [
+  'Сарыарка д 6 кв 1',
+  'Сарыарка д 6 кв 4',
+  'Сарыарка 6 кв 12',
+  'Сарыарка д 14 кв 9',
+  'Сарыарка д 1 кв 7',
+  'Сарыарка д 1 кв 5'
+] as const
+
+function checkDocumentCreated() {
+  cy.get('form').should(($form) => {
+    const errors = $form
+      .find('[data-slot="field-error"], [data-testid="error-message"]')
+      .toArray()
+      .map((element) => element.textContent?.trim())
+
+    expect(errors, 'Document form errors').to.deep.equal([])
+  })
+
+  cy.wait('@downloadDocument', { timeout: 15000 }).its('response.statusCode').should('eq', 200)
+  cy.get('[data-testid="save-btn"]').should('be.enabled')
+}
+
 describe('Create Document Flow', () => {
   beforeEach(() => {
     cy.env(['AUTH_SECRET']).then(({ AUTH_SECRET }) => {
       cy.setCookie(COOKIE_NAME, AUTH_SECRET)
     })
 
+    cy.intercept('POST', '/create-document').as('createDocumentAction')
+    cy.intercept({ method: 'GET', pathname: '/api/documents/generate/*' }).as('downloadDocument')
     cy.visit('/create-document')
-    cy.intercept('POST', '*').as('createDocumentAction')
   })
 
   describe('UI Elements & Functionality', () => {
@@ -20,17 +44,42 @@ describe('Create Document Flow', () => {
         'XANSHA'
       )
       cy.get('[data-testid="template-select"]').should('be.visible')
-      cy.get('[data-testid="company-select-value"]').click()
+      cy.get('[data-testid="document-address-select"]').should('be.visible')
+      cy.get('[data-testid="company-select-value"]').closest('[data-slot="select-trigger"]').click()
       cy.get('[data-testid="company-select-value-XANSHA"]').should('be.visible')
       cy.get('[data-testid="company-select-value-NomadDocs"]').should('be.visible')
 
       cy.get('[data-testid="company-select-value-NomadDocs"]').click()
       cy.get('[data-testid="company-select-value"]').should('have.text', 'NomadDocs')
       cy.get('[data-testid="template-select"]').should('not.exist')
+      cy.get('[data-testid="document-address-select"]').should('not.exist')
 
-      cy.get('[data-testid="company-select-value"]').click()
+      cy.get('[data-testid="company-select-value"]').closest('[data-slot="select-trigger"]').click()
       cy.get('[data-testid="company-select-value-XANSHA"]').click()
       cy.get('[data-testid="company-select-value"]').should('have.text', 'XANSHA')
+      cy.get('[data-testid="document-address-select"]')
+        .should('be.visible')
+        .and('have.text', DOCUMENT_ADDRESSES[0])
+    })
+
+    it('should select each document address', () => {
+      cy.get('[data-testid="document-address-select"]', { timeout: 10000 })
+        .should('be.visible')
+        .and('have.text', DOCUMENT_ADDRESSES[0])
+
+      DOCUMENT_ADDRESSES.forEach((address) => {
+        cy.get('[data-testid="document-address-select"]').click()
+        cy.get('[data-testid^="document-address-select-item-"]').should(
+          'have.length',
+          DOCUMENT_ADDRESSES.length
+        )
+        cy.get(`[data-testid="document-address-select-item-${address}"]`)
+          .should('have.text', address)
+          .click()
+        cy.get('[data-testid="document-address-select"]').should('have.text', address)
+        cy.get('input[name="documentAddress"]').should('have.value', address)
+        cy.get('[data-slot="select-content"]').should('not.be.visible')
+      })
     })
 
     it('Select template', () => {
@@ -43,7 +92,8 @@ describe('Create Document Flow', () => {
       cy.get('[data-testid="template-select-item-HOTEL"]').should('have.text', 'Гостиничный')
 
       cy.get('[data-testid="template-select-item-HOTEL"]').click()
-      cy.get('[role="option"]').should('contain.text', 'Гостиничный')
+      cy.get('[data-testid="template-select"]').should('contain.text', 'Гостиничный')
+      cy.get('[data-slot="select-content"]').should('not.be.visible')
 
       cy.get('[data-testid="template-select"]').click()
       cy.get('[data-testid="template-select-item-APARTMENT"]').should('have.text', 'Квартирная')
@@ -61,15 +111,24 @@ describe('Create Document Flow', () => {
     it('should clear form fields when clicked on the reset button', () => {
       const MOCK_DATA = generateMockData()
       fillCreateDocumentForm(MOCK_DATA)
+      cy.get('[data-testid="document-address-select"]').click()
+      cy.get(`[data-testid="document-address-select-item-${DOCUMENT_ADDRESSES[1]}"]`).click()
+      cy.get('[data-slot="select-content"]').should('not.be.visible')
+      cy.get('[data-testid="document-address-select"]').should('have.text', DOCUMENT_ADDRESSES[1])
       cy.get('[data-testid="reset-btn"]').click()
 
       checkCreateDocumentFormValues(MOCK_DATA)
+      cy.get('[data-testid="document-address-select"]').should('have.text', DOCUMENT_ADDRESSES[0])
+      cy.get('input[name="documentAddress"]').should('have.value', DOCUMENT_ADDRESSES[0])
     })
   })
 
   describe('Creating Document With Valid Data', () => {
     it('should create a document', () => {
-      const MOCK_DATA = generateMockData()
+      const MOCK_DATA = {
+        ...generateMockData(),
+        documentAddress: DOCUMENT_ADDRESSES[0]
+      }
 
       fillCreateDocumentForm(MOCK_DATA)
 
@@ -77,11 +136,7 @@ describe('Create Document Flow', () => {
       cy.get('[data-testid="save-btn"]').click()
       cy.wait('@createDocumentAction').its('response.statusCode').should('eq', 200)
 
-      cy.get('[data-testid="password-error"]').should('not.exist')
-      cy.get('[data-testid="error-message"]').should('not.exist')
-
-      // Target the Sonner toast container and specific toast item
-      cy.get('[data-sonner-toaster]').find('[data-sonner-toast]').should('exist')
+      checkDocumentCreated()
 
       // Check download
       const filename = `Документы ${MOCK_DATA.fullnameClient}.zip`
@@ -93,6 +148,35 @@ describe('Create Document Flow', () => {
       validateZip(filepath, MOCK_DATA)
     })
 
+    for (const template of ['APARTMENT', 'HOTEL']) {
+      it(`should create a ${template} document with the selected document address`, () => {
+        const MOCK_DATA = {
+          ...generateMockData(),
+          documentAddress: DOCUMENT_ADDRESSES[3]
+        }
+
+        fillCreateDocumentForm(MOCK_DATA)
+        cy.get('[data-testid="template-select"]').click()
+        cy.get(`[data-testid="template-select-item-${template}"]`).click()
+        cy.get('[data-slot="select-content"]').should('not.be.visible')
+        cy.get('[data-testid="document-address-select"]').click()
+        cy.get(`[data-testid="document-address-select-item-${MOCK_DATA.documentAddress}"]`).click()
+        cy.get('[data-slot="select-content"]').should('not.be.visible')
+        cy.get('[data-testid="document-address-select"]').should(
+          'have.text',
+          MOCK_DATA.documentAddress
+        )
+
+        cy.get('[data-testid="save-btn"]').click()
+        cy.wait('@createDocumentAction').its('response.statusCode').should('eq', 200)
+        checkDocumentCreated()
+
+        const filepath = `cypress/downloads/Документы ${MOCK_DATA.fullnameClient}.zip`
+        cy.readFile(filepath, { timeout: 15000 }).should('have.length.gt', 0)
+        validateZip(filepath, MOCK_DATA)
+      })
+    }
+
     it('should create a new document with NomadDocs company', () => {
       // Should display NomadDocs as the selected company
       cy.get('[data-testid="company-select-value"]', { timeout: 10000 }).should(
@@ -100,7 +184,7 @@ describe('Create Document Flow', () => {
         'XANSHA'
       )
       cy.get('[data-testid="template-select"]').should('be.visible')
-      cy.get('[data-testid="company-select-value"]').click()
+      cy.get('[data-testid="company-select-value"]').closest('[data-slot="select-trigger"]').click()
       cy.get('[data-testid="company-select-value-XANSHA"]').should('be.visible')
       cy.get('[data-testid="company-select-value-NomadDocs"]').should('be.visible')
 
@@ -115,11 +199,7 @@ describe('Create Document Flow', () => {
       cy.get('[data-testid="save-btn"]').click()
       cy.wait('@createDocumentAction').its('response.statusCode').should('eq', 200)
 
-      cy.get('[data-testid="password-error"]').should('not.exist')
-      cy.get('[data-testid="error-message"]').should('not.exist')
-
-      // Target the Sonner toast container and specific toast item
-      cy.get('[data-sonner-toaster]').find('[data-sonner-toast]').should('exist')
+      checkDocumentCreated()
 
       // Check download
       const filename = `Документы ${MOCK_DATA.fullnameClient}.zip`
@@ -132,18 +212,26 @@ describe('Create Document Flow', () => {
     })
 
     it('should search & update an existing document', () => {
-      const INITIAL_MOCK_DATA = generateMockData()
-      const UPDATE_MOCK_DATA = generateMockData()
+      const INITIAL_MOCK_DATA = {
+        ...generateMockData(),
+        documentAddress: DOCUMENT_ADDRESSES[1]
+      }
+      const UPDATE_MOCK_DATA = {
+        ...generateMockData(),
+        documentAddress: DOCUMENT_ADDRESSES[5]
+      }
 
       fillCreateDocumentForm(INITIAL_MOCK_DATA)
+      cy.get('[data-testid="document-address-select"]').click()
+      cy.get(
+        `[data-testid="document-address-select-item-${INITIAL_MOCK_DATA.documentAddress}"]`
+      ).click()
+      cy.get('[data-slot="select-content"]').should('not.be.visible')
       cy.get('[data-testid="save-btn"]').click()
       cy.wait('@createDocumentAction')
         .its('response.statusCode')
         .should('be.oneOf', [200, 201, 301])
-      cy.get('[data-sonner-toaster]').find('[data-sonner-toast]').should('exist')
-
-      cy.get('[data-testid="password-error"]').should('not.exist')
-      cy.get('[data-testid="error-message"]').should('not.exist')
+      checkDocumentCreated()
 
       const initialFilename = `Документы ${INITIAL_MOCK_DATA.fullnameClient}.zip`
       const initialFilepath = `cypress/downloads/${initialFilename}`
@@ -157,6 +245,16 @@ describe('Create Document Flow', () => {
       cy.contains('li', INITIAL_MOCK_DATA.fullnameClient).should('be.visible').click()
 
       cy.get('[data-testid="existing-document-search-notice"]').should('be.visible')
+      cy.get('[data-testid="document-address-select"]').should(
+        'have.text',
+        INITIAL_MOCK_DATA.documentAddress
+      )
+
+      cy.get('[data-testid="document-address-select"]').click()
+      cy.get(
+        `[data-testid="document-address-select-item-${UPDATE_MOCK_DATA.documentAddress}"]`
+      ).click()
+      cy.get('[data-slot="select-content"]').should('not.be.visible')
 
       cy.get('[data-testid="enumeration-input"]').clear().type(UPDATE_MOCK_DATA.enumeration)
       cy.get('[data-testid="fullnameClient-input"]').clear().type(UPDATE_MOCK_DATA.fullnameClient)
@@ -173,9 +271,7 @@ describe('Create Document Flow', () => {
         .its('response.statusCode')
         .should('be.oneOf', [200, 201, 301])
 
-      cy.get('[data-testid="password-error"]').should('not.exist')
-      cy.get('[data-testid="error-message"]').should('not.exist')
-      cy.get('[data-sonner-toaster]').find('[data-sonner-toast]').should('exist')
+      checkDocumentCreated()
 
       const updatedFilename = `Документы ${UPDATE_MOCK_DATA.fullnameClient}.zip`
       const updatedFilepath = `cypress/downloads/${updatedFilename}`
@@ -183,6 +279,7 @@ describe('Create Document Flow', () => {
 
       validateZip(updatedFilepath, {
         ...INITIAL_MOCK_DATA,
+        documentAddress: UPDATE_MOCK_DATA.documentAddress,
         enumeration: UPDATE_MOCK_DATA.enumeration,
         fullnameClient: UPDATE_MOCK_DATA.fullnameClient,
         clientIdNumber: UPDATE_MOCK_DATA.clientIdNumber,
@@ -258,8 +355,6 @@ describe('Create Document Flow', () => {
           .should('be.visible')
           .and('contain.text', message)
       })
-
-      cy.get('[data-sonner-toast][data-type="success"]').should('not.exist')
     })
 
     it('Can not create document with existing data', () => {
@@ -271,11 +366,7 @@ describe('Create Document Flow', () => {
       cy.get('[data-testid="save-btn"]').click()
       cy.wait('@createDocumentAction').its('response.statusCode').should('eq', 200)
 
-      cy.get('[data-testid="password-error"]').should('not.exist')
-      cy.get('[data-testid="error-message"]').should('not.exist')
-
-      // Target the Sonner toast container and specific toast item
-      cy.get('[data-sonner-toaster]').find('[data-sonner-toast]').should('exist')
+      checkDocumentCreated()
 
       // Check download
       const filename = `Документы ${MOCK_DATA.fullnameClient}.zip`
@@ -293,6 +384,7 @@ describe('Create Document Flow', () => {
       fillCreateDocumentForm(SECOND_MOCK_DATA)
 
       cy.get('[data-testid="enumeration-input"]').clear().type(MOCK_DATA.enumeration)
+      cy.get('[data-testid="enumeration-input"]').should('have.value', MOCK_DATA.enumeration)
 
       // Save Button
       cy.get('[data-testid="save-btn"]').click()

@@ -1,0 +1,2 @@
+CREATE TYPE "public"."document_address" AS ENUM('Сарыарка д 6 кв 1', 'Сарыарка д 6 кв 4', 'Сарыарка 6 кв 12', 'Сарыарка д 14 кв 9', 'Сарыарка д 1 кв 7', 'Сарыарка д 1 кв 5');--> statement-breakpoint
+ALTER TABLE "documents_table" ADD COLUMN "document_address" "document_address" DEFAULT 'Сарыарка д 6 кв 1' NOT NULL;

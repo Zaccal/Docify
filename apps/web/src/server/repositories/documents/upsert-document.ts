@@ -3,7 +3,7 @@ import { CustomersTable, DocumentsTable, OrganizationsTable } from '@Docify/db/s
 
 import type { DocumentFormSchema } from '@/features/documents/form/schemas/document-schema/document.schema'
 import { DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
-import { getNightsCount } from '@/utils/format-document-template-data/subutils/get-nights-count'
+import { getNightsCount } from '@/utils/format-document-template-data/subutils/get-nights-count/get-nights-count'
 
 export async function upsertDocument(
   tx: TransactionType,
@@ -72,6 +72,7 @@ export async function upsertDocument(
     enumeration: data.enumeration,
     documentDate: data.documentDate,
     cellsLine: data.cellsLine ?? {},
+    documentAddress: data.documentAddress,
     customerId: customer.id
   }
 
@@ -84,6 +85,7 @@ export async function upsertDocument(
         enumeration: data.enumeration,
         documentDate: data.documentDate,
         cellsLine: data.cellsLine ?? {},
+        documentAddress: data.documentAddress,
         updatedAt: new Date()
       }
     })

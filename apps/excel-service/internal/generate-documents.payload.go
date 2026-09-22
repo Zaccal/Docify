@@ -123,15 +123,16 @@ func (lines *CellLines) unmarshalJSONObject(data []byte) error {
 }
 
 type Payload struct {
-	ID             string    `json:"id"`
-	Enumeration    string    `json:"enumeration"`
-	DocumentDate   []string  `json:"documentDate"`
-	UpdatedAt      time.Time `json:"updatedAt"`
-	CreatedAt      time.Time `json:"createdAt"`
-	CellsLine      CellLines `json:"cellsLine"`
-	CustomerID     string    `json:"customerId"`
-	OrganizationID string    `json:"organizationId"`
-	Customer       struct {
+	ID              string    `json:"id"`
+	Enumeration     string    `json:"enumeration"`
+	DocumentDate    []string  `json:"documentDate"`
+	DocumentAddress string    `json:"documentAddress"`
+	UpdatedAt       time.Time `json:"updatedAt"`
+	CreatedAt       time.Time `json:"createdAt"`
+	CellsLine       CellLines `json:"cellsLine"`
+	CustomerID      string    `json:"customerId"`
+	OrganizationID  string    `json:"organizationId"`
+	Customer        struct {
 		ID               string `json:"id"`
 		FullnameClient   string `json:"fullnameClient"`
 		ClientIDNumber   string `json:"clientIdNumber"`

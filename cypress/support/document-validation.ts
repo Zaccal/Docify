@@ -1,7 +1,9 @@
 import type { generateMockData } from './utils/generate-mock-data'
 import { getExpectedExcelData } from './utils/get-expected-excel-data'
 
-export function validateZip(filepath: string, mockData: ReturnType<typeof generateMockData>) {
+type MockDocumentData = ReturnType<typeof generateMockData> & { documentAddress?: string }
+
+export function validateZip(filepath: string, mockData: MockDocumentData) {
   cy.task('readZip', filepath).then((files) => {
     expect(files).to.have.length(4)
     const filenames = files.map((file) => file.name)
@@ -60,11 +62,7 @@ function validateExcelFiles(
   }
 }
 
-function validateDocxFile(
-  filepath: string,
-  filename: string,
-  mockData: ReturnType<typeof generateMockData>
-) {
+function validateDocxFile(filepath: string, filename: string, mockData: MockDocumentData) {
   cy.task('readDocxFromZip', { zipPath: filepath, filename }).then((text) => {
     const content = text as string
 
@@ -86,6 +84,12 @@ function validateDocxFile(
 
     for (const value of expectedValues) {
       expect(content).to.include(value)
+    }
+
+    if (mockData.documentAddress) {
+      expect(content, 'Selected document address in the lease agreement').to.include(
+        mockData.documentAddress
+      )
     }
   })
 }

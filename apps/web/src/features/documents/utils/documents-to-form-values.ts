@@ -12,6 +12,7 @@ export function documentToFormValues(document: SearchResultDocument): DocumentVa
         ? [document.documentDate[0], document.documentDate[1]]
         : undefined,
     cellsLine: document.cellsLine,
+    documentAddress: document.documentAddress,
 
     fullnameClient: customer.fullnameClient,
     clientIdNumber: customer.clientIdNumber,

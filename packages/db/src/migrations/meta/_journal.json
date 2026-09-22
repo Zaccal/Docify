@@ -218,6 +218,13 @@
       "when": 1786046522924,
       "tag": "0030_outstanding_invisible_woman",
       "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1789829091673,
+      "tag": "0031_wakeful_grey_gargoyle",
+      "breakpoints": true
     }
   ]
 }

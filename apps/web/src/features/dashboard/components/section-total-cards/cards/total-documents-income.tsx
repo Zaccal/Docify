@@ -17,7 +17,7 @@ import { useLocalStorage } from '@/hooks'
 import { useQuery } from '@/hooks/useQuery'
 import { COMPANY_LOCAL_STORAGE_KEY } from '@/lib/constants'
 import type { Company } from '@/types/company.type'
-import { formatNumber } from '@/utils/format-number'
+import { formatNumber } from '@/utils/format-number/format-number'
 
 export default function TotalDocumentsIncome() {
   const company = useLocalStorage<Company>(COMPANY_LOCAL_STORAGE_KEY).value

@@ -33,6 +33,9 @@ try {
   if (error instanceof Error) {
     console.error(error.message)
     console.error(error.stack)
+    if (error.cause) {
+      console.error('Underlying database error:', error.cause)
+    }
   } else {
     console.error(error)
   }

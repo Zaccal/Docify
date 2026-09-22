@@ -1,6 +1,4 @@
--- Custom SQL migration file, put your code below! --
--- Ensure the migration is atomic.
-BEGIN;
+-- Drizzle manages the transaction for the migration batch.
 
 LOCK TABLE "cost_transactions_table"
 IN ACCESS EXCLUSIVE MODE;
@@ -33,5 +31,3 @@ ALTER TYPE "cost_transaction_reason_new"
 ALTER TABLE "cost_transactions_table"
   ALTER COLUMN "reason"
   SET DEFAULT 'NEW_ORDER'::"cost_transaction_reason";
-
-COMMIT;
