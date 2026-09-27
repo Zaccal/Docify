@@ -1,5 +1,15 @@
-import { relations } from 'drizzle-orm'
-import { index, jsonb, numeric, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { relations, sql } from 'drizzle-orm'
+import {
+  index,
+  jsonb,
+  numeric,
+  pgTable,
+  text,
+  timestamp,
+  uniqueIndex,
+  uuid,
+  varchar
+} from 'drizzle-orm/pg-core'
 
 import { DocumentAddressEnum, TemplateType } from './enums'
 import { CostTransactionsTable } from './transactions'
@@ -65,7 +75,7 @@ export const DocumentsTable = pgTable(
   'documents_table',
   {
     id: uuid('id').primaryKey().defaultRandom(),
-    enumeration: varchar('enumeration', { length: 4 }).notNull().unique(),
+    enumeration: varchar('enumeration', { length: 4 }).notNull(),
     documentDate: text('document_date').array().notNull(),
     updatedAt: timestamp('updated_at').notNull().defaultNow(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
@@ -79,7 +89,13 @@ export const DocumentsTable = pgTable(
   },
   (table) => [
     index('documents_table_customer_id_idx').on(table.customerId),
-    index('documents_table_enumeration_idx').on(table.enumeration)
+    index('documents_table_enumeration_idx').on(table.enumeration),
+
+    // Now we can ensure unique enumeration per year
+    uniqueIndex('documents_year_enumeration_unique').on(
+      table.enumeration,
+      sql`EXTRACT(YEAR FROM ${table.createdAt})`
+    )
   ]
 )
 

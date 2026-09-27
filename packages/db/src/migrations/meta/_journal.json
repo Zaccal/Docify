@@ -225,6 +225,13 @@
       "when": 1789829091673,
       "tag": "0031_wakeful_grey_gargoyle",
       "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1790426958886,
+      "tag": "0032_strong_amphibian",
+      "breakpoints": true
     }
   ]
 }
