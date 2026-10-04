@@ -3,53 +3,80 @@
 import { db, eq } from '@Docify/db'
 import { DocumentsTable } from '@Docify/db/schema'
 
-export async function swapEnumeration(currentDocumentId: string, conflictDocumentId: string) {
+import { getTemporaryEnumeration } from '@/server/repositories/documents/get-temporary-enumeration'
+
+interface SwapEnumerationInput {
+  currentDocumentId: string
+  conflictingDocumentId: string
+  expectedCurrentEnumeration: string
+  expectedConflictEnumeration: string
+  expectedYear: number
+}
+
+export async function swapEnumeration({
+  currentDocumentId,
+  conflictingDocumentId,
+  expectedCurrentEnumeration,
+  expectedConflictEnumeration,
+  expectedYear
+}: SwapEnumerationInput) {
   try {
     const updatedCurrentDocument = await db.transaction(async (tx) => {
       const [currentDocument] = await tx
         .select()
         .from(DocumentsTable)
         .where(eq(DocumentsTable.id, currentDocumentId))
-      const [conflictDocument] = await tx
+      const [conflictingDocument] = await tx
         .select()
         .from(DocumentsTable)
-        .where(eq(DocumentsTable.id, conflictDocumentId))
+        .where(eq(DocumentsTable.id, conflictingDocumentId))
 
-      if (!currentDocument || !conflictDocument) {
+      if (!currentDocument || !conflictingDocument) {
         throw new Error('Документы не найдены')
       }
 
       const currentDocumentYear = currentDocument.createdAt.getFullYear()
-      const conflictDocumentYear = conflictDocument.createdAt.getFullYear()
+      const conflictDocumentYear = conflictingDocument.createdAt.getFullYear()
 
-      if (currentDocumentYear !== conflictDocumentYear) {
-        throw new Error('Невозможно переставить документы с разными годами')
+      if (currentDocumentYear !== expectedYear || conflictDocumentYear !== expectedYear) {
+        throw new Error('Документы были изменены. Попробуйте ещё раз')
+      }
+
+      if (
+        currentDocument.enumeration !== expectedCurrentEnumeration ||
+        conflictingDocument.enumeration !== expectedConflictEnumeration
+      ) {
+        throw new Error('Порядковые номера документов были изменены. Попробуйте ещё раз')
       }
 
       const currentDocumentEnumeration = currentDocument.enumeration
-      const conflictDocumentEnumeration = conflictDocument.enumeration
+      const conflictingDocumentEnumeration = conflictingDocument.enumeration
 
-      if (currentDocumentEnumeration === conflictDocumentEnumeration) {
+      if (currentDocumentEnumeration === conflictingDocumentEnumeration) {
         throw new Error('Невозможно переставить документы с одинаковым порядковым номером')
       }
 
-      const TEMP_ENUMERATION_VALUE = 'TEMP' as const
+      const temporaryEnumeration = await getTemporaryEnumeration(tx, expectedYear)
 
       await tx
         .update(DocumentsTable)
-        .set({ enumeration: TEMP_ENUMERATION_VALUE })
+        .set({ enumeration: temporaryEnumeration })
         .where(eq(DocumentsTable.id, currentDocumentId))
 
       await tx
         .update(DocumentsTable)
         .set({ enumeration: currentDocumentEnumeration })
-        .where(eq(DocumentsTable.id, conflictDocumentId))
+        .where(eq(DocumentsTable.id, conflictingDocumentId))
 
       const [updatedCurrentDocument] = await tx
         .update(DocumentsTable)
-        .set({ enumeration: conflictDocumentEnumeration })
+        .set({ enumeration: conflictingDocumentEnumeration })
         .where(eq(DocumentsTable.id, currentDocumentId))
         .returning()
+
+      if (!updatedCurrentDocument) {
+        throw new Error('Не удалось переставить порядковые номера документов')
+      }
 
       return updatedCurrentDocument
     })

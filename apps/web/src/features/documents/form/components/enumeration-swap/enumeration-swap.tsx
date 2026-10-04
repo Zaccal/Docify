@@ -12,13 +12,21 @@ interface EnumerationSwapProps {
 }
 
 export default function EnumerationSwap({ children, onSuccess }: EnumerationSwapProps) {
-  const { isOpen, toggle, close, data } = useEnumerationSwapStore((state) => state)
+  const { isOpen, setOpen, close, data } = useEnumerationSwapStore((state) => state)
   const [isPending, startTransition] = useTransition()
 
   const handleConfirm = () => {
     startTransition(async () => {
       if (data?.currentDocument && data?.conflictingDocument) {
-        const response = await swapEnumeration(data.currentDocument.id, data.conflictingDocument.id)
+        const response = await swapEnumeration({
+          currentDocumentId: data.currentDocument.id,
+          conflictingDocumentId: data.conflictingDocument.id,
+
+          expectedCurrentEnumeration: data.currentDocument.enumeration,
+          expectedConflictEnumeration: data.conflictingDocument.enumeration,
+          expectedYear: data.year
+        })
+
         if (!response.success) {
           toast.error('Упс, произошла ошибка!', { description: response.error })
           close()
@@ -38,7 +46,7 @@ export default function EnumerationSwap({ children, onSuccess }: EnumerationSwap
       <EnumerationSwapAlertDialog
         isPending={isPending}
         onConfirm={handleConfirm}
-        onOpenChange={toggle}
+        onOpenChange={setOpen}
         open={isOpen}
       />
     </>
