@@ -34,8 +34,8 @@ export default function EnumerationSwapAlertDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>Поменять номера документов?</AlertDialogTitle>
           <AlertDialogDescription>
-            Документ с таким номером уже существует ({truncate(data?.conflictingDocument.id)}). Вы
-            можете поменять номера текущего и существующего документов местами.
+            Документ с таким номером уже существует ({truncate(data?.conflictingCustomer.fullName)}
+            ). Вы можете поменять номера текущего и существующего документов местами.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

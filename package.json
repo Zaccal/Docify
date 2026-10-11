@@ -30,6 +30,7 @@
     "lint:github": "oxlint --format=github",
     "check-types": "turbo check-types",
     "dev:web": "turbo -F web dev",
+    "seed": "bun packages/db/src/seed.ts",
     "db:push": "turbo -F @Docify/db db:push",
     "db:studio": "turbo -F @Docify/db db:studio",
     "db:generate": "turbo -F @Docify/db db:generate",

@@ -4,6 +4,7 @@ import 'server-only'
 import type { DocumentFormSchema } from '@/features/documents/form/schemas/document-schema/document.schema'
 import type { DocumentResult } from '@/types/document-result.type'
 
+import { findCustomerFullNameById } from './helpers/find-customer-fullName-by-id'
 import { findDocumentByCustomerIin } from './helpers/find-document-by-customer-iin'
 import { findDocumentByEnumerationAndYear } from './helpers/find-document-by-enumeration-and-year'
 
@@ -31,6 +32,18 @@ export async function checkEnumerationConflict(
     }
   }
 
+  const enumerationConflictCustomerFullName = await findCustomerFullNameById(
+    enumerationConflictDocument.customerId
+  )
+
+  if (!enumerationConflictCustomerFullName) {
+    return {
+      success: false,
+      data: null,
+      conflict: null
+    }
+  }
+
   return {
     success: false,
     data: null,
@@ -44,6 +57,9 @@ export async function checkEnumerationConflict(
       conflictingDocument: {
         id: enumerationConflictDocument.id,
         enumeration: enumerationConflictDocument.enumeration
+      },
+      conflictingCustomer: {
+        fullName: enumerationConflictCustomerFullName
       }
     }
   }
