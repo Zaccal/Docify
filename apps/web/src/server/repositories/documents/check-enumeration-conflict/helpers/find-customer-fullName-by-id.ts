@@ -8,5 +8,5 @@ export async function findCustomerFullNameById(id: string) {
     .from(CustomersTable)
     .where(eq(CustomersTable.id, id))
 
-  return customer.fullName ?? null
+  return customer?.fullName ?? null
 }

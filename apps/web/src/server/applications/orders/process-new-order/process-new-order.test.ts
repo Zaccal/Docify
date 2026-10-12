@@ -13,6 +13,8 @@ mock.module('@Docify/env/server', () => ({
 const { db } = await import('@Docify/db')
 const customerLookup =
   await import('@/server/repositories/documents/check-enumeration-conflict/helpers/find-document-by-customer-iin')
+const customerNameLookup =
+  await import('@/server/repositories/documents/check-enumeration-conflict/helpers/find-customer-fullName-by-id')
 const enumerationLookup =
   await import('@/server/repositories/documents/check-enumeration-conflict/helpers/find-document-by-enumeration-and-year')
 const documentLookup = await import('@/server/repositories/documents/find-document-by-id')
@@ -24,6 +26,7 @@ const transactionRepository = await import('@/server/repositories/transactions/c
 const tx = {} as TransactionType
 const runTransaction = spyOn(db, 'transaction')
 const findCustomer = spyOn(customerLookup, 'findDocumentByCustomerIin')
+const findCustomerName = spyOn(customerNameLookup, 'findCustomerFullNameById')
 const findEnumeration = spyOn(enumerationLookup, 'findDocumentByEnumerationAndYear')
 const findDocument = spyOn(documentLookup, 'findDocumentById')
 const upsertDocument = spyOn(documentRepository, 'upsertDocument')
@@ -95,6 +98,8 @@ const saved: Awaited<ReturnType<typeof documentRepository.upsertDocument>> = {
     templateType: data.templateType
   }
 }
+const conflictingDocument = { ...saved.document, id: 'document-2', customerId: 'customer-2' }
+const conflictingCustomerFullName = 'Петров П.П.'
 const transaction: Awaited<
   ReturnType<typeof transactionRepository.createChargeTransaction>
 >[number] = {
@@ -123,6 +128,7 @@ function formData() {
 beforeEach(() => {
   runTransaction.mockReset().mockImplementation(async (callback) => callback(tx))
   findCustomer.mockReset().mockResolvedValue(null)
+  findCustomerName.mockReset().mockResolvedValue(conflictingCustomerFullName)
   findEnumeration.mockReset().mockResolvedValue(null)
   findDocument.mockReset().mockResolvedValue({
     ...saved.document,
@@ -143,6 +149,7 @@ describe('checkEnumerationConflict', () => {
       conflict: null
     })
     expect(findEnumeration).toHaveBeenCalledWith(tx, data.enumeration, new Date().getFullYear())
+    expect(findCustomerName).not.toHaveBeenCalled()
   })
 
   test('allows keeping the current document enumeration', async () => {
@@ -154,15 +161,22 @@ describe('checkEnumerationConflict', () => {
       data: null,
       conflict: null
     })
+    expect(findCustomerName).not.toHaveBeenCalled()
   })
 
   test('rejects a conflict for a customer who has no document', async () => {
     findCustomer.mockResolvedValue({ Customer: saved.customer, Document: null })
-    findEnumeration.mockResolvedValue(saved.document)
+    findEnumeration.mockResolvedValue(conflictingDocument)
 
     const result = await checkEnumerationConflict(tx, data)
 
-    expect(result.conflict).toMatchObject({ action: 'reject', currentDocument: null })
+    expect(result.conflict).toMatchObject({
+      action: 'reject',
+      currentDocument: null,
+      conflictingDocument: { id: conflictingDocument.id, enumeration: data.enumeration },
+      conflictingCustomer: { fullName: conflictingCustomerFullName }
+    })
+    expect(findCustomerName).toHaveBeenCalledWith(conflictingDocument.customerId)
     expect(findEnumeration).toHaveBeenCalledWith(tx, data.enumeration, new Date().getFullYear())
   })
 })
@@ -201,6 +215,7 @@ describe('processNewOrder', () => {
     })
     expect(findDocument).toHaveBeenCalledWith(saved.document.id)
     expect(findCustomer).not.toHaveBeenCalled()
+    expect(findCustomerName).not.toHaveBeenCalled()
     expect(upsertDocument).not.toHaveBeenCalled()
     expect(createCharge).not.toHaveBeenCalled()
   })
@@ -210,7 +225,7 @@ describe('processNewOrder', () => {
     if (currentDocument) {
       findCustomer.mockResolvedValue({ Customer: saved.customer, Document: currentDocument })
     }
-    findEnumeration.mockResolvedValue({ ...saved.document, id: 'document-2' })
+    findEnumeration.mockResolvedValue(conflictingDocument)
 
     const result = await processNewOrder(data)
     const year = currentDocument?.createdAt.getFullYear() ?? new Date().getFullYear()
@@ -223,10 +238,12 @@ describe('processNewOrder', () => {
         year,
         enumeration: data.enumeration,
         currentDocument: currentDocument ? { id: currentDocument.id, enumeration: '0001' } : null,
-        conflictingDocument: { id: 'document-2', enumeration: data.enumeration }
+        conflictingDocument: { id: conflictingDocument.id, enumeration: data.enumeration },
+        conflictingCustomer: { fullName: conflictingCustomerFullName }
       }
     })
     expect(findEnumeration).toHaveBeenCalledWith(tx, data.enumeration, year)
+    expect(findCustomerName).toHaveBeenCalledWith(conflictingDocument.customerId)
     expect(upsertDocument).not.toHaveBeenCalled()
     expect(createCharge).not.toHaveBeenCalled()
   })
@@ -248,17 +265,23 @@ describe('createDocuments', () => {
       if (action === 'swap') {
         findCustomer.mockResolvedValue({ Customer: saved.customer, Document: saved.document })
       }
-      findEnumeration.mockResolvedValue({ ...saved.document, id: 'document-2' })
+      findEnumeration.mockResolvedValue(conflictingDocument)
 
       const result = await createDocuments(initialState, formData())
 
       expect(result).toMatchObject({
         success: false,
         data: null,
-        conflict: { action, conflictingDocument: { id: 'document-2' } },
+        conflict: {
+          action,
+          conflictingDocument: { id: conflictingDocument.id },
+          conflictingCustomer: { fullName: conflictingCustomerFullName }
+        },
         values: data
       })
       expect(result.message).toContain(data.enumeration)
+      expect(findCustomerName).toHaveBeenCalledWith(conflictingDocument.customerId)
+      expect(upsertDocument).not.toHaveBeenCalled()
       expect(createCharge).not.toHaveBeenCalled()
     }
   )

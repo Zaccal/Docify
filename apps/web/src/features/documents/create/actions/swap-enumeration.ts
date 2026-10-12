@@ -1,6 +1,6 @@
 'use server'
 
-import { db, eq } from '@Docify/db'
+import { asc, db, eq, inArray } from '@Docify/db'
 import { DocumentsTable } from '@Docify/db/schema'
 
 import { getTemporaryEnumeration } from '@/server/repositories/documents/get-temporary-enumeration'
@@ -22,14 +22,22 @@ export async function swapEnumeration({
 }: SwapEnumerationInput) {
   try {
     const updatedCurrentDocument = await db.transaction(async (tx) => {
-      const [currentDocument] = await tx
+      if (currentDocumentId === conflictingDocumentId) {
+        throw new Error('Невозможно переставить документ с самим собой')
+      }
+
+      const documents = await tx
         .select()
         .from(DocumentsTable)
-        .where(eq(DocumentsTable.id, currentDocumentId))
-      const [conflictingDocument] = await tx
-        .select()
-        .from(DocumentsTable)
-        .where(eq(DocumentsTable.id, conflictingDocumentId))
+        .where(inArray(DocumentsTable.id, [currentDocumentId, conflictingDocumentId]))
+        .orderBy(asc(DocumentsTable.id))
+        .for('update')
+
+      const currentDocument = documents.find((document) => document.id === currentDocumentId)
+
+      const conflictingDocument = documents.find(
+        (document) => document.id === conflictingDocumentId
+      )
 
       if (!currentDocument || !conflictingDocument) {
         throw new Error('Документы не найдены')
