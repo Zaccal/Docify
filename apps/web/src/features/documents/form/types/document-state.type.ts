@@ -1,3 +1,5 @@
+import type { DocumentResult } from '@/types/document-result.type'
+
 import type {
   DocumentFormError,
   DocumentFormSchema
@@ -5,10 +7,8 @@ import type {
 
 export type DocumentValues = Partial<DocumentFormSchema>
 
-export interface DocumentState {
-  success: boolean
+export interface DocumentState extends DocumentResult<{ documentId: string }> {
   error?: DocumentFormError
   message?: string
-  documentId?: string
   values?: DocumentValues
 }
