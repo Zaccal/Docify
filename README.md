@@ -1,241 +1,287 @@
-# Docify
+<p align="center">
+  <img src="docify-previews/Banner.png" alt="Docify — automate your business documents" width="100%" />
+</p>
 
-This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, Self, and more.
+<h1 align="center">Docify</h1>
 
-This project is a web application for automating the generation of Excel/DOCS documents for my family business.
+<p align="center">
+  <strong>Less paperwork. More time for the business.</strong><br />
+  Generate Excel and Word documents, manage clients, and keep daily operations in one place.<br />
+  Built for my family's business.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-18181B?style=flat-square&amp;logo=nextdotjs&amp;logoColor=white" alt="Next.js" />
+  <img src="https://img.shields.io/badge/TypeScript-705184?style=flat-square&amp;logo=typescript&amp;logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Go-705184?style=flat-square&amp;logo=go&amp;logoColor=white" alt="Go" />
+  <img src="https://img.shields.io/badge/PostgreSQL-705184?style=flat-square&amp;logo=postgresql&amp;logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Bun-18181B?style=flat-square&amp;logo=bun&amp;logoColor=white" alt="Bun" />
+</p>
+
+<p align="center">
+  <a href="#preview">Preview</a> ·
+  <a href="#features">Features</a> ·
+  <a href="#getting-started">Getting started</a> ·
+  <a href="#testing">Testing</a> ·
+  <a href="#deployment">Deployment</a>
+</p>
+
+---
+
+## Preview
+
+A look inside Docify. Click any screenshot to view it at full size.
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="docify-previews/preview-1.png">
+        <img src="docify-previews/preview-1.png" alt="Docify dashboard with document totals, client and organization counts, and an activity chart" width="100%" />
+      </a>
+      <p><strong>Business at a glance</strong><br />Document totals, recent activity, and client insights.</p>
+    </td>
+    <td width="50%" valign="top">
+      <a href="docify-previews/preview-4.png">
+        <img src="docify-previews/preview-4.png" alt="Document creation form with template selection, client details, and organization information" width="100%" />
+      </a>
+      <p><strong>From details to documents</strong><br />Choose a template, fill in the details, or reuse an existing document.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="docify-previews/preview-2.png">
+        <img src="docify-previews/preview-2.png" alt="Searchable operations table showing clients, organizations, statuses, and amounts" width="100%" />
+      </a>
+      <p><strong>Every operation in view</strong><br />Search activity and review statuses, clients, and amounts.</p>
+    </td>
+    <td width="50%" valign="top">
+      <a href="docify-previews/preview-3.png">
+        <img src="docify-previews/preview-3.png" alt="Operation action menu with options to view, return, recreate, or ignore an operation" width="100%" />
+      </a>
+      <p><strong>Actions within reach</strong><br />View, return, recreate, or ignore an operation from its menu.</p>
+    </td>
+  </tr>
+</table>
 
 ## Features
 
-- **TypeScript** - For type safety and improved developer experience
-- **Next.js** - Full-stack React framework
-- **TailwindCSS** - Utility-first CSS for rapid UI development
-- **Shared UI package** - Base UI primitives live in `packages/ui`
-- **Drizzle** - TypeScript-first ORM
-- **PostgreSQL** - Database engine
-- **Husky** - Git hooks for code quality
-- **Turborepo** - Optimized monorepo build system
-- **Go** - Microservice for generating Excel documents
+- **Document generation** — Create Excel and Word documents from reusable templates.
+- **Faster data entry** — Prefill a new document using an existing one.
+- **Client and organization management** — Keep business details together for recurring work.
+- **Operations history** — Search records and track statuses and amounts.
+- **Dashboard overview** — See document totals, client counts, and activity over time.
+- **Shared design system** — A consistent interface built with Base UI and Tailwind CSS.
+
+## Tech Stack
+
+| Layer               | Technologies                                          |
+| ------------------- | ----------------------------------------------------- |
+| Web application     | Next.js, React, TypeScript                            |
+| UI and styling      | Tailwind CSS, Base UI, shared `@Docify/ui` components |
+| Data                | PostgreSQL, Drizzle ORM                               |
+| Document generation | Go with Excelize for Excel; Docxtemplater for Word    |
+| Workspace           | Bun, Turborepo                                        |
+| Testing             | Cypress, Testcontainers                               |
+| Code quality        | Oxfmt, Oxlint, Husky                                  |
 
 ## Getting Started
 
-First, install the dependencies:
+### Prerequisites
+
+- **Bun** — The version pinned in `package.json`.
+- **PostgreSQL** — A running database for local development.
+- **Go** — The version specified in `apps/excel-service/go.mod` or newer.
+- **Air** — Live reloading for the Go service.
+- **Docker** — Required for the Testcontainers E2E runner and Docker Compose deployment.
+
+### 1. Install dependencies
+
+Run from the repository root:
 
 ```bash
 bun install
 ```
 
-## Database Setup
+### 2. Configure the environment
 
-This project uses PostgreSQL with Drizzle ORM.
+Create `apps/web/.env`:
 
-1. Make sure you have a PostgreSQL database set up.
-2. Update your `apps/web/.env` file with your PostgreSQL connection details.
+```env
+CORS_ORIGIN=http://localhost:3001
+DATABASE_URL=postgresql://USER:PASSWORD@localhost:5432/docify
+PASSWORD=YOUR_LOGIN_PASSWORD
+AUTH_SECRET=YOUR_GENERATED_SECRET
+TEMPLATE_DIR=templates
+EXCEL_SERVICE_URL=http://localhost:3002
+```
 
-3. Apply the schema to your database:
+Replace the database credentials, login password, and auth secret with your own values.
+
+Create `apps/excel-service/.env`:
+
+```env
+PORT=3002
+TEMPLATE_PATH=templates
+```
+
+### 3. Set up the database
+
+Apply the schema to your local PostgreSQL database:
 
 ```bash
 bun run db:push
 ```
 
-Then, run the development server:
+### 4. Start development
 
 ```bash
 bun run dev
 ```
 
-Open [http://localhost:3001](http://localhost:3001) in your browser to see the fullstack application.
+Open **[localhost:3001](http://localhost:3001)**. Turborepo starts the Next.js app and the Go Excel service together.
+
+To start only the web application:
+
+```bash
+bun run dev:web
+```
 
 ## Testing
 
-Docify uses **Cypress** for end-to-end (E2E) testing and **Testcontainers** to provide an isolated PostgreSQL database.
+Docify uses **Cypress** for end-to-end tests and **Testcontainers** for an isolated PostgreSQL database.
 
-### Environment Variables
-
-Before running the application, create `.env` in `apps/web`:
-
-```env
-CORS_ORIGIN=
-DATABASE_URL=LOCAL_DB_CONNECTION_URL
-PASSWORD=PASSWORD_FOR_LOGIN
-AUTH_SECRET=GENERATED_SECRET
-TEMPLATE_DIR=templates
-EXCEL_SERVICE_URL=http://localhost:PORT
-```
-
-The Excel service requires its own `.env` file in `apps/excel-service`:
-
-```env
-PORT=
-TEMPLATE_PATH=templates
-```
-
-### E2E Testing
-
-The E2E test runner uses **Testcontainers** to automatically create a temporary PostgreSQL database for each test run. You do not need to create a separate test database or `.env.test` file.
-
-The test database connection URL is generated automatically by Testcontainers and passed to the Next.js application and database migrations.
-
-#### Run E2E Tests
-
-```bash
-bun run e2e:run
-```
-
-This command:
-
-1. Starts a PostgreSQL container using Testcontainers.
-2. Creates the test database.
-3. Runs the database migrations.
-4. Starts the Next.js development server.
-5. Waits for Next.js to become available.
-6. Runs Cypress tests.
-7. Stops the Next.js server.
-8. Removes the PostgreSQL container.
-
-This is the recommended command for **CI and automated E2E testing**.
-
-#### Open Cypress
-
-```bash
-bun run e2e:open
-```
-
-This starts the E2E environment and opens Cypress in interactive mode, allowing tests to be run and debugged manually.
-
-### Cypress Environment Variables
-
-Cypress uses `cypress.env.json` for values required by the tests.
-
-Create `cypress.env.json` in the project root:
+Create `cypress.env.json` in the repository root:
 
 ```json
 {
-  "PASSWORD": "PASSWORD_FOR_LOGIN"
+  "PASSWORD": "YOUR_LOGIN_PASSWORD"
 }
 ```
 
-The `PASSWORD` value should match the `PASSWORD` configured in `apps/web/.env`.
+Use the same password as `apps/web/.env`. This file is already excluded by `.gitignore`.
 
-> **Do not commit `cypress.env.json` if it contains real credentials.** Add it to `.gitignore` if necessary.
+| Command            | Use                                                                     |
+| ------------------ | ----------------------------------------------------------------------- |
+| `bun run e2e:run`  | Run the complete E2E environment and tests for CI or local verification |
+| `bun run e2e:open` | Start the E2E environment and open interactive Cypress                  |
 
-### Running Cypress Directly
+The runner creates a temporary PostgreSQL database, applies migrations, starts the development services, waits for Next.js, and launches Cypress. It handles cleanup after the run. The database URL is supplied automatically; a separate test database or `.env.test` file is not needed.
 
-Cypress can also be run without the E2E runner:
+<details>
+<summary><strong>Run Cypress against an existing environment</strong></summary>
+
+These commands run Cypress only. Start the application, Excel service, and database first.
 
 ```bash
 bun run cypress:run
-```
-
-Or opened in interactive mode:
-
-```bash
 bun run cypress:open
 ```
 
-These commands only run Cypress. They do **not** start Testcontainers or Next.js automatically, so the required application and database must already be running.
+</details>
 
-### E2E Runner Scripts
-
-The E2E runner scripts are located in:
+<details>
+<summary><strong>E2E runner scripts</strong></summary>
 
 ```text
 cypress/
 └── runner/
+    ├── runner.ts
+    ├── utils.ts
     └── scripts/
-        ├── ci.ts
-        └── default.ts
+        ├── ci.ts          # bun run e2e:run
+        └── default.ts     # bun run e2e:open
 ```
 
-The corresponding package scripts are:
-
-```json
-{
-  "e2e:run": "bun ./cypress/runner/scripts/ci.ts",
-  "e2e:open": "bun ./cypress/runner/scripts/default.ts"
-}
-```
+</details>
 
 ## Excel Service
 
-The Excel service is a Go microservice that generates Excel documents from templates.
+The Go microservice generates Excel documents from templates stored in `apps/excel-service/templates`.
 
-Requirements:
-
-- Go (version 1.21 or higher)
-- Air (for live reloading)
-
-To run the Excel service:
+With Go, Air, and the service's `.env` configured, run it independently:
 
 ```bash
-cd apps/excel
+cd apps/excel-service
 bun run dev
 ```
 
+The web app connects through `EXCEL_SERVICE_URL`, which should match the service's `PORT`.
+
 ## UI Customization
 
-React web apps in this stack share Base UI primitives through `packages/ui`.
+Shared Base UI primitives and styles live in `packages/ui`.
 
-- Change design tokens and global styles in `packages/ui/src/styles/globals.css`
-- Update shared primitives in `packages/ui/src/components/*`
-- Shared components are exported from `@Docify/ui/components/*`
+| Change                          | Location                             |
+| ------------------------------- | ------------------------------------ |
+| Design tokens and global styles | `packages/ui/src/styles/globals.css` |
+| Shared components               | `packages/ui/src/components/`        |
+| App-specific blocks             | `apps/web/`                          |
 
-### Add more shared components
-
-Install or wrap additional Base UI primitives in `packages/ui/src/components`.
+Add or wrap Base UI primitives in the shared package:
 
 ```bash
 bun add @base-ui/react --filter @Docify/ui
 ```
 
-Import shared components like this:
+Import shared components using the package exports:
 
 ```tsx
 import { Button } from '@Docify/ui/components/button'
 ```
 
-### Add app-specific blocks
-
-If you want to add app-specific blocks instead of shared primitives, keep them inside `apps/web`.
-
 ## Deployment
 
-### Docker Compose
+Docker Compose runs the **web app**, **Excel service**, and **Nginx** using `docker-compose.yml`. Application Dockerfiles live in `apps/web` and `apps/excel-service`.
 
-- Target: web + server
-- Config: `docker-compose.yml` (app Dockerfiles live in `apps/*/Dockerfile`)
-- Build images: bun run docker:build
-- Start: bun run docker:up
-- Logs: bun run docker:logs
-- Stop: bun run docker:down
+Configure the app environment files and set `DATABASE_URL` in the root `.env` for Compose. Container networking overrides are defined in `docker-compose.yml`; the production proxy configuration lives in `deployment/nginx/nginx.prod.conf`.
 
-Environment variables are read from each app's `.env` file (baked into web builds for public variables) and overridden in `docker-compose.yml` for container networking.
-
-## Git Hooks and Formatting
-
-- Initialize hooks: `bun run prepare`
+| Command                | Action                                      |
+| ---------------------- | ------------------------------------------- |
+| `bun run docker:build` | Build application images                    |
+| `bun run docker:up`    | Build and start the stack in the background |
+| `bun run docker:logs`  | Follow stack logs                           |
+| `bun run docker:down`  | Stop the stack                              |
 
 ## Project Structure
 
-```
+```text
 Docify/
 ├── apps/
-│   └── web/         # Fullstack application (Next.js)
+│   ├── web/               # Next.js application and Word templates
+│   └── excel-service/     # Go service and Excel templates
 ├── packages/
-│   ├── ui/          # Shared Base UI components and styles
-│   └── db/          # Database schema & queries
+│   ├── config/            # Shared configuration
+│   ├── db/                # Database schema and migrations
+│   ├── env/               # Environment validation
+│   └── ui/                # Shared Base UI components and styles
+├── cypress/               # E2E tests and environment runner
+├── deployment/            # Nginx and deployment configuration
+├── docify-previews/       # README banner and screenshots
+└── docker-compose.yml
 ```
 
 ## Available Scripts
 
-- `bun run dev`: Start all applications in development mode
-- `bun run build`: Build all applications
-- `bun run dev:web`: Start only the web application
-- `bun run check-types`: Check TypeScript types across all apps
-- `bun run db:push`: Push schema changes to database
-- `bun run db:generate`: Generate database client/types
-- `bun run db:migrate`: Run database migrations
-- `bun run db:studio`: Open database studio UI
-- `bun run docker:build`: Build the Docker Compose images
-- `bun run docker:up`: Build and start the Docker Compose stack
-- `bun run docker:logs`: Tail logs from the Docker Compose stack
-- `bun run docker:down`: Stop the Docker Compose stack
+Run these commands from the repository root.
+
+| Command               | Action                                          |
+| --------------------- | ----------------------------------------------- |
+| `bun run dev`         | Start all applications in development mode      |
+| `bun run dev:web`     | Start only the web application                  |
+| `bun run build`       | Build all applications                          |
+| `bun run check-types` | Run the workspace type-check task               |
+| `bun run lint`        | Check code with Oxlint                          |
+| `bun run fmt`         | Format files with Oxfmt                         |
+| `bun run fmt:check`   | Check formatting without changing files         |
+| `bun run db:push`     | Push schema changes to the database             |
+| `bun run db:generate` | Generate SQL migrations from the Drizzle schema |
+| `bun run db:migrate`  | Apply database migrations                       |
+| `bun run db:studio`   | Open Drizzle Studio                             |
+| `bun run prepare`     | Initialize Husky Git hooks                      |
+
+---
+
+<p align="center">
+  Built for the family business · Scaffolded with
+  <a href="https://github.com/AmanVarshney01/create-better-t-stack">Better-T-Stack</a>
+</p>
