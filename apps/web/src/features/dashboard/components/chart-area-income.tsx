@@ -68,6 +68,11 @@ export default function ChartAreaIncome() {
   )
   const isMobile = useIsMobile()
   const [timeRange, setTimeRange] = useState('90d')
+  const [referenceDate, setReferenceDate] = useState<Date | null>(null)
+
+  useEffect(() => {
+    setReferenceDate(new Date())
+  }, [chartData, timeRange])
 
   useEffect(() => {
     if (isMobile) {
@@ -75,7 +80,7 @@ export default function ChartAreaIncome() {
     }
   }, [isMobile])
 
-  if (isLoading) return <Skeleton className="h-111 w-full rounded-md" />
+  if (isLoading || !referenceDate) return <Skeleton className="h-111 w-full rounded-md" />
   if (isError)
     return (
       <div className="flex h-111 w-full items-center justify-center rounded-md border-2 border-[#e3bdba] bg-[#fff4f3]">
@@ -96,7 +101,7 @@ export default function ChartAreaIncome() {
 
   const daysToSubtract = timeRange === '7d' ? 7 : timeRange === '30d' ? 30 : 90
   const periodLabel = timeRange === '90d' ? '3 месяца' : `${daysToSubtract} дней`
-  const startDate = new Date()
+  const startDate = new Date(referenceDate)
   startDate.setHours(0, 0, 0, 0)
   const endDate = new Date(startDate)
   endDate.setDate(endDate.getDate() + 1)
