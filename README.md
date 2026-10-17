@@ -63,7 +63,7 @@ A look inside Docify. Click any screenshot to view it at full size.
   </tr>
 </table>
 
-## Features
+A full-stack document automation platform built for a real family business workflow.
 
 - **Document generation** — Create Excel and Word documents from reusable templates.
 - **Faster data entry** — Prefill a new document using an existing one.
@@ -84,7 +84,7 @@ A look inside Docify. Click any screenshot to view it at full size.
 | Testing             | Cypress, Testcontainers                               |
 | Code quality        | Oxfmt, Oxlint, Husky                                  |
 
-## Getting Started
+[Features](#-features) · [Architecture](#-architecture) · [Getting started](#-getting-started) · [Testing](#-testing) · [Deployment](#-deployment)
 
 ### Prerequisites
 
@@ -194,7 +194,7 @@ cypress/
 
 </details>
 
-## Excel Service
+The value must match `PASSWORD` in `apps/web/.env`. Do not commit real credentials.
 
 The Go microservice generates Excel documents from templates stored in `apps/excel-service/templates`.
 
@@ -219,9 +219,7 @@ Shared Base UI primitives and styles live in `packages/ui`.
 
 Add or wrap Base UI primitives in the shared package:
 
-```bash
-bun add @base-ui/react --filter @Docify/ui
-```
+## 🎨 UI development
 
 Import shared components using the package exports:
 
@@ -242,7 +240,7 @@ Configure the app environment files and set `DATABASE_URL` in the root `.env` fo
 | `bun run docker:logs`  | Follow stack logs                           |
 | `bun run docker:down`  | Stop the stack                              |
 
-## Project Structure
+<div align="center">
 
 ```text
 Docify/
