@@ -1,95 +1,121 @@
-<div align="center">
+<p align="center">
+  <img src="docify-previews/Banner.png" alt="Docify — automate your business documents" width="100%" />
+</p>
 
-# Docify
+<h1 align="center">Docify</h1>
 
-**Generate consistent Excel and Word documents from reusable templates — without repetitive manual work.**
+<p align="center">
+  <strong>Less paperwork. More time for the business.</strong><br />
+  Generate Excel and Word documents, manage clients, and keep daily operations in one place.<br />
+  Built for my family's business.
+</p>
 
-A full-stack document automation platform built for a real family business workflow.
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-18181B?style=flat-square&amp;logo=nextdotjs&amp;logoColor=white" alt="Next.js" />
+  <img src="https://img.shields.io/badge/TypeScript-705184?style=flat-square&amp;logo=typescript&amp;logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Go-705184?style=flat-square&amp;logo=go&amp;logoColor=white" alt="Go" />
+  <img src="https://img.shields.io/badge/PostgreSQL-705184?style=flat-square&amp;logo=postgresql&amp;logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Bun-18181B?style=flat-square&amp;logo=bun&amp;logoColor=white" alt="Bun" />
+</p>
 
-[![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=111827)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Go](https://img.shields.io/badge/Go-Excel_service-00ADD8?logo=go&logoColor=white)](https://go.dev/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Bun](https://img.shields.io/badge/Bun-1.3-FBF0DF?logo=bun&logoColor=14151A)](https://bun.sh/)
-[![Turborepo](https://img.shields.io/badge/Turborepo-monorepo-EF4444?logo=turborepo&logoColor=white)](https://turbo.build/repo)
-[![Cypress](https://img.shields.io/badge/Cypress-E2E-69D3A7?logo=cypress&logoColor=white)](https://www.cypress.io/)
-
-[Features](#-features) · [Architecture](#-architecture) · [Getting started](#-getting-started) · [Testing](#-testing) · [Deployment](#-deployment)
-
-</div>
+<p align="center">
+  <a href="#preview">Preview</a> ·
+  <a href="#features">Features</a> ·
+  <a href="#getting-started">Getting started</a> ·
+  <a href="#testing">Testing</a> ·
+  <a href="#deployment">Deployment</a>
+</p>
 
 ---
 
-## ✨ Features
+## Preview
 
-- **Template-driven generation** — produce Excel and DOCX documents from structured form data.
-- **Centralized customer data** — save and reuse customer and organization details with PostgreSQL.
-- **Consistent calculations** — calculate dates, nights, totals, and formatted document values in one place.
-- **Ready-to-download bundles** — generate the related documents together for a workflow.
-- **Shared design system** — reusable Base UI components and Tailwind CSS styles across the web app.
-- **Isolated E2E tests** — Cypress runs against a disposable PostgreSQL database through Testcontainers.
-- **Containerized delivery** — Docker Compose, Nginx, and separate web and Excel-generation services.
+A look inside Docify. Click any screenshot to view it at full size.
 
-## 🧱 Architecture
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="docify-previews/preview-1.png">
+        <img src="docify-previews/preview-1.png" alt="Docify dashboard with document totals, client and organization counts, and an activity chart" width="100%" />
+      </a>
+      <p><strong>Business at a glance</strong><br />Document totals, recent activity, and client insights.</p>
+    </td>
+    <td width="50%" valign="top">
+      <a href="docify-previews/preview-4.png">
+        <img src="docify-previews/preview-4.png" alt="Document creation form with template selection, client details, and organization information" width="100%" />
+      </a>
+      <p><strong>From details to documents</strong><br />Choose a template, fill in the details, or reuse an existing document.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="docify-previews/preview-2.png">
+        <img src="docify-previews/preview-2.png" alt="Searchable operations table showing clients, organizations, statuses, and amounts" width="100%" />
+      </a>
+      <p><strong>Every operation in view</strong><br />Search activity and review statuses, clients, and amounts.</p>
+    </td>
+    <td width="50%" valign="top">
+      <a href="docify-previews/preview-3.png">
+        <img src="docify-previews/preview-3.png" alt="Operation action menu with options to view, return, recreate, or ignore an operation" width="100%" />
+      </a>
+      <p><strong>Actions within reach</strong><br />View, return, recreate, or ignore an operation from its menu.</p>
+    </td>
+  </tr>
+</table>
 
-| Layer | Technology | Responsibility |
-| --- | --- | --- |
-| Web application | Next.js 16, React 19, TypeScript | Forms, validation, document workflows, and downloads |
-| Excel service | Go | Generates Excel files from templates |
-| Database | PostgreSQL, Drizzle ORM | Customers, organizations, documents, and migrations |
-| UI | Base UI, Tailwind CSS 4 | Shared components, themes, and design tokens |
-| Monorepo | Bun, Turborepo | Workspaces, scripts, caching, and builds |
-| Quality | Cypress, Testcontainers, Oxc, Husky | E2E testing, linting, formatting, and Git hooks |
+A full-stack document automation platform built for a real family business workflow.
 
-```text
-Docify/
-├── apps/
-│   ├── web/                # Next.js full-stack application
-│   └── excel-service/      # Go Excel-generation service
-├── packages/
-│   ├── config/             # Shared TypeScript configuration
-│   ├── db/                 # Drizzle schema, queries, and migrations
-│   ├── env/                # Typed environment configuration
-│   └── ui/                 # Shared Base UI components and styles
-├── cypress/                # E2E specs, helpers, tasks, and runners
-├── deployment/             # Nginx and deployment configuration
-└── docker-compose.yml      # Production-oriented service stack
-```
+- **Document generation** — Create Excel and Word documents from reusable templates.
+- **Faster data entry** — Prefill a new document using an existing one.
+- **Client and organization management** — Keep business details together for recurring work.
+- **Operations history** — Search records and track statuses and amounts.
+- **Dashboard overview** — See document totals, client counts, and activity over time.
+- **Shared design system** — A consistent interface built with Base UI and Tailwind CSS.
 
-## 🚀 Getting started
+## Tech Stack
+
+| Layer               | Technologies                                          |
+| ------------------- | ----------------------------------------------------- |
+| Web application     | Next.js, React, TypeScript                            |
+| UI and styling      | Tailwind CSS, Base UI, shared `@Docify/ui` components |
+| Data                | PostgreSQL, Drizzle ORM                               |
+| Document generation | Go with Excelize for Excel; Docxtemplater for Word    |
+| Workspace           | Bun, Turborepo                                        |
+| Testing             | Cypress, Testcontainers                               |
+| Code quality        | Oxfmt, Oxlint, Husky                                  |
+
+[Features](#-features) · [Architecture](#-architecture) · [Getting started](#-getting-started) · [Testing](#-testing) · [Deployment](#-deployment)
 
 ### Prerequisites
 
-- [Bun](https://bun.sh/) 1.3+
-- [PostgreSQL](https://www.postgresql.org/)
-- [Go](https://go.dev/) for running the Excel service locally
-- [Docker](https://www.docker.com/) for containers and E2E tests
+- **Bun** — The version pinned in `package.json`.
+- **PostgreSQL** — A running database for local development.
+- **Go** — The version specified in `apps/excel-service/go.mod` or newer.
+- **Air** — Live reloading for the Go service.
+- **Docker** — Required for the Testcontainers E2E runner and Docker Compose deployment.
 
-### 1. Clone and install
+### 1. Install dependencies
+
+Run from the repository root:
 
 ```bash
-git clone https://github.com/Zaccal/Docify.git
-cd Docify
 bun install
 ```
 
-### 2. Configure the web app
+### 2. Configure the environment
 
 Create `apps/web/.env`:
 
 ```env
-DATABASE_URL=postgresql://postgres:password@localhost:5432/docify
-PASSWORD=your_login_password
-AUTH_SECRET=your_generated_secret
 CORS_ORIGIN=http://localhost:3001
+DATABASE_URL=postgresql://USER:PASSWORD@localhost:5432/docify
+PASSWORD=YOUR_LOGIN_PASSWORD
+AUTH_SECRET=YOUR_GENERATED_SECRET
 TEMPLATE_DIR=templates
 EXCEL_SERVICE_URL=http://localhost:3002
 ```
 
-> Keep real credentials out of Git. Use local values for development and repository/environment secrets in CI.
-
-### 3. Configure the Excel service
+Replace the database credentials, login password, and auth secret with your own values.
 
 Create `apps/excel-service/.env`:
 
@@ -98,125 +124,162 @@ PORT=3002
 TEMPLATE_PATH=templates
 ```
 
-### 4. Prepare the database
+### 3. Set up the database
 
-Make sure PostgreSQL is running, then apply the schema:
+Apply the schema to your local PostgreSQL database:
 
 ```bash
 bun run db:push
 ```
 
-### 5. Start development
-
-Start the monorepo:
+### 4. Start development
 
 ```bash
 bun run dev
 ```
 
-The web app is available at [http://localhost:3001](http://localhost:3001).
+Open **[localhost:3001](http://localhost:3001)**. Turborepo starts the Next.js app and the Go Excel service together.
 
-To run only the web workspace:
+To start only the web application:
 
 ```bash
 bun run dev:web
 ```
 
-## 🧪 Testing
+## Testing
 
-Docify uses Cypress for end-to-end testing and Testcontainers for a clean PostgreSQL instance on every complete E2E run.
+Docify uses **Cypress** for end-to-end tests and **Testcontainers** for an isolated PostgreSQL database.
 
-### Headless E2E run
-
-```bash
-bun run e2e:run
-```
-
-The runner starts PostgreSQL, applies migrations, launches the app, runs Cypress, and cleans up the temporary environment.
-
-### Interactive E2E mode
-
-```bash
-bun run e2e:open
-```
-
-Create `cypress.env.json` in the repository root when local tests need a login password:
+Create `cypress.env.json` in the repository root:
 
 ```json
 {
-  "PASSWORD": "your_login_password"
+  "PASSWORD": "YOUR_LOGIN_PASSWORD"
 }
 ```
 
-The value must match `PASSWORD` in `apps/web/.env`. Do not commit real credentials.
+Use the same password as `apps/web/.env`. This file is already excluded by `.gitignore`.
 
-You can also run Cypress directly when the application and database are already running:
+| Command            | Use                                                                     |
+| ------------------ | ----------------------------------------------------------------------- |
+| `bun run e2e:run`  | Run the complete E2E environment and tests for CI or local verification |
+| `bun run e2e:open` | Start the E2E environment and open interactive Cypress                  |
+
+The runner creates a temporary PostgreSQL database, applies migrations, starts the development services, waits for Next.js, and launches Cypress. It handles cleanup after the run. The database URL is supplied automatically; a separate test database or `.env.test` file is not needed.
+
+<details>
+<summary><strong>Run Cypress against an existing environment</strong></summary>
+
+These commands run Cypress only. Start the application, Excel service, and database first.
 
 ```bash
 bun run cypress:run
 bun run cypress:open
 ```
 
-## 🐳 Deployment
+</details>
 
-The production Compose stack contains the web app, Excel service, and Nginx reverse proxy.
+<details>
+<summary><strong>E2E runner scripts</strong></summary>
 
-```bash
-bun run docker:build   # Build images
-bun run docker:up      # Build and start the stack
-bun run docker:logs    # Follow service logs
-bun run docker:down    # Stop the stack
+```text
+cypress/
+└── runner/
+    ├── runner.ts
+    ├── utils.ts
+    └── scripts/
+        ├── ci.ts          # bun run e2e:run
+        └── default.ts     # bun run e2e:open
 ```
 
-Runtime values come from the application environment files and Compose environment overrides. TLS and Nginx configuration live under `deployment/`.
+</details>
 
-## 🛠️ Useful scripts
+The value must match `PASSWORD` in `apps/web/.env`. Do not commit real credentials.
 
-| Command | Description |
-| --- | --- |
-| `bun run dev` | Start all workspaces in development mode |
-| `bun run dev:web` | Start only the Next.js app |
-| `bun run build` | Build all workspaces |
-| `bun run check-types` | Type-check the monorepo |
-| `bun run lint` | Run Oxc linting |
-| `bun run lint:fix` | Fix supported lint issues |
-| `bun run fmt` | Format the repository |
-| `bun run fmt:check` | Check formatting without changing files |
-| `bun run db:push` | Push the Drizzle schema |
-| `bun run db:generate` | Generate a database migration |
-| `bun run db:migrate` | Run database migrations |
-| `bun run db:studio` | Open Drizzle Studio |
-| `bun run e2e:run` | Run the complete headless E2E environment |
+The Go microservice generates Excel documents from templates stored in `apps/excel-service/templates`.
+
+With Go, Air, and the service's `.env` configured, run it independently:
+
+```bash
+cd apps/excel-service
+bun run dev
+```
+
+The web app connects through `EXCEL_SERVICE_URL`, which should match the service's `PORT`.
+
+## UI Customization
+
+Shared Base UI primitives and styles live in `packages/ui`.
+
+| Change                          | Location                             |
+| ------------------------------- | ------------------------------------ |
+| Design tokens and global styles | `packages/ui/src/styles/globals.css` |
+| Shared components               | `packages/ui/src/components/`        |
+| App-specific blocks             | `apps/web/`                          |
+
+Add or wrap Base UI primitives in the shared package:
 
 ## 🎨 UI development
 
-Shared primitives live in `packages/ui/src/components`, while design tokens and global styles live in `packages/ui/src/styles/globals.css`.
+Import shared components using the package exports:
 
 ```tsx
 import { Button } from '@Docify/ui/components/button'
 ```
 
-Keep reusable primitives in `packages/ui` and feature-specific blocks inside `apps/web`.
+## Deployment
 
-## 🤝 Contributing
+Docker Compose runs the **web app**, **Excel service**, and **Nginx** using `docker-compose.yml`. Application Dockerfiles live in `apps/web` and `apps/excel-service`.
 
-1. Create a focused branch.
-2. Make the change and add or update tests.
-3. Run the quality checks:
+Configure the app environment files and set `DATABASE_URL` in the root `.env` for Compose. Container networking overrides are defined in `docker-compose.yml`; the production proxy configuration lives in `deployment/nginx/nginx.prod.conf`.
 
-```bash
-bun run fmt:check
-bun run lint
-bun run check-types
-bun run e2e:run
-```
-
-4. Open a pull request with a clear description of the change.
-
----
+| Command                | Action                                      |
+| ---------------------- | ------------------------------------------- |
+| `bun run docker:build` | Build application images                    |
+| `bun run docker:up`    | Build and start the stack in the background |
+| `bun run docker:logs`  | Follow stack logs                           |
+| `bun run docker:down`  | Stop the stack                              |
 
 <div align="center">
 
-Built with **Next.js**, **Go**, **PostgreSQL**, and a little obsession with eliminating repetitive paperwork.
+```text
+Docify/
+├── apps/
+│   ├── web/               # Next.js application and Word templates
+│   └── excel-service/     # Go service and Excel templates
+├── packages/
+│   ├── config/            # Shared configuration
+│   ├── db/                # Database schema and migrations
+│   ├── env/               # Environment validation
+│   └── ui/                # Shared Base UI components and styles
+├── cypress/               # E2E tests and environment runner
+├── deployment/            # Nginx and deployment configuration
+├── docify-previews/       # README banner and screenshots
+└── docker-compose.yml
+```
 
-</div>
+## Available Scripts
+
+Run these commands from the repository root.
+
+| Command               | Action                                          |
+| --------------------- | ----------------------------------------------- |
+| `bun run dev`         | Start all applications in development mode      |
+| `bun run dev:web`     | Start only the web application                  |
+| `bun run build`       | Build all applications                          |
+| `bun run check-types` | Run the workspace type-check task               |
+| `bun run lint`        | Check code with Oxlint                          |
+| `bun run fmt`         | Format files with Oxfmt                         |
+| `bun run fmt:check`   | Check formatting without changing files         |
+| `bun run db:push`     | Push schema changes to the database             |
+| `bun run db:generate` | Generate SQL migrations from the Drizzle schema |
+| `bun run db:migrate`  | Apply database migrations                       |
+| `bun run db:studio`   | Open Drizzle Studio                             |
+| `bun run prepare`     | Initialize Husky Git hooks                      |
+
+---
+
+<p align="center">
+  Built for the family business · Scaffolded with
+  <a href="https://github.com/AmanVarshney01/create-better-t-stack">Better-T-Stack</a>
+</p>
