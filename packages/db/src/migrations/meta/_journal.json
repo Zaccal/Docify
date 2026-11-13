@@ -232,6 +232,13 @@
       "when": 1790426958886,
       "tag": "0032_strong_amphibian",
       "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1794574837705,
+      "tag": "0033_add-customer-point-of-sale",
+      "breakpoints": true
     }
   ]
 }

@@ -135,6 +135,7 @@ function createDocumentData(overrides: Partial<DocumentData> = {}): DocumentData
       clientIdDateFrom: '01.01.2020',
       clientIdType: 'Удостоверение личности',
       iin: '123456789012',
+      pointOfSale: 'Жанаарка',
       organizationId: 'organization-1',
 
       organization: {

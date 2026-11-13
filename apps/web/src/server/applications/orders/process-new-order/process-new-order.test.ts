@@ -4,6 +4,8 @@ import type { TransactionType } from '@Docify/db'
 
 import { documentFormSchema } from '@/features/documents/form/schemas/document-schema/document.schema'
 import type { DocumentState } from '@/features/documents/form/types/document-state.type'
+import { documentToFormValues } from '@/features/documents/utils/documents-to-form-values'
+import { restoreTransactionFromSnapshot } from '@/utils/restore-transaction-from-snapshot'
 
 mock.module('server-only', () => ({}))
 mock.module('@Docify/env/server', () => ({
@@ -41,6 +43,7 @@ const { createDocuments } = await import('@/features/documents/create/actions/cr
 const data = documentFormSchema.parse({
   operationId: '00000000-0000-4000-8000-000000000001',
   company: 'XANSHA',
+  pointOfSale: 'Караганда',
   enumeration: '0002',
   documentDate: ['10.09.2026', '15.09.2026'],
   fullnameClient: 'Иванов И.И.',
@@ -76,6 +79,7 @@ const saved: Awaited<ReturnType<typeof documentRepository.upsertDocument>> = {
     organizationId: 'organization-1',
     fullnameClient: data.fullnameClient,
     iin: data.iin,
+    pointOfSale: data.pointOfSale,
     clientIdDateFrom: data.clientIdDateFrom,
     clientIdNumber: data.clientIdNumber,
     clientIdType: data.clientIdType
@@ -182,6 +186,22 @@ describe('checkEnumerationConflict', () => {
 })
 
 describe('processNewOrder', () => {
+  test('preserves the point of sale when restoring a snapshot and loading the form', () => {
+    const document = restoreTransactionFromSnapshot(transaction.snapshot)
+
+    expect(document.customer.pointOfSale).toBe('Караганда')
+    expect(documentToFormValues(document).pointOfSale).toBe('Караганда')
+  })
+
+  test('restores older snapshots using Zhanaarka', () => {
+    const customer = { ...transaction.snapshot.customer }
+    delete customer.pointOfSale
+
+    const document = restoreTransactionFromSnapshot({ ...transaction.snapshot, customer })
+
+    expect(document.customer.pointOfSale).toBe('Жанаарка')
+  })
+
   test('creates one charge with the document snapshot', async () => {
     const result = await processNewOrder(data)
 

@@ -10,6 +10,7 @@ import PizZip from 'pizzip'
 import type { TemplateType } from '@/features/documents/form/schemas/document-schema/document.schema'
 import { DEFAULT_COMPANY_TYPE, DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
 import { fetchExcelService } from '@/services/documents/fetch-excel-service'
+import { getTemplatePath } from '@/services/documents/get-template-path'
 import type { Company } from '@/types/company.type'
 import { Template } from '@/types/enums/template.enum'
 import type { FindDocumentByIdData } from '@/types/find-document-by-id.type'
@@ -48,7 +49,16 @@ async function generateLeaseAgreement(
     throw new Error('Hotel template is only available for XANSHA company')
   }
 
-  const templatePath = getTemplatePath(organization, Template.LEASE_AGREEMENT, templateType)
+  const templateDir = path.isAbsolute(env.TEMPLATE_DIR)
+    ? env.TEMPLATE_DIR
+    : path.join(process.cwd(), 'templates')
+  const templatePath = getTemplatePath(
+    templateDir,
+    organization,
+    Template.LEASE_AGREEMENT,
+    templateType,
+    data.customer.pointOfSale
+  )
   const templateBuffer = await readFile(templatePath)
 
   const zip = new PizZip(templateBuffer)
@@ -77,24 +87,4 @@ function addZipFilesToArchive(archive: PizZip, zipBuffer: Buffer) {
       date: file.date
     })
   }
-}
-
-function getTemplatePath(
-  organization: Company,
-  template: Template,
-  templateType: TemplateType = 'APARTMENT'
-) {
-  if (templateType === 'HOTEL') {
-    return path.join(getTemplatesDirectory(organization), 'HOTEL', template)
-  }
-
-  return path.join(getTemplatesDirectory(organization), template)
-}
-
-function getTemplatesDirectory(organization: Company) {
-  const templateDir = path.isAbsolute(env.TEMPLATE_DIR)
-    ? env.TEMPLATE_DIR
-    : path.join(process.cwd(), 'templates')
-
-  return path.join(templateDir, organization)
 }

@@ -139,6 +139,7 @@ type Payload struct {
 		ClientIDDateFrom string `json:"clientIdDateFrom"`
 		ClientIDType     string `json:"clientIdType"`
 		Iin              string `json:"iin"`
+		PointOfSale      string `json:"pointOfSale"`
 		OrganizationID   string `json:"organizationId"`
 		Organization     struct {
 			ID           string  `json:"id"`

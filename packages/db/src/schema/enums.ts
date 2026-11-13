@@ -15,6 +15,8 @@ export const CostTransactionStatusEnum = pgEnum('cost_transaction_status', ['POS
 
 export const TemplateType = pgEnum('template_type', ['HOTEL', 'APARTMENT'])
 
+export const PointOfSaleEnum = pgEnum('point_of_sale', ['Караганда', 'Жанаарка'])
+
 // Default: Сарыарка д 6 кв 1
 export const DocumentAddressEnum = pgEnum('document_address', [
   'Сарыарка д 6 кв 1',

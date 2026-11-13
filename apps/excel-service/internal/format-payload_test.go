@@ -17,7 +17,7 @@ func TestFormatPayloadAddsGeneratedValues(t *testing.T) {
 	assertPayloadGeneratedValue(t, result, "formattedDateFrom", "10 Июня 2026г")
 	assertPayloadGeneratedValue(t, result, "formattedDateTo", "13 Июня 2026г")
 	assertPayloadGeneratedValue(t, result, "nights", "3")
-	assertPayloadGeneratedValue(t, result, "totalCost", "3 000 000")
+	assertPayloadGeneratedValue(t, result, "totalCost", "3 000 000,00")
 	assertPayloadGeneratedValue(t, result, "totalCostRu", "Три миллиона")
 	assertPayloadGeneratedValue(t, result, "costPerDayRu", "Один миллион")
 
@@ -29,7 +29,7 @@ func TestFormatPayloadAddsGeneratedValues(t *testing.T) {
 	}
 
 	if result.Customer.Organization.CostPerDay != 1000000 {
-		t.Fatalf("expected formatted cost per day, got %d", result.Customer.Organization.CostPerDay)
+		t.Fatalf("expected formatted cost per day, got %v", result.Customer.Organization.CostPerDay)
 	}
 }
 
