@@ -37,7 +37,7 @@ const chartConfig = {
   //   label: 'Visitors'
   // },
   amount: {
-    label: 'Сумма',
+    label: 'Сумма ',
     color: 'var(--primary)'
   }
 } satisfies ChartConfig
@@ -53,11 +53,26 @@ export default function ChartAreaIncome() {
     data: chartData,
     isLoading,
     isError
-  } = useQuery<ChartData[]>(() =>
-    fetch(`/api/transactions/chart?company=${company}`).then((res) => res.json())
+  } = useQuery<ChartData[]>(
+    async ({ signal }) => {
+      const response = await fetch(
+        `/api/transactions/chart?company=${encodeURIComponent(company)}`,
+        { signal }
+      )
+      if (!response.ok) {
+        throw new Error('Failed to load chart data')
+      }
+      return response.json()
+    },
+    { keys: [company] }
   )
   const isMobile = useIsMobile()
   const [timeRange, setTimeRange] = useState('90d')
+  const [referenceDate, setReferenceDate] = useState<Date | null>(null)
+
+  useEffect(() => {
+    setReferenceDate(new Date())
+  }, [chartData, timeRange])
 
   useEffect(() => {
     if (isMobile) {
@@ -65,7 +80,7 @@ export default function ChartAreaIncome() {
     }
   }, [isMobile])
 
-  if (isLoading) return <Skeleton className="h-111 w-full rounded-md" />
+  if (isLoading || !referenceDate) return <Skeleton className="h-111 w-full rounded-md" />
   if (isError)
     return (
       <div className="flex h-111 w-full items-center justify-center rounded-md border-2 border-[#e3bdba] bg-[#fff4f3]">
@@ -84,18 +99,18 @@ export default function ChartAreaIncome() {
       </div>
     )
 
-  const filteredData = chartData?.filter((item) => {
+  const daysToSubtract = timeRange === '7d' ? 7 : timeRange === '30d' ? 30 : 90
+  const periodLabel = timeRange === '90d' ? '3 месяца' : `${daysToSubtract} дней`
+  const startDate = new Date(referenceDate)
+  startDate.setHours(0, 0, 0, 0)
+  const endDate = new Date(startDate)
+  endDate.setDate(endDate.getDate() + 1)
+  // Include today and the preceding calendar days in the selected range.
+  startDate.setDate(startDate.getDate() - (daysToSubtract - 1))
+
+  const filteredData = (chartData ?? []).filter((item) => {
     const date = new Date(item.date)
-    const referenceDate = new Date('2024-06-30')
-    let daysToSubtract = 90
-    if (timeRange === '30d') {
-      daysToSubtract = 30
-    } else if (timeRange === '7d') {
-      daysToSubtract = 7
-    }
-    const startDate = new Date(referenceDate)
-    startDate.setDate(startDate.getDate() - daysToSubtract)
-    return date >= startDate
+    return date >= startDate && date < endDate
   })
 
   return (
@@ -104,16 +119,18 @@ export default function ChartAreaIncome() {
         <CardTitle>Сгенерированные документы</CardTitle>
         <CardDescription>
           <span className="hidden @[540px]/card:block">
-            Статистика генерации за последние 3 месяца
+            Статистика генерации за последние {periodLabel}
           </span>
-          <span className="@[540px]/card:hidden">Последние 3 месяца</span>
+          <span className="@[540px]/card:hidden">Последние {periodLabel}</span>
         </CardDescription>
         <CardAction>
           <ToggleGroup
             multiple={false}
-            value={timeRange ? [timeRange] : []}
+            value={[timeRange]}
             onValueChange={(value) => {
-              setTimeRange(value[0] ?? '90d')
+              if (value[0]) {
+                setTimeRange(value[0])
+              }
             }}
             variant="outline"
             className="hidden *:data-[slot=toggle-group-item]:px-4! @[767px]/card:flex"
