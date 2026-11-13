@@ -211,6 +211,10 @@ export const documentAddressSchema = z.enum([
 
 export type DocumentAddress = z.infer<typeof documentAddressSchema>
 
+export const pointOfSale = z.enum(['Караганда', 'Жанаарка'])
+
+export type PointOfSale = z.infer<typeof pointOfSale>
+
 export const documentFormSchema = z.object({
   enumeration: enumerationSchema,
   fullnameClient: fullnameClientSchema,
@@ -235,7 +239,8 @@ export const documentFormSchema = z.object({
   operationId: operationIdSchema,
   company: companySchema,
   documentId: documentIdSchema,
-  documentAddress: z._default(documentAddressSchema, 'Сарыарка д 6 кв 1')
+  documentAddress: z._default(documentAddressSchema, 'Сарыарка д 6 кв 1'),
+  pointOfSale: z._default(pointOfSale, 'Жанаарка')
 })
 
 export type DocumentFormSchema = z.infer<typeof documentFormSchema>

@@ -19,6 +19,7 @@ export function documentToFormValues(document: SearchResultDocument): DocumentVa
     clientIdDateFrom: customer.clientIdDateFrom,
     clientIdType: customer.clientIdType,
     iin: customer.iin,
+    pointOfSale: customer.pointOfSale,
 
     organization: customer.organization.organization,
     bin: customer.organization.bin,

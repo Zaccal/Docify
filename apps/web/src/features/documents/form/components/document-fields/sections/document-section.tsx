@@ -4,11 +4,15 @@ import { DocumentAttachmentIcon } from '@hugeicons/core-free-icons'
 
 import { useCompanySelect } from '@/components/company-select/company-select-store'
 import { DatePicker } from '@/components/date-picker'
-import TemplateSelect from '@/features/documents/form/components/template-select'
-import { DEFAULT_COMPANY_TYPE } from '@/lib/constants'
+import {
+  documentAddressSchema,
+  pointOfSale,
+  type TemplateType
+} from '@/features/documents/form/schemas/document-schema/document.schema'
+import { DEFAULT_COMPANY_TYPE, DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
 
-import DocumentAddressSelect from '../../document-address-select'
 import DocumentFieldCard from '../../document-field-card/index'
+import GenericSelect from '../../selects/generic-select'
 import { useDocumentFields } from '../document-fields-store'
 
 export default function DocumentSection() {
@@ -49,16 +53,44 @@ export default function DocumentSection() {
           </Field>
         </div>
         {company === DEFAULT_COMPANY_TYPE && (
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             <Field>
               <FieldLabel>Шаблон</FieldLabel>
-              <TemplateSelect defaultValue={values?.templateType} name="templateType" />
+              <GenericSelect
+                options={{
+                  name: 'templateType',
+                  options: [
+                    { value: 'APARTMENT', label: 'Квартирная' },
+                    { value: 'HOTEL', label: 'Гостиничный' }
+                  ] satisfies readonly { value: TemplateType; label: string }[],
+                  defaultValue: values?.templateType ?? DEFAULT_TEMPLATE_TYPE,
+                  placeholder: 'Выберите шаблон',
+                  testId: 'template-select'
+                }}
+              />
             </Field>
             <Field>
               <FieldLabel>Адрес документа</FieldLabel>
-              <DocumentAddressSelect
-                name="documentAddress"
-                defaultValue={values?.documentAddress}
+              <GenericSelect
+                options={{
+                  name: 'documentAddress',
+                  options: documentAddressSchema.options,
+                  defaultValue: values?.documentAddress ?? documentAddressSchema.options[0],
+                  placeholder: 'Выберите адрес',
+                  testId: 'document-address-select'
+                }}
+              />
+            </Field>
+            <Field>
+              <FieldLabel>Точка продаж</FieldLabel>
+              <GenericSelect
+                options={{
+                  name: 'pointOfSale',
+                  options: pointOfSale.options,
+                  defaultValue: values?.pointOfSale ?? pointOfSale.options[1],
+                  placeholder: 'Выберите точку продаж',
+                  testId: 'point-of-sale-select'
+                }}
               />
             </Field>
           </div>

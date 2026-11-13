@@ -11,6 +11,7 @@ export function restoreTransactionFromSnapshot(
     updatedAt: new Date(),
     customer: {
       ...snapshot.customer,
+      pointOfSale: snapshot.customer.pointOfSale ?? 'Жанаарка',
       createdAt: new Date(),
       updatedAt: new Date(),
       organization: {

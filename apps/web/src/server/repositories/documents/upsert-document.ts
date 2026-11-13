@@ -52,6 +52,7 @@ export async function upsertDocument(
     clientIdDateFrom: data.clientIdDateFrom,
     clientIdType: data.clientIdType,
     iin: data.iin,
+    pointOfSale: data.pointOfSale,
     organizationId: organization.id
   }
 

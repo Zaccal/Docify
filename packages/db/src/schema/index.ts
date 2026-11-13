@@ -11,7 +11,7 @@ import {
   varchar
 } from 'drizzle-orm/pg-core'
 
-import { DocumentAddressEnum, TemplateType } from './enums'
+import { DocumentAddressEnum, PointOfSaleEnum, TemplateType } from './enums'
 import { CostTransactionsTable } from './transactions'
 
 export const OrganizationsTable = pgTable(
@@ -57,6 +57,7 @@ export const CustomersTable = pgTable(
     clientIdDateFrom: text('client_id_date_from').notNull(),
     clientIdType: text('client_id_type').notNull(),
     iin: varchar('iin', { length: 12 }).notNull().unique(),
+    pointOfSale: PointOfSaleEnum('point_of_sale').notNull().default('Жанаарка'),
     updatedAt: timestamp('updated_at').notNull().defaultNow(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
 

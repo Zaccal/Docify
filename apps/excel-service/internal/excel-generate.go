@@ -60,7 +60,7 @@ func GenerateExcelDocumentsArchive(org string, data Payload, tem string) ([]byte
 }
 
 func addGeneratedWorkbook(zipWriter *zip.Writer, org string, template excelTemplate, data Payload, tem string) error {
-	f, err := openTemplateWorkbook(org, template.templateName, tem)
+	f, err := openTemplateWorkbook(org, template.templateName, tem, data.Customer.PointOfSale)
 	if err != nil {
 		return err
 	}
@@ -102,23 +102,29 @@ func addGeneratedWorkbook(zipWriter *zip.Writer, org string, template excelTempl
 	return nil
 }
 
-func openTemplateWorkbook(org string, templateName string, tem string) (*excelize.File, error) {
+func openTemplateWorkbook(org string, templateName string, tem string, pointOfSale string) (*excelize.File, error) {
 	templatePathRoot := os.Getenv("TEMPLATE_PATH")
 	if templatePathRoot == "" {
 		return nil, fmt.Errorf("TEMPLATE_PATH is missing")
 	}
 
-	var templatePath string
-
-	switch tem {
-	case "APARTMENT":
-		templatePath = filepath.Join(templatePathRoot, org, templateName)
-	case "HOTEL":
-		templatePath = filepath.Join(templatePathRoot, org, "HOTEL", templateName)
-	default:
-		templatePath = filepath.Join(templatePathRoot, org, templateName)
+	templateDir := filepath.Join(templatePathRoot, org)
+	if org == xansha {
+		switch pointOfSale {
+		case "Караганда":
+			templateDir = filepath.Join(templateDir, "karaganda")
+		case "", "Жанаарка":
+			templateDir = filepath.Join(templateDir, "zhanaarka")
+		default:
+			return nil, fmt.Errorf("invalid pointOfSale: %q", pointOfSale)
+		}
 	}
 
+	if tem == "HOTEL" {
+		templateDir = filepath.Join(templateDir, "HOTEL")
+	}
+
+	templatePath := filepath.Join(templateDir, templateName)
 	f, err := excelize.OpenFile(templatePath)
 	if err != nil {
 		return nil, fmt.Errorf("open template %s: %w", templatePath, err)
