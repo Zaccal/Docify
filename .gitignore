@@ -60,6 +60,7 @@ deployment/certbot/www/
 # e2e
 cypress.env.json
 cypress/downloads/*
+cypress/screenshots/*
 
 # Local database seed
 /packages/db/src/seed.ts

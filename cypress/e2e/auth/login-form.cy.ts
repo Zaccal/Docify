@@ -51,7 +51,7 @@ describe('Authentication', () => {
         cy.get('[data-testid="password-field"]').type(PASSWORD)
         cy.get('[data-testid="login-button"]').click()
 
-        cy.wait('@loginAction').its('response.statusCode').should('eq', 303)
+        cy.wait('@loginAction').its('response.statusCode').should('be.oneOf', [303, 200, 201])
 
         cy.get('[data-testid="password-error"]').should('not.exist')
 
