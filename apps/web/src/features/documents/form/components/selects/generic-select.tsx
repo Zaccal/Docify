@@ -16,17 +16,27 @@ interface GenericSelectProps<T extends string> {
     placeholder?: string
     testId?: string
   }
+  disabled?: boolean
+  onValueChange?: (value: T | null) => void
 }
 
 export default function GenericSelect<T extends string>({
-  options: { name, options, defaultValue, placeholder, testId }
+  options: { name, options, defaultValue, placeholder, testId },
+  disabled = false,
+  onValueChange
 }: GenericSelectProps<T>) {
   const items = options.map((option) =>
     typeof option === 'string' ? { value: option, label: option } : option
   )
 
   return (
-    <Select name={name} defaultValue={defaultValue} items={items}>
+    <Select
+      disabled={disabled}
+      name={name}
+      defaultValue={defaultValue}
+      items={items}
+      onValueChange={onValueChange}
+    >
       <SelectTrigger data-testid={testId}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
