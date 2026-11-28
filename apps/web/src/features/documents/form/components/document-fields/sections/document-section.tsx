@@ -1,12 +1,14 @@
 import { Field, FieldError, FieldLabel } from '@Docify/ui/components/field'
 import { Input } from '@Docify/ui/components/input'
 import { DocumentAttachmentIcon } from '@hugeicons/core-free-icons'
+import { useState } from 'react'
 
 import { useCompanySelect } from '@/components/company-select/company-select-store'
 import { DatePicker } from '@/components/date-picker'
 import {
   documentAddressSchema,
   pointOfSale,
+  type PointOfSale,
   type TemplateType
 } from '@/features/documents/form/schemas/document-schema/document.schema'
 import { DEFAULT_COMPANY_TYPE, DEFAULT_TEMPLATE_TYPE } from '@/lib/constants'
@@ -18,6 +20,9 @@ import { useDocumentFields } from '../document-fields-store'
 export default function DocumentSection() {
   const { company } = useCompanySelect()
   const { errors, values } = useDocumentFields()
+  const [selectedPointOfSale, setSelectedPointOfSale] = useState<PointOfSale | null>(
+    values?.pointOfSale ?? pointOfSale.options[1]
+  )
 
   return (
     <DocumentFieldCard.Root>
@@ -72,6 +77,7 @@ export default function DocumentSection() {
             <Field>
               <FieldLabel>Адрес документа</FieldLabel>
               <GenericSelect
+                disabled={selectedPointOfSale === 'Караганда'}
                 options={{
                   name: 'documentAddress',
                   options: documentAddressSchema.options,
@@ -84,6 +90,7 @@ export default function DocumentSection() {
             <Field>
               <FieldLabel>Точка продаж</FieldLabel>
               <GenericSelect
+                onValueChange={setSelectedPointOfSale}
                 options={{
                   name: 'pointOfSale',
                   options: pointOfSale.options,
